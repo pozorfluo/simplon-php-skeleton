@@ -9,8 +9,8 @@ declare(strict_types=1);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>hello-php</title>
-    <!-- <link rel="stylesheet" href="css/style.css" />
-    <script src="js/script.js"></script> -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- <script src="js/script.js"></script> -->
 </head>
 
 <body>
@@ -149,9 +149,9 @@ FORM;
         9 => "Séisme capable de tout détruire sur une très vaste zone.",
     ];
     if (array_key_exists($magnitude, $phrases)) {
-        echo "<h3>{$phrases[$magnitude]}</h3>";
+        echo "<h2>{$phrases[$magnitude]}</h2>";
     } else {
-        echo "<h4>Elle avalé, la machine avalé.</h4>";
+        echo "<h2>Elle avalé, la machine avalé.</h2>";
     }
 
     //---------------------------------------------------------------- p2ex5
@@ -301,14 +301,14 @@ FORM;
         return $cheers;
     }
     echo '<hr>';
-    echo '<h1>' . kanpai($gender, $age) . '</h1>';
+    echo '<h2>' . kanpai($gender, $age) . '</h2>';
     //---------------------------------------------------------------- p4ex8
     function sum3ints(int $a = 1, int $b = 1, int $c = 1): int
     {
         return $a + $b + $c;
     }
     echo '<hr>';
-    echo '<h1>' . sum3ints() . '</h1>';
+    echo '<h2>' . sum3ints() . '</h2>';
 
     //---------------------------------------------------------------- p5ex1
     echo '<hr>';
