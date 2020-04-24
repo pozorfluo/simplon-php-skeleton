@@ -66,7 +66,7 @@ HELLO;
 FORM;
     //-------------------------------------------------- ex php-cooking-data
     echo '<hr />';
-    $movies_string = file_get_contents("../resources/movies.json", FALSE);
+    $movies_string = file_get_contents("resources/movies.json", FALSE);
     $movies_json = json_decode($movies_string, TRUE);
     // echo '<pre>';
     // var_dump($movies_json['feed']['entry'][0]);
@@ -420,6 +420,33 @@ FORM;
     foreach ($departements as $num => $name) {
         echo '<b>' . sprintf("%02d", $num) . '</b> : ' . $name . '<br />';
     }
+
+    //---------------------------------------------------------------- p5ex9,10
+    function flattenArray(array $nested_arrays): void
+    {
+        foreach ($nested_arrays as $key => $value) {
+            if (gettype($value) !== 'array') {
+                echo ('<pre>' . var_export($key, true) . ' => '
+                    . var_export($value, true) . '</pre>');
+            } else {
+                flattenArray($value);
+            }
+        }
+    }
+
+    function prettyPrintArray(array $nested_arrays): void
+    {
+        foreach ($nested_arrays as $key => $value) {
+            if (gettype($value) !== 'array') {
+                echo ('<li class="dump">' . $key . ' : '
+                    . $value . '</li>');
+            } else {
+                echo ('<ul class="dump">' . $key);
+                prettyPrintArray($value);
+                echo ('</ul>');
+            }
+        }
+    }
     ?>
 
 
@@ -431,7 +458,11 @@ FORM;
     echo '<pre>$_POST = ';
     var_dump($_POST);
     echo '<pre>' . var_export($_POST, true) . '</pre>';
-    echo "\nrunning : {$_SERVER['HTTP_USER_AGENT']}</pre>"
+    echo '<pre>' . var_dump($_POST) . '</pre>';
+    echo "<pre>running : {$_SERVER['HTTP_USER_AGENT']}</pre>";
+    prettyPrintArray($movies_json['feed']['entry'][0]);
+    prettyPrintArray($departements);
+    prettyPrintArray($months);
     // phpinfo();
     ?>
 </body>

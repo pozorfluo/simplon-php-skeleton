@@ -145,6 +145,19 @@ input[type="submit"]:active {
   background-color: var(--color-accent);
   color: var(--color-black);
 }
+ul.dump {
+    color: tomato;
+    font-size: 0.75rem;
+}
+li.dump {
+    margin-left: 2rem;
+}
+li.dump:nth-child(odd){
+    color: blue;
+}
+li.dump:nth-child(even){
+    color: green;
+}
 
 /* input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
