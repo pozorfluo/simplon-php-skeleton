@@ -1,19 +1,16 @@
 <?php
 
-declare(strict_types=1); ?>
-<!DOCTYPE html>
-<html lang="en">
+declare(strict_types=1);
+require 'utilities.php';
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hello-php</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- <script src="js/script.js"></script> -->
-</head>
+require 'html-head.php';
+?>
 
 <body>
+
+
     <?php
+    require 'html-nav.php';
     //---------------------------------------------------- p1ex1,2,6,7 p2ex1
     if (array_key_exists('firstname', $_POST)) {
         $firstname = htmlspecialchars($_POST['firstname']);
@@ -47,10 +44,10 @@ declare(strict_types=1); ?>
         <p>lastname : {$lastname}</p>
         <p>age      : <b>${age}</b></p>
         <h1>{$cheers}</h1>
-        <hr />
 HELLO;
     }
     echo <<<FORM
+<hr />
 <form action="index.php" method="post">
 
         First Name <input type="text" name="firstname" value="{$firstname}" />
@@ -361,7 +358,9 @@ FORM;
         return $cheers;
     }
     echo '<hr>';
-    echo '<h2>' . kanpai($gender, $age) . '</h2>';
+    if (isset($gender) && isset($age)) {
+        echo '<h2>' . kanpai($gender, $age) . '</h2>';
+    }
     //---------------------------------------------------------------- p4ex8
     function sum3ints(int $a = 1, int $b = 1, int $c = 1): int
     {
@@ -421,32 +420,7 @@ FORM;
         echo '<b>' . sprintf("%02d", $num) . '</b> : ' . $name . '<br />';
     }
 
-    //---------------------------------------------------------------- p5ex9,10
-    function flattenArray(array $nested_arrays): void
-    {
-        foreach ($nested_arrays as $key => $value) {
-            if (gettype($value) !== 'array') {
-                echo ('<pre>' . var_export($key, true) . ' => '
-                    . var_export($value, true) . '</pre>');
-            } else {
-                flattenArray($value);
-            }
-        }
-    }
 
-    function prettyPrintArray(array $nested_arrays): void
-    {
-        foreach ($nested_arrays as $key => $value) {
-            if (gettype($value) !== 'array') {
-                echo ('<li class="dump">' . $key . ' : '
-                    . $value . '</li>');
-            } else {
-                echo ('<ul class="dump">' . $key);
-                prettyPrintArray($value);
-                echo ('</ul>');
-            }
-        }
-    }
     ?>
 
 
