@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-?>
+declare(strict_types=1); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,10 +35,15 @@ declare(strict_types=1);
     } else {
         $cheers = 'No beer for you &#x1F61E';
     }
-
+    // $svg_width = strlen($firstname) * 10;
+    // <svg class="header" viewBox="0 0 {$svg_width} 24">
+    //     <text x="0" y="16">{$firstname}</text>
+    // </svg>
     if (!empty($_POST)) {
         echo <<<HELLO
-        <h1>Hello {$firstname} !</h1>
+        <h1 class="header">{$firstname}</h1>
+        <h2>Hello {$firstname} !</h2>
+
         <p>lastname : {$lastname}</p>
         <p>age      : <b>${age}</b></p>
         <h1>{$cheers}</h1>
@@ -48,19 +52,109 @@ HELLO;
     }
     echo <<<FORM
 <form action="index.php" method="post">
-    <p>
+
         First Name <input type="text" name="firstname" value="{$firstname}" />
-    </p>
-    <p>Last Name <input type="text" name="lastname" value="{$lastname}" /></p>
-    <p>Age <input type="number" name="age" value={$age} /></p>
-    <p><select name="gender" id="gender">
+        Last Name <input type="text" name="lastname" value="{$lastname}" />
+    Age <input type="number" name="age" value={$age} />
+       Gender <select name="gender" id="gender">
         <option value="female">female</option>
         <option value="male" selected>male</option>
         <option value="other">other</option>
-    </select></p>
-    <p><input type="submit" value="GO !"/></p>
+    </select>
+    <input type="submit" value="GO !"/>
 </form>
 FORM;
+    //-------------------------------------------------- ex php-cooking-data
+    echo '<hr />';
+    $movies_string = file_get_contents("../resources/movies.json", FALSE);
+    $movies_json = json_decode($movies_string, TRUE);
+    // echo '<pre>';
+    // var_dump($movies_json['feed']['entry'][0]);
+    // echo '</pre>';
+    $movies_top = array_slice($movies_json['feed']['entry'], 0, $age);
+    echo '<select name="top10" id="top10">';
+
+    foreach ($movies_top as $i => $movie) {
+        echo '<option value="' . $movie['im:name']['label'] . '">';
+        echo ($i + 1) . ' - ' . $movie['im:name']['label'];
+        echo '</option>';
+    }
+    echo '</select>';
+
+    // $movie_names = array_column($movies_json['feed']['entry'], 'im:name');
+    // $movie_names = array_column($movie_names, 'label');
+
+    $movie_names = array_map(
+        function ($raw) {
+            return $raw['im:name']['label'];
+        },
+        $movies_json['feed']['entry']
+    );
+
+    // var_dump($movie_names[1]);
+    $that_movie_index = array_search('Gravity', $movie_names);
+    // var_dump($that_movie_index);
+    echo '<h2>Gravity is ' . ($that_movie_index + 1) . '</h2>';
+
+    $movie_top_prices = array_map(
+        function ($raw) {
+            return (float) $raw['im:price']['attributes']['amount'];
+        },
+        $movies_top
+    );
+    // var_dump($movie_top_prices);
+    $prices_total = array_sum($movie_top_prices);
+    // var_dump($prices_total);
+    echo '<h2>Buy iTunes top 10 bundle $' . $prices_total . ' !!</h2>';
+
+    $movie_top_rent = array_map(
+        function ($raw) {
+            return (float) $raw['attributes']['amount'];
+        },
+        array_slice(
+            array_column($movies_json['feed']['entry'], 'im:rentalPrice'),
+            0,
+            10
+        )
+    );
+    // var_dump($movie_top_prices);
+    $rent_total = array_sum($movie_top_rent);
+    // var_dump($prices_total);
+    echo '<h2>Top 10 Rentable for $' . $rent_total . ' !!</h2>';
+    //---------------------------------------------------------------- p2ex3
+    if (!empty($_POST)) {
+        $gender = $_POST['gender'];
+        switch ($gender) {
+            case 'female':
+                $cheers .= '♀️';
+                break;
+            case 'male':
+                $cheers .= '♂️';
+                break;
+            default:
+                $cheers .= '🦄';
+                break;
+        }
+        echo "<h1>{$cheers}</h1>";
+    }
+    //---------------------------------------------------------------- p2ex4
+    $magnitude = 9;
+    $phrases = [
+        1 => "Micro-séisme impossible à ressentir.",
+        2 => "Micro-séisme impossible à ressentir mais enregistrable par les sismomètres.",
+        3 => "Ne cause pas de dégats mais commence à pouvoir être légèrement ressenti.",
+        4 => "Séisme capable de faire bouger des objets mais ne causant généralement pas de dégats.",
+        5 => "Séisme capable d'engendrer des dégats importants sur de vieux bâtiments ou bien des bâtiments présentants des défauts de construction. Peu de dégats sur des bâtiments modernes.",
+        6 => "Fort séisme capable d'engendrer des destructions majeures sur une large distance (180 km) autour de l'épicentre.",
+        7 => "Séisme capable de destructions majeures à modérées sur une très large zone en fonction de la distance.",
+        8 => "Séisme capable de destructions majeures sur une très large zone de plusieurs centaines de kilomètres.",
+        9 => "Séisme capable de tout détruire sur une très vaste zone.",
+    ];
+    if (array_key_exists($magnitude, $phrases)) {
+        echo "<h2>{$phrases[$magnitude]}</h2>";
+    } else {
+        echo "<h2>Elle avalé, la machine avalé.</h2>";
+    }
     //---------------------------------------------------------------- p1ex3
     echo '<hr />';
     $km = 1;
@@ -119,43 +213,9 @@ FORM;
         echo '💀';
     }
 
-    //---------------------------------------------------------------- p2ex3
-    if (!empty($_POST)) {
-        $gender = $_POST['gender'];
-        switch ($gender) {
-            case 'female':
-                $cheers .= '♀️';
-                break;
-            case 'male':
-                $cheers .= '♂️';
-                break;
-            default:
-                $cheers .= '🦄';
-                break;
-        }
-        echo "<h1>{$cheers}</h1>";
-    }
-    //---------------------------------------------------------------- p2ex4
-    $magnitude = 9;
-    $phrases = [
-        1 => "Micro-séisme impossible à ressentir.",
-        2 => "Micro-séisme impossible à ressentir mais enregistrable par les sismomètres.",
-        3 => "Ne cause pas de dégats mais commence à pouvoir être légèrement ressenti.",
-        4 => "Séisme capable de faire bouger des objets mais ne causant généralement pas de dégats.",
-        5 => "Séisme capable d'engendrer des dégats importants sur de vieux bâtiments ou bien des bâtiments présentants des défauts de construction. Peu de dégats sur des bâtiments modernes.",
-        6 => "Fort séisme capable d'engendrer des destructions majeures sur une large distance (180 km) autour de l'épicentre.",
-        7 => "Séisme capable de destructions majeures à modérées sur une très large zone en fonction de la distance.",
-        8 => "Séisme capable de destructions majeures sur une très large zone de plusieurs centaines de kilomètres.",
-        9 => "Séisme capable de tout détruire sur une très vaste zone.",
-    ];
-    if (array_key_exists($magnitude, $phrases)) {
-        echo "<h2>{$phrases[$magnitude]}</h2>";
-    } else {
-        echo "<h2>Elle avalé, la machine avalé.</h2>";
-    }
-
     //---------------------------------------------------------------- p2ex5
     // echo ($gender != 'Homme') ? 'C\'est une développeuse !!!' : 'C\'est un développeur !!!';
+    echo '<hr>';
     if ($gender != 'male') {
         echo 'C\'est une ♀️ ou 🦄 !!!';
     } else {
@@ -352,13 +412,13 @@ FORM;
     echo '<pre>' . var_export($departements, true) . '</pre>';
     //---------------------------------------------------------------- p5ex8
     echo '<hr>';
-    foreach( $months as $month) {
-        echo $month.'<br />';
+    foreach ($months as $month) {
+        echo $month . '<br />';
     }
     //---------------------------------------------------------------- p5ex9,10
     echo '<hr>';
-    foreach( $departements as $num => $name) {
-        echo '<b>'.sprintf("%02d", $num).'</b> : '.$name.'<br />';
+    foreach ($departements as $num => $name) {
+        echo '<b>' . sprintf("%02d", $num) . '</b> : ' . $name . '<br />';
     }
     ?>
 
