@@ -3,6 +3,11 @@
 declare(strict_types=1);
 require 'utilities.php';
 
+//------------------------------------------------------------------ session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $page_title = 'ex-session-form';
 require 'html-head.php';
 ?>
@@ -65,9 +70,7 @@ require 'html-head.php';
     // <h4>{$language}</h4>
     // <h4>{$server}</h4>
     // <h4>{$week}</h4>
-    //---------------------------------------------------------------- p6ex6
-
-
+    //------------------------------------------------------------------- p7
     $required_fields = [
         'firstname', 'lastname', 'gender'
     ];
@@ -148,6 +151,10 @@ FORM;
                 <h3>{$gender}</h3>
                 <h2>{$filename}</h2>
 HELLO;
+    //---------------------------------------------------------------- p8ex2
+    $_SESSION['firstname'] = $firstname;
+    $_SESSION['lastname'] = $lastname;
+    $_SESSION['gender'] = $gender;
     }
 
     echo '<hr />';
@@ -156,7 +163,9 @@ HELLO;
 
 
     echo '<hr />';
-    echo "<pre>running : {$_SERVER['HTTP_USER_AGENT']}</pre>";
+    echo "<pre>running     : {$_SERVER['HTTP_USER_AGENT']}</pre>";
+    echo "<pre>user ip     : {$_SERVER['REMOTE_ADDR']}</pre>";
+    echo "<pre>server name : {$_SERVER['SERVER_NAME']}</pre>";
     // echo '<pre>'.var_export($GLOBALS, TRUE).'</pre>';
     ?>
 </body>

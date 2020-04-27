@@ -15,14 +15,19 @@ declare(strict_types=1);
             ex-session-form
         </div>
     </a>
-    <a href="ex-session-form.php">
+    <a href="another-page.php">
         <div class="nav-button">
-            ex-session-form
+            another-page
         </div>
     </a>
-    <a href="ex-session-form.php">
+    <a href="cookies-form.php">
         <div class="nav-button">
-            ex-session-form
+            cookies-form
+        </div>
+    </a>
+    <a href="cookies-read.php">
+        <div class="nav-button">
+            cookies-read
         </div>
     </a>
 </nav>

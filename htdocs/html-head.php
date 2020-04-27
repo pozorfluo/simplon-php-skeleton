@@ -3,7 +3,7 @@
 declare(strict_types=1);
 // if ($page_title === null) {
 if (!isset($page_title)) {
-    $page_title = 'hell-php';
+    $page_title = 'hello-php';
 }
 ?>
 

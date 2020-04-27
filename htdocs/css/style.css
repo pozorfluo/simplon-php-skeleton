@@ -67,7 +67,8 @@ h3 {
   /* font-size: clamp(1rem, 6vmin, 8rem); */
   font-size: 8rem;
   font-weight: 900;
-  line-height: 9rem;
+  line-height: 8rem;
+  padding-bottom: 2rem;
   /* text-align: center;
     text-justify: distribute; */
   /* filter: drop-shadow(16px 16px 0px var(--color-accent)); */
