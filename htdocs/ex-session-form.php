@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require 'utilities.php';
+require_once 'utilities.php';
 
 //------------------------------------------------------------------ session
 if (session_status() == PHP_SESSION_NONE) {
@@ -83,7 +83,7 @@ require 'html-head.php';
         && ($_FILES['userfile']['error'] === 0)
         && ($_FILES['userfile']['type'] === 'application/pdf'));
 
-    if($missing_file) {
+    if ($missing_file) {
         $missing_post_fields[] = 'userfile';
     }
 
@@ -151,23 +151,14 @@ FORM;
                 <h3>{$gender}</h3>
                 <h2>{$filename}</h2>
 HELLO;
-    //---------------------------------------------------------------- p8ex2
-    $_SESSION['firstname'] = $firstname;
-    $_SESSION['lastname'] = $lastname;
-    $_SESSION['gender'] = $gender;
+        //------------------------------------------------------------ p8ex2
+        $_SESSION['firstname'] = $firstname;
+        $_SESSION['lastname'] = $lastname;
+        $_SESSION['gender'] = $gender;
     }
 
-    echo '<hr />';
-    echo '<h2>$GLOBALS</h2>';
-    dumpArray($GLOBALS);
-
-
-    echo '<hr />';
-    echo "<pre>running     : {$_SERVER['HTTP_USER_AGENT']}</pre>";
-    echo "<pre>user ip     : {$_SERVER['REMOTE_ADDR']}</pre>";
-    echo "<pre>server name : {$_SERVER['SERVER_NAME']}</pre>";
-    // echo '<pre>'.var_export($GLOBALS, TRUE).'</pre>';
     ?>
+    <?php require 'globals-dump.php' ?>
 </body>
 
 </html>

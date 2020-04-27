@@ -30,4 +30,9 @@ declare(strict_types=1);
             cookies-read
         </div>
     </a>
+    <a href="hello-pdo.php">
+        <div class="nav-button">
+            hello-pdo
+        </div>
+    </a>
 </nav>
