@@ -5,7 +5,7 @@ require_once 'utilities.php';
 
     echo '<hr />';
     echo '<h2>$GLOBALS</h2>';
-    dumpArray($GLOBALS);
+    prettyDump($GLOBALS);
 
     echo '<hr />';
     echo "<pre>running     : {$_SERVER['HTTP_USER_AGENT']}</pre>";

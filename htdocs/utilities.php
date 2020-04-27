@@ -28,8 +28,8 @@ function prettyPrintArray(array $nested_arrays): void
         }
     }
 }
-//---------------------------------------------------------------- dumpArray
-function dumpArray(array $nested_arrays): void
+//---------------------------------------------------------------- prettyDump
+function prettyDump(array $nested_arrays): void
 {
     foreach ($nested_arrays as $key => $value) {
         switch (gettype($value)) {
@@ -43,7 +43,7 @@ function dumpArray(array $nested_arrays): void
                         . count($value) . ')</span>'
                         . '</summary><ul style="font-size: 0.75rem;'
                         . 'background-color: ghostwhite">');
-                    dumpArray($value);
+                    prettyDump($value);
                     echo ('</ul></details>');
                 }
                 break;
@@ -84,7 +84,7 @@ function dumpArray(array $nested_arrays): void
     // echo '<pre style="margin-left: 2rem;">' . var_export($GLOBALS, true) . '</pre>';
     // echo '<pre>' . var_dump($GLOBALS) . '</pre>';
 
-    // function dumpArray(array $nested_arrays): void
+    // function prettyDump(array $nested_arrays): void
     // {
     //     foreach ($nested_arrays as $key => $value) {
     //         if (gettype($value) !== 'array') {
@@ -99,7 +99,7 @@ function dumpArray(array $nested_arrays): void
     //                     . $key . '<span style="color : steelblue;font-weight : 100;"> ('
     //                     . count($value) . ')</span>'
     //                     . '</summary><ul style="font-size: 0.75rem; background-color: ghostwhite">');
-    //                 dumpArray($value);
+    //                 prettyDump($value);
     //                 echo ('</ul></details>');
     //             }
     //         }
