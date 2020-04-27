@@ -434,9 +434,9 @@ FORM;
     echo '<pre>' . var_export($_POST, true) . '</pre>';
     echo '<pre>' . var_dump($_POST) . '</pre>';
     echo "<pre>running : {$_SERVER['HTTP_USER_AGENT']}</pre>";
-    prettyPrintArray($movies_json['feed']['entry'][0]);
-    prettyPrintArray($departements);
-    prettyPrintArray($months);
+    prettyArray($movies_json['feed']['entry'][0]);
+    prettyArray($departements);
+    prettyArray($months);
     // phpinfo();
     ?>
 </body>

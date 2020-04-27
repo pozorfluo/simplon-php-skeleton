@@ -26,6 +26,7 @@ require 'html-head.php';
 
     $db_options = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_PERSISTENT => true
     );
 
@@ -44,8 +45,12 @@ require 'html-head.php';
     //---------------------------------------------------- use db connection
     $query =
         "SELECT
+             `id`,
+             `lastName`,
              `firstName`,
-             `lastName`
+             `birthDate`,
+             `card`,
+             `cardNumber`
          FROM 
              `clients` 
          ORDER BY 
@@ -54,6 +59,9 @@ require 'html-head.php';
     $statement = $db->query($query);
 
     $result = $statement->fetchAll();
+
+    prettyTable($result, 'query');
+
     ?>
 
 

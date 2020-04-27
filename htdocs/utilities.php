@@ -14,8 +14,8 @@ function flattenArray(array $nested_arrays): void
     }
 }
 
-//--------------------------------------------------------- prettyPrintArray
-function prettyPrintArray(array $nested_arrays): void
+//-------------------------------------------------------------- prettyArray
+function prettyArray(array $nested_arrays): void
 {
     foreach ($nested_arrays as $key => $value) {
         if (gettype($value) !== 'array') {
@@ -23,10 +23,34 @@ function prettyPrintArray(array $nested_arrays): void
                 . $value . '</li>');
         } else {
             echo ('<ul class="dump">' . $key);
-            prettyPrintArray($value);
+            prettyArray($value);
             echo ('</ul>');
         }
     }
+}
+
+//-------------------------------------------------------------- prettyTable
+function prettyTable(array $query_results, string $css_class): void
+{
+    /* table header */
+    $col_names = array_keys($query_results[0]);
+    echo '<table class="' . $css_class . '"><thead class="' . $css_class . '">'
+        . '<tr class="' . $css_class . '">';
+
+    foreach ($col_names as $col_name) {
+        echo '<th class="' . $css_class . '">' . $col_name . '</th>';
+    }
+    echo '</tr></thead><tbody>';
+
+    /* table body */
+    foreach ($query_results as $result) {
+        echo '<tr class="' . $css_class . '">';
+        foreach ($result as $col => $value) {
+            echo '<td class="' . $css_class . '">' . $value . '</td>';
+        }
+        echo '</tr>';
+    }
+    echo '</tbody></table>';
 }
 //---------------------------------------------------------------- prettyDump
 function prettyDump(array $nested_arrays): void
@@ -74,7 +98,7 @@ function prettyDump(array $nested_arrays): void
                     . '<span style="color : steelblue;font-weight : bold;">'
                     . $key . '</span> : '
                     . ($value ?? '<span style="font-weight : bold;'
-                    . 'color : violet">NULL<span/>') 
+                        . 'color : violet">NULL<span/>')
                     . '</li>');
                 break;
         }

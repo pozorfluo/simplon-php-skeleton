@@ -1,5 +1,6 @@
 :root {
   --color-accent: tomato;
+  --color-accent-trans: rgba(255, 99, 71, 0.381);
   --color-black: black;
   --color-white: ghostwhite;
   --color-alt: #bc5090;
@@ -40,7 +41,7 @@ h1 {
   font-weight: 900;
   line-height: 6rem;
   padding: 0.75rem;
-  margin: 2rem 0 2rem 0 ;
+  margin: 2rem 0 2rem 0;
   background-color: var(--color-accent);
   color: var(--color-white);
   /* border: solid 4px var(--color-black); */
@@ -57,7 +58,6 @@ h3 {
   text-transform: uppercase;
   /* box-shadow: 10px 10px 0px 0px var(--color-accent); */
 }
-
 
 .header {
   color: var(--color-accent);
@@ -86,32 +86,32 @@ h4:hover {
 }
 
 nav {
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: auto;
-    /* grid-template-areas:
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: auto;
+  /* grid-template-areas:
       "link link link link" */
 }
 .nav-button {
-    /* grid-area: link; */
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 900;
-    line-height: 1rem;
-    padding: 0.75rem;
-    margin: 0 0 0.5rem 0;
-    background-color: white;
-    color: var(--color-accent);
+  /* grid-area: link; */
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1rem;
+  padding: 0.75rem;
+  margin: 0 0 0.5rem 0;
+  background-color: white;
+  color: var(--color-accent);
 }
 .nav-button:hover {
-    background-color: var(--color-black);
-    color: var(--color-accent);
-    transform: scale3d(1.05, 1.05, 1);
-    filter: drop-shadow(8px 8px 0px var(--color-accent));
+  background-color: var(--color-black);
+  color: var(--color-accent);
+  transform: scale3d(1.05, 1.05, 1);
+  filter: drop-shadow(8px 8px 0px var(--color-accent));
 }
-a{
-    text-decoration: none;
-    color:  var(--color-accent);
+a {
+  text-decoration: none;
+  color: var(--color-accent);
 }
 /* a:hover{
 } */
@@ -129,16 +129,16 @@ hr {
 }
 
 form {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "input input"
-      "input input"
-      "input input"
-      "input input"
-      "submit submit";
-  }
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "input input"
+    "input input"
+    "input input"
+    "input input"
+    "submit submit";
+}
 
 input,
 select,
@@ -182,9 +182,9 @@ input[type="submit"]:active {
   color: var(--color-black);
 }
 ul.dump {
-    color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: bold;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 /* summary.dump {
     font-weight: bold;
@@ -194,16 +194,67 @@ span.dump {
     color: var(--color-dark);
 } */
 li.dump {
-    font-weight: normal;
-    margin-left: 2rem;
+  font-weight: normal;
+  margin-left: 2rem;
 }
-li.dump:nth-child(odd){
-    color: var(--color-alt);
-    background-color: #FFFFFF;
+li.dump:nth-child(odd) {
+  color: var(--color-alt);
+  background-color: #ffffff;
 }
-li.dump:nth-child(even){
-    color: var(--color-dark);
-    background-color: #FFFFFF55;
+li.dump:nth-child(even) {
+  color: var(--color-dark);
+  background-color: #ffffff55;
+}
+
+table.query {
+  margin: 1rem 0 1.5rem 0;
+  width: 100%;
+}
+th.query {
+  /* grid-area: link; */
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1rem;
+  padding: 0.75rem;
+  margin: 0 0 0.5rem 0;
+  background-color: var(--color-black);
+  font-size: 1.2rem;
+  font-weight: 900;
+  line-height: 2rem;
+}
+
+tr.query,
+td.query {
+  /* grid-area: link; */
+  text-align: center;
+  font-size: 1rem;
+  /* font-weight: 900; */
+  line-height: 1rem;
+  padding: 0.75rem;
+  margin: 0 0 0.5rem 0;
+  background-color: white;
+  color: var(--color-accent);
+}
+
+th.query:hover {
+  color: var(--color-white);
+  background-color: var(--color-alt);
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans));
+}
+
+/* td.query:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+} */
+td.query:hover {
+  background-color: var(--color-alt);
+  color: var(--color-white);
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans));
+}
+tr.query:hover {
+  transform: scale3d(1.05, 1.05, 1);
+  filter: drop-shadow(0px 8px 0px var(--color-accent));
 }
 
 /* input[type=number]::-webkit-inner-spin-button, 
