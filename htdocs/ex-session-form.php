@@ -76,107 +76,80 @@ require 'html-head.php';
         return !(isset($_POST[$field]) &&  ($_POST[$field] !== ""));
     });
 
+    $missing_file = !(isset($_FILES['userfile'])
+        && ($_FILES['userfile']['error'] === 0)
+        && ($_FILES['userfile']['type'] === 'application/pdf'));
+
+    if($missing_file) {
+        $missing_post_fields[] = 'userfile';
+    }
+
     $missing_get_fields = array_filter($required_fields, function ($field) {
         return !(isset($_GET[$field]) &&  ($_GET[$field] !== ""));
     });
 
+
     if (!empty($missing_post_fields) && !empty($missing_get_fields)) {
         echo <<<FORM
     <hr />
-    <form action="" method="post">
-    First Name 
-    <input type="text" name="firstname" value="ケンシロウ" />
-    Last Name
-    <input type="text" name="lastname" value="霞" />
-    Gender 
-    <select name="gender" id="gender">
-    <option > </option>
-    <option value="female">female</option>
-    <option value="male" selected>male</option>
-    <option value="other">other</option>
-    </select>
-    <input type="submit" value="POST !"/>
+    <form enctype="multipart/form-data" action="" method="POST">
+        First Name 
+        <input type="text" name="firstname" value="ケンシロウ" />
+        Last Name
+        <input type="text" name="lastname" value="霞" />
+        Gender 
+        <select name="gender" id="gender">
+            <option > </option>
+            <option value="female">female</option>
+            <option value="male" selected>male</option>
+            <option value="other">other</option>
+        </select>
+
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+        Upload file
+        <input name="userfile" type="file" />
+
+        <input type="submit" value="POST !"/>
     </form>
-    <hr />
-    <form action="" method="get">
-    First Name 
-    <input type="text" name="firstname" value="" />
-    Last Name
-    <input type="text" name="lastname" value="" />
-    Gender 
-    <select name="gender" id="gender">
-    <option  selected> </option>
-    <option value="female">female</option>
-    <option value="male">male</option>
-    <option value="other">other</option>
-    </select>
-    <input type="submit" value="GET !"/>
+
+        <hr />
+
+    <form action="" method="GET">
+        First Name 
+        <input type="text" name="firstname" value="" />
+        Last Name
+        <input type="text" name="lastname" value="" />
+        Gender 
+        <select name="gender" id="gender">
+            <option  selected> </option>
+            <option value="female">female</option>
+            <option value="male">male</option>
+            <option value="other">other</option>
+        </select>
+        <input type="submit" value="GET !"/>
     </form>
+
 FORM;
     } else {
         if (empty($missing_post_fields)) {
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
             $gender = $_POST['gender'];
+            $filename = $_FILES['userfile']['name'];
         } else {
             $firstname = $_GET['firstname'];
             $lastname = $_GET['lastname'];
             $gender = $_GET['gender'];
+            $filename = 'no file sent';
         }
         echo <<<HELLO
                 <h1 class="header">{$firstname}</h1>
                 <h2>hello {$firstname} {$lastname} !</h2>
                 <h3>{$gender}</h3>
+                <h2>{$filename}</h2>
 HELLO;
     }
 
-
-    //     if (
-    //         isset($_POST['firstname'], $_POST['lastname'], $_POST['gender'])
-    //         && ($_POST['gender'] !== "")
-    //         && ($_POST['firstname'] !== "")
-    //         && ($_POST['lastname'] !== "")
-    //     ) {
-    //         $firstname = $_POST['firstname'];
-    //         $lastname = $_POST['lastname'];
-    //         $gender = $_POST['gender'];
-    //     } else {
-    //         if (
-    //             isset($_GET['firstname'], $_GET['lastname'], $_GET['gender'])
-    //             && ($_GET['gender'] !== "")
-    //             && ($_GET['firstname'] !== "")
-    //             && ($_GET['lastname'] !== "")
-    //         ) {
-    //             $firstname = $_GET['firstname'];
-    //             $lastname = $_GET['lastname'];
-    //             $gender = $_GET['gender'];
-    //             echo <<<HELLO
-    //             <h1 class="header>Hello {$firstname}</h1>
-    //             <h2>{$lastname}</h2>
-    //             <h3>{$gender}</h3>
-    // HELLO;
-    //         } else {
-
-    //             echo <<<FORM
-    //         <hr />
-    //         <form action="" method="post">
-    //         First Name 
-    //         <input type="text" name="firstname" value="" />
-    //         Last Name
-    //         <input type="text" name="lastname" value="" />
-    //         Gender 
-    //         <select name="gender" id="gender">
-    //         <option  selected> </option>
-    //         <option value="female">female</option>
-    //         <option value="male">male</option>
-    //         <option value="other">other</option>
-    //         </select>
-    //         <input type="submit" value="GO !"/>
-    //         </form>
-    // FORM;
-    //         }
-    //     }
-    //--
     echo '<hr />';
     echo '<h2>$GLOBALS</h2>';
     dumpArray($GLOBALS);
