@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 $page_title = 'cookies-read';
 
- require 'src/html-head.php';
+ require 'src/head.php';
 ?>
 
 <body>
     <?php
-     require 'src/html-nav.php';
+     require 'src/nav.php';
     ?>
 
 

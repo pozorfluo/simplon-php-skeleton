@@ -39,12 +39,12 @@ if (empty($missing_post_fields)) {
 
 $page_title = 'cookies-form';
 
- require 'src/html-head.php';
+ require 'src/head.php';
 ?>
 
 <body>
     <?php
-     require 'src/html-nav.php';
+     require 'src/nav.php';
     ?>
 
     <hr />

@@ -10,12 +10,12 @@ if (session_status() === PHP_SESSION_NONE) {
 $page_title = 'another-page';
 
 
-require 'src/html-head.php';
+require 'src/head.php';
 ?>
 
 <body>
     <?php
-    require 'src/html-nav.php';
+    require 'src/nav.php';
 
     if (isset($_SESSION['count'])) {
         $_SESSION['count']++;

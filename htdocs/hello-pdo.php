@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
+require_once 'src/AutoLoader.php';
 
+use \Models\HelloPdo as HelloPdoModel;
 
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
@@ -9,12 +11,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $page_title = 'hello-pdo';
 
-require 'src/html-head.php';
+require 'src/head.php';
 ?>
 
 <body>
     <?php
-    require 'src/html-nav.php';
+    require 'src/nav.php';
     ?>
 
     <hr />
@@ -22,7 +24,7 @@ require 'src/html-head.php';
     <?php
 
     require 'src/DB-config.php';
-    require 'src/DB.php';
+    // require 'src/DB.php';
     $db = new DB(
         $db_config['DB_DRIVER'],
         $db_config['DB_HOST'],
@@ -33,7 +35,7 @@ require 'src/html-head.php';
         $db_config['DB_PASSWORD']
     );
 
-    require 'src/HelloPdoModel.php';
+    // require 'src/HelloPdoModel.php';
     $helloPdoModel = new HelloPdoModel($db);
 
     switch ($_POST['query'] ?? 'ex1') {
@@ -48,6 +50,22 @@ require 'src/html-head.php';
         case 'ex3':
             $result = $_SESSION['helloPdo_getEx3'] ?? $helloPdoModel->getEx3();
             $_SESSION['helloPdo_getEx3'] = $result;
+            break;
+        case 'ex4':
+            $result = $_SESSION['helloPdo_getEx4'] ?? $helloPdoModel->getEx4();
+            $_SESSION['helloPdo_getEx4'] = $result;
+            break;
+        case 'ex5':
+            $result = $_SESSION['helloPdo_getEx5'] ?? $helloPdoModel->getEx5();
+            $_SESSION['helloPdo_getEx5'] = $result;
+            break;
+        case 'ex6':
+            $result = $_SESSION['helloPdo_getEx6'] ?? $helloPdoModel->getEx6();
+            $_SESSION['helloPdo_getEx6'] = $result;
+            break;
+        case 'ex7':
+            $result = $_SESSION['helloPdo_getEx7'] ?? $helloPdoModel->getEx7();
+            $_SESSION['helloPdo_getEx7'] = $result;
             break;
         default:
             $result = $_SESSION['helloPdo_getEx1'] ?? $helloPdoModel->getEx1();

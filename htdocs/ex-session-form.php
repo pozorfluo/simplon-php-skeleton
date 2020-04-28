@@ -9,14 +9,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $page_title = 'ex-session-form';
- require 'src/html-head.php';
+ require 'src/head.php';
 ?>
 
 <body>
 
 
     <?php
-     require 'src/html-nav.php';
+     require 'src/nav.php';
     //---------------------------------------------------------------- p6ex1
     // if (isset($_GET['firstname'])) {
     //     $firstname = htmlspecialchars($_GET['firstname']);

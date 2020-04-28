@@ -3,14 +3,14 @@
 declare(strict_types=1);
 require 'src/utilities.php';
 
-require 'src/html-head.php';
+require 'src/head.php';
 ?>
 
 <body>
 
 
     <?php
-    require 'src/html-nav.php';
+    require 'src/nav.php';
     //---------------------------------------------------- p1ex1,2,6,7 p2ex1
     if (array_key_exists('firstname', $_POST)) {
         $firstname = htmlspecialchars($_POST['firstname']);
