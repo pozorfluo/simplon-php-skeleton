@@ -24,18 +24,7 @@ require 'src/head.php';
     <?php
 
     require 'src/DB-config.php';
-    // require 'src/DB.php';
-    $db = new DB(
-        $db_config['DB_DRIVER'],
-        $db_config['DB_HOST'],
-        $db_config['DB_PORT'],
-        $db_config['DB_NAME'],
-        $db_config['DB_CHARSET'],
-        $db_config['DB_USER'],
-        $db_config['DB_PASSWORD']
-    );
 
-    // require 'src/HelloPdoModel.php';
     $helloPdoModel = new HelloPdoModel($db);
 
     switch ($_POST['query'] ?? 'ex1') {
@@ -73,7 +62,6 @@ require 'src/head.php';
             break;
     }
     require 'src/pdo-table.php';
-
     ?>
 
     <?php require 'src/globals-dump.php' ?>
