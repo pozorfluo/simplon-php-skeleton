@@ -1,16 +1,15 @@
 <?php
 
 declare(strict_types=1);
-require 'utilities.php';
 
 $page_title = 'cookies-read';
 
-require 'html-head.php';
+ require 'src/html-head.php';
 ?>
 
 <body>
     <?php
-    require 'html-nav.php';
+     require 'src/html-nav.php';
     ?>
 
 
@@ -26,7 +25,7 @@ require 'html-head.php';
 
     ?>
     
-    <?php require 'globals-dump.php' ?>
+    <?php  require 'src/globals-dump.php' ?>
 </body>
 
 </html>

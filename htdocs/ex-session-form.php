@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once 'utilities.php';
+require_once 'src/utilities.php';
 
 //------------------------------------------------------------------ session
 if (session_status() == PHP_SESSION_NONE) {
@@ -9,14 +9,14 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 $page_title = 'ex-session-form';
-require 'html-head.php';
+ require 'src/html-head.php';
 ?>
 
 <body>
 
 
     <?php
-    require 'html-nav.php';
+     require 'src/html-nav.php';
     //---------------------------------------------------------------- p6ex1
     // if (isset($_GET['firstname'])) {
     //     $firstname = htmlspecialchars($_GET['firstname']);
@@ -158,7 +158,7 @@ HELLO;
     }
 
     ?>
-    <?php require 'globals-dump.php' ?>
+    <?php  require 'src/globals-dump.php' ?>
 </body>
 
 </html>

@@ -1,26 +1,21 @@
 <?php
 
 declare(strict_types=1);
-require 'utilities.php';
 
 //------------------------------------------------------------------ session
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// var_dump(defined('SID'));
-// var_dump(SID);
-// print_r($_SESSION);
-// echo session_id();
 
 $page_title = 'another-page';
 
 
-require 'html-head.php';
+require 'src/html-head.php';
 ?>
 
 <body>
     <?php
-    require 'html-nav.php';
+    require 'src/html-nav.php';
 
     if (empty($_SESSION['count'])) {
         $_SESSION['count'] = 1;
@@ -44,8 +39,8 @@ require 'html-head.php';
     echo '<h2>SID : ' . htmlspecialchars(session_id()) . '</h2>';
 
     ?>
-    
-    <?php require 'globals-dump.php' ?>
+
+    <?php require 'src/globals-dump.php' ?>
 </body>
 
 </html>

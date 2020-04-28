@@ -78,13 +78,13 @@ function prettyDump(array $nested_arrays): void
                     . 'font-weight : 100;"> ('
                     . gettype($value) . ')</span>'
                     . '</summary><ul style="font-size: 0.75rem;'
-                    . 'background-color: ghostwhite">'
-                    . '<li style="margin-left: 2rem;color: teal;'
-                    . 'background-color: white">'
-                    . '<span style="color : steelblue;font-weight : bold;">'
-                    . 'object</span> : '
-                    . '<pre>' . var_export($value, true)
-                    . '</pre></li></ul></details>');
+                    . 'background-color: ghostwhite">');
+                    prettyDump(get_object_vars($value));
+                    echo ' <details open><summary style="font-weight : bold;'
+                    . 'color : plum">(methods)</summary><pre>';
+                    prettyArray(get_class_methods($value));
+                    echo '</details></pre>';
+                    echo '</li></ul></details>';
                 break;
             case 'callable':
             case 'iterable':

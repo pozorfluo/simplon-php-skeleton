@@ -1,16 +1,16 @@
 <?php
 
 declare(strict_types=1);
-require 'utilities.php';
+require 'src/utilities.php';
 
-require 'html-head.php';
+require 'src/html-head.php';
 ?>
 
 <body>
 
 
     <?php
-    require 'html-nav.php';
+    require 'src/html-nav.php';
     //---------------------------------------------------- p1ex1,2,6,7 p2ex1
     if (array_key_exists('firstname', $_POST)) {
         $firstname = htmlspecialchars($_POST['firstname']);
@@ -49,11 +49,10 @@ HELLO;
     echo <<<FORM
 <hr />
 <form action="index.php" method="post">
-
         First Name <input type="text" name="firstname" value="{$firstname}" />
         Last Name <input type="text" name="lastname" value="{$lastname}" />
     Age <input type="number" name="age" value={$age} />
-       Gender <select name="gender" id="gender">
+       Gender <select name="gender">
         <option value="female">female</option>
         <option value="male" selected>male</option>
         <option value="other">other</option>
@@ -426,17 +425,17 @@ FORM;
 
     <hr />
     <?php
-    echo '$firstname = (' . gettype($firstname) . ")<b>${firstname}</b><br />";
-    echo '$lastname = (' . gettype($lastname) . ")<b>${lastname}</b><br />";
-    echo '$age = (' . gettype($age) . ")<b>${age}</b><br />";
-    echo '<pre>$_POST = ';
-    var_dump($_POST);
-    echo '<pre>' . var_export($_POST, true) . '</pre>';
-    echo '<pre>' . var_dump($_POST) . '</pre>';
+    // echo '$firstname = (' . gettype($firstname) . ")<b>${firstname}</b><br />";
+    // echo '$lastname = (' . gettype($lastname) . ")<b>${lastname}</b><br />";
+    // echo '$age = (' . gettype($age) . ")<b>${age}</b><br />";
+    // echo '<pre>$_POST = ';
+    // var_dump($_POST);
+    // echo '<pre>' . var_export($_POST, true) . '</pre>';
+    // echo '<pre>' . var_dump($_POST) . '</pre>';
     echo "<pre>running : {$_SERVER['HTTP_USER_AGENT']}</pre>";
-    prettyArray($movies_json['feed']['entry'][0]);
-    prettyArray($departements);
-    prettyArray($months);
+    // prettyArray($movies_json['feed']['entry'][0]);
+    // prettyArray($departements);
+    // prettyArray($months);
     // phpinfo();
     ?>
 </body>

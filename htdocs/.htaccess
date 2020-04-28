@@ -1,0 +1,15 @@
+php_value display_errors On
+php_value mbstring.http_input auto
+php_value date.timezone America/New_York
+
+# secure .htaccess
+<Files .htaccess>
+	Order allow,deny
+	Deny from all
+</Files>
+
+# secure .env
+<Files .env>
+	Order allow,deny
+	Deny from all
+</Files>

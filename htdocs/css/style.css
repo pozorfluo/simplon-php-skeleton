@@ -138,6 +138,7 @@ form {
     "input input"
     "input input"
     "submit submit";
+    align-items: center;
 }
 
 input,
@@ -238,8 +239,8 @@ td.query {
 }
 
 th.query:hover {
-  color: var(--color-white);
-  background-color: var(--color-alt);
+  color: var(--color-black);
+  background-color: var(--color-accent);
   filter: drop-shadow(2px 4px 4px var(--color-accent-trans));
 }
 
