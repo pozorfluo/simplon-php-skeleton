@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 
 //------------------------------------------------------------------ session
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 $page_title = 'hello-pdo';
@@ -20,56 +20,42 @@ require 'src/html-head.php';
     <hr />
 
     <?php
-    //--------------------------------------------------- open db connection
-    $db_config = file_get_contents('.env');
-    $db_config = json_decode($db_config, true);
 
-    $db_dsn = $db_config['DB_DRIVER']
-        . ':host=' . $db_config['DB_HOST']
-        . ':' . $db_config['DB_PORT']
-        . ';dbname=' . $db_config['DB_NAME']
-        . ';charset=' . $db_config['DB_CHARSET'];
-
-    $db_options = array(
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_PERSISTENT => true
+    require 'src/DB-config.php';
+    require 'src/DB.php';
+    $db = new DB(
+        $db_config['DB_DRIVER'],
+        $db_config['DB_HOST'],
+        $db_config['DB_PORT'],
+        $db_config['DB_NAME'],
+        $db_config['DB_CHARSET'],
+        $db_config['DB_USER'],
+        $db_config['DB_PASSWORD']
     );
-
-    try {
-        $db = new PDO(
-            $db_dsn,
-            $db_config['DB_USER'],
-            $db_config['DB_PASSWORD'],
-            $db_options
-        );
-    } catch (PDOException $exception) {
-        echo 'PDO Error : ' . $exception->getMessage() . '<br/>';
-        // die();
-    }
 
     require 'src/HelloPdoModel.php';
     $helloPdoModel = new HelloPdoModel($db);
+
     switch ($_POST['query'] ?? 'ex1') {
         case 'ex1':
-            $result = $helloPdoModel->getEx1();
+            $result = $_SESSION['helloPdo_getEx1'] ?? $helloPdoModel->getEx1();
+            $_SESSION['helloPdo_getEx1'] = $result;
             break;
         case 'ex2':
-            $result = $helloPdoModel->getEx2();
+            $result = $_SESSION['helloPdo_getEx2'] ?? $helloPdoModel->getEx2();
+            $_SESSION['helloPdo_getEx2'] = $result;
             break;
         case 'ex3':
-            $result = $helloPdoModel->getEx3();
+            $result = $_SESSION['helloPdo_getEx3'] ?? $helloPdoModel->getEx3();
+            $_SESSION['helloPdo_getEx3'] = $result;
             break;
         default:
-            $result = $helloPdoModel->getEx1();
+            $result = $_SESSION['helloPdo_getEx1'] ?? $helloPdoModel->getEx1();
+            $_SESSION['helloPdo_getEx1'] = $result;
             break;
     }
     require 'src/pdo-table.php';
 
-
-    // toss sensitive $db_config before dumping $GLOBALS
-    unset($db_config);
-    unset($db_dsn);
     ?>
 
     <?php require 'src/globals-dump.php' ?>

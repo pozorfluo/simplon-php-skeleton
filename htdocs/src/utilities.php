@@ -76,7 +76,7 @@ function prettyDump(array $nested_arrays): void
                     . 'font-weight : bold;">'
                     . $key . '<span style="color : steelblue;'
                     . 'font-weight : 100;"> ('
-                    . gettype($value) . ')</span>'
+                    . gettype($value).' : '. get_class($value). ')</span>'
                     . '</summary><ul style="font-size: 0.75rem;'
                     . 'background-color: ghostwhite">');
                     prettyDump(get_object_vars($value));

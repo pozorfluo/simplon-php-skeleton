@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 //------------------------------------------------------------------ session
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -17,11 +17,12 @@ require 'src/html-head.php';
     <?php
     require 'src/html-nav.php';
 
-    if (empty($_SESSION['count'])) {
-        $_SESSION['count'] = 1;
-    } else {
+    if (isset($_SESSION['count'])) {
         $_SESSION['count']++;
+    } else {
+        $_SESSION['count'] = 1;
     }
+
 
     if (isset($_SESSION['firstname'])) {
         echo '<h1 class="header">' . $_SESSION['firstname'] . '</h1>';

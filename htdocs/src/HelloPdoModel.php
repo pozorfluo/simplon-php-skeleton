@@ -9,7 +9,7 @@ class HelloPdoModel
 {
     protected $db;
 
-    public function __construct(PDO $db)
+    public function __construct(DB $db)
     {
         $this->db = $db;
     }
@@ -30,7 +30,6 @@ class HelloPdoModel
              `lastName` ASC;";
 
         $statement = $this->db->query($query);
-
         return $statement->fetchAll();
     }
 
