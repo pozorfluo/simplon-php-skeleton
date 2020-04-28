@@ -3,6 +3,7 @@
 declare(strict_types=1);
 require_once 'src/AutoLoader.php';
 
+use \Helpers\DBConfig as DBConfig;
 use \Models\HelloPdo as HelloPdoModel;
 
 //------------------------------------------------------------------ session
@@ -23,43 +24,39 @@ require 'src/head.php';
 
     <?php
 
-    require 'src/DB-config.php';
+    $db_configs = new DBConfig('.env');
+    $model = new HelloPdoModel($db_configs);
+    $exercise = $_POST['query'] ?? 'ex1';
 
-    $helloPdoModel = new HelloPdoModel($db);
-
-    switch ($_POST['query'] ?? 'ex1') {
+    switch ($exercise) {
         case 'ex1':
-            $result = $_SESSION['helloPdo_getEx1'] ?? $helloPdoModel->getEx1();
-            $_SESSION['helloPdo_getEx1'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx1();
             break;
         case 'ex2':
-            $result = $_SESSION['helloPdo_getEx2'] ?? $helloPdoModel->getEx2();
-            $_SESSION['helloPdo_getEx2'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx2();
             break;
         case 'ex3':
-            $result = $_SESSION['helloPdo_getEx3'] ?? $helloPdoModel->getEx3();
-            $_SESSION['helloPdo_getEx3'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx3();
             break;
         case 'ex4':
-            $result = $_SESSION['helloPdo_getEx4'] ?? $helloPdoModel->getEx4();
-            $_SESSION['helloPdo_getEx4'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx4();
             break;
         case 'ex5':
-            $result = $_SESSION['helloPdo_getEx5'] ?? $helloPdoModel->getEx5();
-            $_SESSION['helloPdo_getEx5'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx5();
             break;
         case 'ex6':
-            $result = $_SESSION['helloPdo_getEx6'] ?? $helloPdoModel->getEx6();
-            $_SESSION['helloPdo_getEx6'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx6();
             break;
         case 'ex7':
-            $result = $_SESSION['helloPdo_getEx7'] ?? $helloPdoModel->getEx7();
-            $_SESSION['helloPdo_getEx7'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx7();
             break;
         default:
-            $result = $_SESSION['helloPdo_getEx1'] ?? $helloPdoModel->getEx1();
-            $_SESSION['helloPdo_getEx1'] = $result;
+            $result = $_SESSION[$exercise] ?? $model->getEx1();
             break;
+    }
+
+    if (isset($result)) {
+        $_SESSION[$exercise] = $result;
     }
     require 'src/pdo-table.php';
     ?>
