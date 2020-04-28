@@ -10,10 +10,11 @@ namespace Helpers;
 class DBConfig
 {
     protected $configs;
-    protected $selected;
+    // protected $selected;
 
     public function __construct(string $file)
     {
+        echo '<pre>DBConfig->__construct()</pre>';
         if (file_exists($file)) {
             $json_configs = file_get_contents('.env');
             $this->configs = json_decode($json_configs, true);
@@ -30,38 +31,48 @@ class DBConfig
                 ]
             ];
         }
-        $this->selected = array_key_first($this->configs);
+        // $this->selected = array_key_first($this->configs);
     }
 
-    public function get(?string $config_name = null): \DB
+    public function get(?string $config_name = null): ?\DB
     {
-        $config_name = $config_name ?? $this->selected;
+        //$this->selected;
+        $config_name = $config_name ?? array_key_first($this->configs);
+        echo '<pre>DBConfig->get() ' . $config_name . '</pre>';
         
-        return new \DB(
-            $this->configs[$config_name]['DB_DRIVER'],
-            $this->configs[$config_name]['DB_HOST'],
-            $this->configs[$config_name]['DB_PORT'],
-            $this->configs[$config_name]['DB_NAME'],
-            $this->configs[$config_name]['DB_CHARSET'],
-            $this->configs[$config_name]['DB_USER'],
-            $this->configs[$config_name]['DB_PASSWORD']
-        );
-    }
-
-    public function isSelected(string $config_name): bool
-    {
-        return ($config_name === $this->selected);
-    }
-
-    public function select(string $config_name): bool
-    {
-        if (isset($this->configs[$config_name]))
-        {
-            $this->selected = $config_name;
-            return true;
+        if (isset($this->configs[$config_name])) {
+            return new \DB(
+                $this->configs[$config_name]['DB_DRIVER'],
+                $this->configs[$config_name]['DB_HOST'],
+                $this->configs[$config_name]['DB_PORT'],
+                $this->configs[$config_name]['DB_NAME'],
+                $this->configs[$config_name]['DB_CHARSET'],
+                $this->configs[$config_name]['DB_USER'],
+                $this->configs[$config_name]['DB_PASSWORD']
+            );
         }
-        return false;
+        return null;
     }
+
+    // public function isSelected(string $config_name): bool
+    // {
+    //     echo '<pre>->isSelected() '. $config_name.'</pre>';
+    //     echo '<pre>'.var_export($this->selected, true).'</pre>';
+    //     return ($config_name === $this->selected);
+    // }
+
+    // public function select(string $config_name): bool
+    // {
+    //     if (isset($this->configs[$config_name]))
+    //     {
+    //         echo '<pre>->select() '. $config_name.'</pre>';
+
+    //         $this->selected = $config_name;
+    //         echo '<pre>'.var_export($this->selected, true).'</pre>';
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
 
 
