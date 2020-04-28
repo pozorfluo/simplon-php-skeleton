@@ -77,17 +77,19 @@ class HelloPdo
     {
         $query =
             "SELECT
-                 `id`,
+                 `clients`.`id`,
                  `lastName` AS `last name`,
                  `firstName` AS `first name`,
                  `birthDate` AS `date of birth`,
-                 `cardNumber` AS `card number`
+                 `clients`.`cardNumber` AS `card number`
              FROM 
                  `clients` 
+             INNER JOIN
+                 `cards` ON `clients`.`cardNumber` = `cards`.`cardNumber`
              WHERE
-                 `card` = 1
+                 `cards`.`cardTypesId` = 1
              ORDER BY 
-                 `id` ASC;";
+                 `clients`.`id` ASC;";
 
         $statement = $this->db->query($query);
 
