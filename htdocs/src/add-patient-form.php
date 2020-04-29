@@ -24,11 +24,10 @@ $missing_fields = array_filter($required_fields, function ($field) {
 
 if (empty($missing_fields)) {
 
-    $args = array_filter($required_fields, function ($field) {
+    $argus = array_map(function ($field) {
         return $_POST[$field];
-    });
+    }, $required_fields);
 
-    echo '<pre>' . var_export($args, true) . '</pre>';
     $query = [
         'config' => 'patients',
         'query' =>
@@ -37,18 +36,18 @@ if (empty($missing_fields)) {
         VALUES
             (?, ?, ?, ?, ?)
             ;",
-        'args' => $args
+        'args' => $argus
     ];
 
     $db_configs = new DBConfig('.env');
     $model = new HelloPdoModel($db_configs);
 
-    // $result =  $model->execute(
-    //     $query['config'],
-    //     $query['query'],
-    //     $query['args'],
-    //     true
-    // );
+    $result =  $model->execute(
+        $query['config'],
+        $query['query'],
+        $query['args'],
+        true
+    );
 }
 ?>
 <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">

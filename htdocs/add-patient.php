@@ -17,7 +17,7 @@ require 'src/head.php';
     <hr />
 
     <?php require 'src/add-patient-form.php'; ?>
-    <?php require 'src/globals-dump.php'; ?>
+    <?php require 'src/footer.php';?>
 
 </body>
 
