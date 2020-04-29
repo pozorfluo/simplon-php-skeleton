@@ -6,6 +6,7 @@ declare(strict_types=1);
  * 
  */
 ?>
+
 <form action="" method="post">
     <label for="query">Query</label>
     <select name="query" onchange="this.form.submit()">
@@ -20,7 +21,11 @@ declare(strict_types=1);
     </select>
     <!-- <input type="submit" value="GET !" /> -->
 </form>
-
+<form action="" method="post">
+    <textarea rows="20" style="width:100%;" name="query" autofocus>...
+    </textarea>
+    <input type="submit" value="GET !" />
+</form>
 <?php
 require_once 'src/utilities.php';
 

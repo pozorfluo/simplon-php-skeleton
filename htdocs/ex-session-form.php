@@ -19,14 +19,14 @@ $page_title = 'ex-session-form';
      require 'src/nav.php';
     //---------------------------------------------------------------- p6ex1
     // if (isset($_GET['firstname'])) {
-    //     $firstname = htmlspecialchars($_GET['firstname']);
+    //     $firstname = htmlspecialchars($_GET['firstname'], ENT_QUOTES);
     //     echo "<h1 class='header'>Hello {$firstname}!</h1>";
     // } else {
     //     $firstname = 'no first name ? 😔';
     // }
 
     // if (isset($_GET['lastname'])) {
-    //     $lastname = htmlspecialchars($_GET['lastname']);
+    //     $lastname = htmlspecialchars($_GET['lastname'], ENT_QUOTES);
     // } else {
     //     $lastname = 'no last name ? 😔';
     // }
@@ -38,30 +38,30 @@ $page_title = 'ex-session-form';
     // }
 
     // if (isset($_GET['startDate'])) {
-    //     $startDate = $_GET['startDate'];
+    //     $startDate = htmlspecialchars($_GET['startDate'], ENT_QUOTES);
     // } else {
     //     $startDate = 'no startDate ? 😔';
     // }
     // if (isset($_GET['endDate'])) {
-    //     $endDate = $_GET['endDate'];
+    //     $endDate = htmlspecialchars($_GET['endDate'], ENT_QUOTES);
     // } else {
     //     $endDate = 'no endDate ? 😔';
     // }
 
     // if (isset($_GET['language'])) {
-    //     $language = $_GET['language'];
+    //     $language = htmlspecialchars($_GET['language'], ENT_QUOTES);
     // } else {
     //     $language = 'no language ? 😔';
     // }
 
     // if (isset($_GET['server'])) {
-    //     $server = $_GET['server'];
+    //     $server = htmlspecialchars($_GET['server'], ENT_QUOTES);
     // } else {
     //     $server = 'no server ? 😔';
     // }
 
     // if (isset($_GET['week'])) {
-    //     $week = $_GET['week'];
+    //     $week = htmlspecialchars($_GET['week'], ENT_QUOTES);
     // } else {
     //     $week = 'no week ? 😔';
     // }
@@ -135,14 +135,14 @@ $page_title = 'ex-session-form';
 FORM;
     } else {
         if (empty($missing_post_fields)) {
-            $firstname = $_POST['firstname'];
-            $lastname = $_POST['lastname'];
-            $gender = $_POST['gender'];
-            $filename = $_FILES['userfile']['name'];
+            $firstname = htmlspecialchars($_POST['firstname'], ENT_QUOTES);
+            $lastname = htmlspecialchars($_POST['lastname'], ENT_QUOTES);
+            $gender = htmlspecialchars($_POST['gender'], ENT_QUOTES);
+            $filename = htmlspecialchars($_FILES['userfile']['name'], ENT_QUOTES);
         } else {
-            $firstname = $_GET['firstname'];
-            $lastname = $_GET['lastname'];
-            $gender = $_GET['gender'];
+            $firstname = htmlspecialchars($_GET['firstname'], ENT_QUOTES);
+            $lastname = htmlspecialchars($_GET['lastname'], ENT_QUOTES);
+            $gender = htmlspecialchars($_GET['gender'], ENT_QUOTES);
             $filename = 'no file sent';
         }
         echo <<<HELLO

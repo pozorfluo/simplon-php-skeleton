@@ -13,12 +13,12 @@ require 'src/head.php';
     require 'src/nav.php';
     //---------------------------------------------------- p1ex1,2,6,7 p2ex1
     if (array_key_exists('firstname', $_POST)) {
-        $firstname = htmlspecialchars($_POST['firstname']);
+        $firstname = htmlspecialchars($_POST['firstname'], ENT_QUOTES);
     } else {
         $firstname = 'ケンシロウ';
     }
     if (array_key_exists('lastname', $_POST)) {
-        $lastname = htmlspecialchars($_POST['lastname']);
+        $lastname = htmlspecialchars($_POST['lastname'], ENT_QUOTES);
     } else {
         $lastname = '霞';
     }

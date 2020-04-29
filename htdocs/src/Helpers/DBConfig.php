@@ -16,7 +16,7 @@ class DBConfig
     {
         echo '<pre>DBConfig->__construct()</pre>';
         if (file_exists($file)) {
-            $json_configs = file_get_contents('.env');
+            $json_configs = file_get_contents($file);
             $this->configs = json_decode($json_configs, true);
         } else {
             $this->configs = [
@@ -39,7 +39,7 @@ class DBConfig
         //$this->selected;
         $config_name = $config_name ?? array_key_first($this->configs);
         echo '<pre>DBConfig->get() ' . $config_name . '</pre>';
-        
+
         if (isset($this->configs[$config_name])) {
             return new \DB(
                 $this->configs[$config_name]['DB_DRIVER'],

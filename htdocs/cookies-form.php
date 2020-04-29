@@ -18,7 +18,7 @@ $missing_post_fields = array_filter($required_fields, function ($field) {
 if (empty($missing_post_fields)) {
     setcookie(
         'username',
-        $_POST['username'],
+        htmlspecialchars($_POST['username'], ENT_QUOTES),
         time() + 60 * 5,
         "/",
         "",
@@ -27,7 +27,7 @@ if (empty($missing_post_fields)) {
     );
     setcookie(
         'dontstorepasswordincookies',
-        $_POST['dontstorepasswordincookies'],
+        htmlspecialchars($_POST['dontstorepasswordincookies'], ENT_QUOTES),
         time() + 60 * 5,
         "/",
         "",

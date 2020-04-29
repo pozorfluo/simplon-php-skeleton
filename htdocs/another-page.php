@@ -37,7 +37,7 @@ require 'src/head.php';
     }
 
     echo "<h3>page seen {$_SESSION['count']} times.</h3>";
-    echo '<h2>SID : ' . htmlspecialchars(session_id()) . '</h2>';
+    echo '<h2>SID : ' . htmlspecialchars(session_id(), ENT_QUOTES) . '</h2>';
 
     ?>
 

@@ -138,12 +138,13 @@ form {
     "input input"
     "input input"
     "submit submit";
-    align-items: center;
+  align-items: center;
 }
 
 input,
 select,
-button {
+button,
+textarea {
   /* grid-area: input; */
   width: 100%;
   background-color: var(--color-accent);
@@ -152,6 +153,11 @@ button {
   margin-top: 0.5rem;
   border: 0px;
   font-weight: bolder;
+}
+textarea {
+  grid-area: input;
+  background-color: white;
+  color: var(--color-accent);
 }
 input[type="submit"] {
   grid-area: submit;
