@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once 'src/utilities.php';
+require_once 'src/Utilities.php';
 
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {

@@ -123,11 +123,9 @@ require 'src/head.php';
         'Part2 ex1' => [
             'config' => 'patients',
             'query' => "SELECT
-                            *
+                            COUNT(*) AS `number of patients`
                         FROM 
-                            `patients` 
-                        ORDER BY 
-                            `id` ASC;"
+                            `patients`;"
         ],
     ];
 

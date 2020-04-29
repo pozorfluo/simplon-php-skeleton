@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require 'src/utilities.php';
+require 'src/Utilities.php';
 
 require 'src/head.php';
 ?>

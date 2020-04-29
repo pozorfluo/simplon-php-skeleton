@@ -9,6 +9,9 @@ class DB
 {
     public $pdo;
 
+    /**
+     * 
+     */
     public function __construct(
         string $driver = 'mysql',
         string $host = '127.0.0.1',
@@ -45,8 +48,11 @@ class DB
             // die();
         }
     }
-
-    public function query(string $query, ?string $args = NULL): \PDOStatement
+    
+    /**
+     * 
+     */
+    public function query(string $query, ?array $args = NULL): \PDOStatement
     {
         if (is_null($args)) {
             return $this->pdo->query($query);
@@ -55,4 +61,17 @@ class DB
         $statement->execute($args);
         return $statement;
     }
+
+    // /**
+    //  * 
+    //  */
+    // public function transaction(string $query, ?array $args = NULL): void
+    // {
+    //     if (is_null($args)) {
+    //         return $this->pdo->query($query);
+    //     }
+    //     $statement = $this->pdo->prepare($query);
+    //     $statement->execute($args);
+    //     return $statement;
+    // }
 }

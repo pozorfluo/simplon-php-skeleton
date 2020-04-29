@@ -35,4 +35,9 @@ declare(strict_types=1);
             hello-pdo
         </div>
     </a>
+    <a href="add-patient.php">
+        <div class="nav-button">
+            add-patient
+        </div>
+    </a>
 </nav>

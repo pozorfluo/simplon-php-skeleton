@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once 'utilities.php';
+require_once 'Utilities.php';
 
 ?>
 <hr />
