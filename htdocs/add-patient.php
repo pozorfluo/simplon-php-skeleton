@@ -16,9 +16,7 @@ require 'src/head.php';
 ?>
 
 <body>
-    <?php
-    require 'src/nav.php';
-    ?>
+    <?php require 'src/nav.php'; ?>
 
     <hr />
 
@@ -51,7 +49,7 @@ require 'src/head.php';
                         FROM 
                             `patients`;"
         ],
-        'Part2 ex1 insert' => [
+        'Part2 ex1 insert random test entry' => [
             'config' => 'patients',
             'query' => "INSERT INTO 
                             `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
@@ -59,11 +57,11 @@ require 'src/head.php';
                             (?, ?, ?, ?, ?)
                             ;",
             'args' => [
-                'lastname_'.substr(md5(strval(rand())), 0, 7),
-                'firstname_'.substr(md5(strval(rand())), 0, 7),
+                'lastname_' . substr(md5(strval(rand())), 0, 7),
+                'firstname_' . substr(md5(strval(rand())), 0, 7),
                 date('Y-m-d'),
                 date('is-U'), // used as test phone
-                substr(md5(strval(rand())), 0, 7).'@mail.com',
+                substr(md5(strval(rand())), 0, 7) . '@mail.com',
             ]
         ],
         'Part2 ex1 empty table' => [
@@ -72,54 +70,23 @@ require 'src/head.php';
         ],
     ];
 
-    // echo '<pre>' . var_export(substr(md5(strval(rand())), 0, 7) , true) . '</pre>';
-    // echo '<pre>' . var_export(date('is-U'), true) . '</pre>';
-    // echo '<pre>' . var_export(json_encode($helpers), true) . '</pre>';
     $helper = $_GET['query'] ?? array_key_first($helpers);
-
-    // echo '<pre>'.var_export(array_key_first($helpers), true).'</pre>';
-
 
     $db_configs = new DBConfig('.env');
     $model = new HelloPdoModel($db_configs, $helpers);
-    // $result =  $model->runExercise($helper);
+
     $result =  $model->execute(
         $helpers[$helper]['config'],
         $helpers[$helper]['query'],
-        $helpers[$helper]['args'] ?? NULL
+        $helpers[$helper]['args'] ?? NULL,
+        true
     );
 
+    require 'src/patient-table.php';
     ?>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET">
-        <label for="query">Query</label>
-        <select name="query" onchange="this.form.submit()">
-            <option>Select helper</option>
-            <?php
-            foreach (array_keys($helpers) as $helper) {
-                echo '<option value="' . $helper . '">' . $helper . '</option>';
-            }
-            ?>
-        </select>
-        <!-- <input type="submit" value="GET !" /> -->
-    </form>
 
-    <?php
-    require_once 'src/Utilities.php';
-    // echo '<pre>'.var_export($result, true).'</pre>';
-
-    if (!isset($result) || is_null($result) || empty($result) || is_null($result[0])) {
-        prettyDump(['All done !']);
-    } else {
-        prettyTable($result, 'query');
-    }
-    ?>
     <?php require 'src/globals-dump.php' ?>
 
 </body>
 
 </html>
-
-<?php
-//------------------------------------------------------ close db connection
-// $statement = null;
-// $db = null;

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:700&display=swap");
 
 :root {
   --color-accent: tomato;
@@ -81,10 +81,12 @@ h2:hover,
 h3:hover,
 h4:hover {
   transform: scale3d(1.01, 1.01, 1);
-  filter: drop-shadow(8px 8px 0px var(--color-black));
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans))
+    drop-shadow(8px 8px 0px var(--color-black));
 }
 .header:hover {
-  filter: drop-shadow(16px 16px 0px var(--color-accent));
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans))
+    drop-shadow(16px 16px 0px var(--color-accent));
 }
 
 nav {
@@ -109,7 +111,8 @@ nav {
   background-color: var(--color-black);
   color: var(--color-accent);
   transform: scale3d(1.05, 1.05, 1);
-  filter: drop-shadow(8px 8px 0px var(--color-accent));
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans))
+    drop-shadow(8px 8px 0px var(--color-accent));
 }
 a {
   text-decoration: none;
@@ -163,7 +166,7 @@ textarea {
   background-color: white;
   color: var(--color-accent);
   /* border: solid 8px transparent; */
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.75rem;
   font-weight: bold;
 }
@@ -173,7 +176,8 @@ textarea:focus {
   /* color: var(--color-accent); */
   /* border: solid 8px var(--color-accent); */
   transform: scale3d(1.01, 1.01, 1);
-  filter: drop-shadow(8px 8px 0px var(--color-accent));
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans))
+    drop-shadow(8px 8px 0px var(--color-accent));
 }
 
 input[type="submit"] {
@@ -199,12 +203,19 @@ button:focus {
   background-color: var(--color-black);
   color: var(--color-white);
   transform: scale3d(1.01, 1.01, 1);
-  filter: drop-shadow(4px 4px 0px var(--color-accent));
+  filter: drop-shadow(2px 4px 4px var(--color-accent-trans))
+    drop-shadow(4px 4px 0px var(--color-accent));
 }
+
 input[type="submit"]:active {
   background-color: var(--color-accent);
   color: var(--color-black);
 }
+
+/* input:valid {
+    background-color: var(--color-alt);
+  color: var(--color-dark);
+} */
 ul.dump {
   color: var(--color-accent);
   font-size: 0.75rem;

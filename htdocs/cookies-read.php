@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 $page_title = 'cookies-read';
 
- require 'src/head.php';
+require 'src/head.php';
 ?>
 
 <body>
-    <?php
-     require 'src/nav.php';
-    ?>
-
-
+    <?php require 'src/nav.php'; ?>
+    
     <?php
 
     if (isset($_COOKIE['username'])) {
-        echo '<h2>' . $_COOKIE['username'] . '</h2>';
+        echo '<hr /><h2>' . $_COOKIE['username'] . '</h2>';
     }
 
     if (isset($_COOKIE['dontstorepasswordincookies'])) {
@@ -24,8 +21,8 @@ $page_title = 'cookies-read';
     }
 
     ?>
-    
-    <?php  require 'src/globals-dump.php' ?>
+
+    <?php require 'src/globals-dump.php' ?>
 </body>
 
 </html>

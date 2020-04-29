@@ -43,9 +43,7 @@ $page_title = 'cookies-form';
 ?>
 
 <body>
-    <?php
-     require 'src/nav.php';
-    ?>
+    <?php require 'src/nav.php'; ?>
 
     <hr />
     <form action="" method="POST">

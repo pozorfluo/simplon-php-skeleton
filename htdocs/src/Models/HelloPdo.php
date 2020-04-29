@@ -87,7 +87,7 @@ class HelloPdo
         ?array $args = NULL,
         bool $transaction = false
     ): ?array {
-        echo '<pre>HelloPdo->execute()</pre>';
+        // echo '<pre>HelloPdo->execute()</pre>';
         if ($this->useConfig($config_name)) {
             /* todo - [ ]sanitize here ! */
 
@@ -110,11 +110,12 @@ class HelloPdo
         string $query,
         ?array $args = NULL
     ): ?array {
-        echo '<pre>HelloPdo->transaction()</pre>';
+        // echo '<pre>HelloPdo->transaction()</pre>';
         try {
             $this->db->pdo->beginTransaction();
             $statement = $this->db->query($query, $args);
             $this->db->pdo->commit();
+            // echo '<pre>HelloPdo->transaction() commit : ok.</pre>';
             return $statement->fetchAll();
         } catch (Exception $e) {
             $this->db->pdo->rollback();
