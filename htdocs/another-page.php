@@ -41,7 +41,7 @@ require 'src/head.php';
 
     ?>
 
-    <?php require 'src/globals-dump.php' ?>
+    <?php require 'src/globals-dump.php'; ?>
 </body>
 
 </html>

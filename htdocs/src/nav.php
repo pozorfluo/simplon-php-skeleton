@@ -40,4 +40,14 @@ declare(strict_types=1);
             add-patient
         </div>
     </a>
+    <a href="list-patient.php">
+        <div class="nav-button">
+            list-patient
+        </div>
+    </a>
+    <a href="helper-patient.php">
+        <div class="nav-button">
+            helper-patient
+        </div>
+    </a>
 </nav>

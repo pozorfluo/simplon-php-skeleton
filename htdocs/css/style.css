@@ -142,6 +142,7 @@ form {
     "input input"
     "input input"
     "input input"
+    "input input"
     "submit submit";
   align-items: center;
 }
@@ -156,6 +157,7 @@ textarea {
   color: var(--color-white);
   padding: 0.5rem;
   margin-top: 0.5rem;
+  border-radius: 0px;
   border: 0px;
   font-weight: bolder;
 }
