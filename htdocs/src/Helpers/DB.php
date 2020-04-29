@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
+namespace Helpers;
 /**
  * 
  */
@@ -20,9 +20,9 @@ class DB
         array $options = []
     ) {
         $default_options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES => false,
         ];
         $options = array_replace($default_options, $options);
 
@@ -33,7 +33,7 @@ class DB
             . ';charset=' . $charset;
 
         try {
-            $this->pdo = new PDO(
+            $this->pdo = new \PDO(
                 $dsn,
                 $user,
                 $password,
@@ -46,7 +46,7 @@ class DB
         }
     }
 
-    public function query(string $query, ?string $args = NULL): PDOStatement
+    public function query(string $query, ?string $args = NULL): \PDOStatement
     {
         if (is_null($args)) {
             return $this->pdo->query($query);

@@ -34,14 +34,14 @@ class DBConfig
         // $this->selected = array_key_first($this->configs);
     }
 
-    public function get(?string $config_name = null): ?\DB
+    public function get(?string $config_name = null): ?DB
     {
         //$this->selected;
         $config_name = $config_name ?? array_key_first($this->configs);
         echo '<pre>DBConfig->get() ' . $config_name . '</pre>';
 
         if (isset($this->configs[$config_name])) {
-            return new \DB(
+            return new DB(
                 $this->configs[$config_name]['DB_DRIVER'],
                 $this->configs[$config_name]['DB_HOST'],
                 $this->configs[$config_name]['DB_PORT'],

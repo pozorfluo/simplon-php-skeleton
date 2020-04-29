@@ -7,7 +7,7 @@ declare(strict_types=1);
  */
 ?>
 
-<form action="" method="post">
+<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']);?>" method="GET">
     <label for="query">Query</label>
     <select name="query" onchange="this.form.submit()">
         <option value="ex1">Part 1 Exercise 1</option>
@@ -21,10 +21,10 @@ declare(strict_types=1);
     </select>
     <!-- <input type="submit" value="GET !" /> -->
 </form>
-<form action="" method="post">
-    <textarea rows="20" style="width:100%;" name="query" autofocus>...
+<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+    <textarea rows="20" style="width:100%;" name="query">...
     </textarea>
-    <input type="submit" value="GET !" />
+    <input type="submit" value="SUBMIT !" />
 </form>
 <?php
 require_once 'src/utilities.php';

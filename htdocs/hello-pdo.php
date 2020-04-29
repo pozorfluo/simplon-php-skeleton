@@ -24,8 +24,7 @@ require 'src/head.php';
 
     <?php
 
-
-    $exercise = $_POST['query'] ?? 'nothing';
+    $exercise = $_GET['query'] ?? $_POST['query'] ?? 'nothing';
     echo '<pre>'.var_export($exercise, true).'</pre>';
     
 

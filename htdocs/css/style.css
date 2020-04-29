@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:700&display=swap');
+
 :root {
   --color-accent: tomato;
   --color-accent-trans: rgba(255, 99, 71, 0.381);
@@ -156,9 +158,20 @@ textarea {
 }
 textarea {
   grid-area: input;
-  background-color: white;
-  color: var(--color-accent);
+  margin-top: 1rem;
+  /* border: solid 8px transparent; */
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
 }
+textarea:hover,
+textarea:focus {
+  background-color: var(--color-black);
+  color: var(--color-accent);
+  /* border: solid 8px var(--color-accent); */
+  transform: scale3d(1.01, 1.01, 1);
+  filter: drop-shadow(8px 8px 0px var(--color-accent));
+}
+
 input[type="submit"] {
   grid-area: submit;
   background-color: white;
