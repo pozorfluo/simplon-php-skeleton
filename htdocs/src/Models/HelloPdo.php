@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * 
+ */
+
 declare(strict_types=1);
 
 namespace Models;
 
 use Exception;
+use Helpers\DBConfig;
 
 /**
  * 
@@ -27,7 +32,7 @@ class HelloPdo
      * 
      */
     public function __construct(
-        \Helpers\DBConfig $db_configs,
+        DBConfig $db_configs,
         array $exercises = []
     ) {
         // echo '<pre>HelloPdo->__construct()</pre>';
@@ -92,7 +97,7 @@ class HelloPdo
             /* todo - [ ]sanitize here ! */
 
             if ($transaction) {
-                return $this->transaction($config_name, $query, $args);
+                return $this->transaction($query, $args);
             } else {
                 $statement = $this->db->query($query, $args);
                 return $statement->fetchAll();
@@ -106,7 +111,6 @@ class HelloPdo
      * Wrap a single :sadface: query in a pdo transaction
      */
     protected function transaction(
-        string $config_name,
         string $query,
         ?array $args = NULL
     ): ?array {

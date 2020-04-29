@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * 
  */
+
+declare(strict_types=1);
+
 ?>
 
 <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET">
@@ -33,13 +34,13 @@ if (!isset($result) || is_null($result) || empty($result) || is_null($result[0])
 ?>
 
 <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-    <textarea rows="5" name="query"><?php 
-        if(isset($_GET['query'])){
-           echo $_SESSION['query'];
-        }else{
-            echo '...';
-        }
-    ?>
+    <textarea rows="5" name="query"><?php
+                                    if (isset($_GET['query'])) {
+                                        echo $_SESSION['query'];
+                                    } else {
+                                        echo '...';
+                                    }
+                                    ?>
     </textarea>
     <input type="submit" value="SUBMIT !" />
 </form>

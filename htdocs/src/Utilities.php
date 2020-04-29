@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 
+ */
+
 declare(strict_types=1);
 //------------------------------------------------------------- flattenArray
 function flattenArray(array $nested_arrays): void

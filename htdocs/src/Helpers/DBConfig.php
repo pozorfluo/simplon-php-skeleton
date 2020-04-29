@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 
+ */
+
 declare(strict_types=1);
 
 namespace Helpers;
@@ -51,4 +55,3 @@ class DBConfig
         return null;
     }
 }
-

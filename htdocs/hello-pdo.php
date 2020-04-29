@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 
+ */
+
 declare(strict_types=1);
 require_once 'src/AutoLoader.php';
 
@@ -147,7 +151,7 @@ require 'src/head.php';
     require 'src/pdo-table.php';
     ?>
 
-    <?php require 'src/footer.php';?>
+    <?php require 'src/footer.php'; ?>
 
 </body>
 
