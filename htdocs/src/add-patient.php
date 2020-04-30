@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-require_once 'src/AutoLoader.php';
+// require_once 'src/AutoLoader.php';
 
 use \Helpers\DBConfig as DBConfig;
 use \Models\HelloPdo as HelloPdoModel;
-use \Views\PatientForm as PatientForm;
+use \Templates\PatientForm as PatientForm;
 
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
@@ -74,7 +74,7 @@ require 'src/head.php';
         'jean-mi' . strval(rand(11, 999)) . '@caramail.com',
         htmlspecialchars($_SERVER['PHP_SELF'])
     );
-    $add_patient_form->compose();
+    $add_patient_form->render();
     ?>
 
     <?php require 'src/footer.php'; ?>

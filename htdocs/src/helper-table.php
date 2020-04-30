@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-require_once 'src/AutoLoader.php';
+// require_once 'src/AutoLoader.php';
 
 use \Helpers\DBConfig as DBConfig;
 use \Models\HelloPdo as HelloPdoModel;

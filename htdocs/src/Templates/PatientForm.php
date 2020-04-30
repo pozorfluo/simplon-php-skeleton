@@ -6,12 +6,14 @@
 
 declare(strict_types=1);
 
-namespace Views;
+namespace Templates;
+
+use Interfaces\ITemplate as ITemplate;
 
 /**
  * 
  */
-class PatientForm
+class PatientForm implements ITemplate
 {
     public $data;
 
@@ -51,7 +53,7 @@ class PatientForm
     /**
      * 
      */
-    public function compose(): void
+    public function render(): void
     {
         echo <<<VIEW
 <form action="{$this->data['action']}" method="POST">

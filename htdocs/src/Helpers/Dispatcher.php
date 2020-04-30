@@ -20,10 +20,10 @@ class Dispatcher
     public function __construct()
     {
         $uri = $_SERVER['REQUEST_URI'];
-        echo '<pre>' . var_export($uri, true) . '</pre>';
+        // echo '<pre>' . var_export($uri, true) . '</pre>';
 
-        if (strpos($uri, 'index.php')) {
-            $this->request['controller']  = $_GET['controller'] ?? '';
+        if (strpos($uri, 'index.php') || $uri = '/') {
+            $this->request['controller']  = $_GET['controller'] ?? 'Patient';
             $this->request['action'] = $_GET['action'] ?? '';
             $this->request['parameters'] = $_GET['parameters'] ?? '';
         } else {
@@ -34,14 +34,14 @@ class Dispatcher
         }
 
         $this->request['uri'] = $uri;
-        echo '<pre>' . var_export($this->request, true) . '</pre>';
+        // echo '<pre>' . var_export($this->request, true) . '</pre>';
     }
 
-    public function call() :void
+    public function call(): void
     {
         $controller = $this->load($this->request['controller']);
         call_user_func_array(
-            $controller,
+            [$controller, 'run'],
             [
                 $this->request['action'],
                 $this->request['parameters']

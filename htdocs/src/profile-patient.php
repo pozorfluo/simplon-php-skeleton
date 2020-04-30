@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-require_once 'src/AutoLoader.php';
+// require_once 'src/AutoLoader.php';
 
 use \Helpers\DBConfig as DBConfig;
 use \Models\HelloPdo as HelloPdoModel;
@@ -63,7 +63,7 @@ require 'src/head.php';
         'update-patient.php?id='. $_GET['id'],
         'Update Patient'
     );
-    $add_patient_form->compose();
+    $add_patient_form->render();
     
     ?>
     <?php require 'src/footer.php'; ?>

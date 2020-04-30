@@ -8,14 +8,21 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-
+use Models\Model as Model;
+use Views\View as View;
 
 /**
  * 
  */
-class Controller
+abstract class Controller
 {
-    protected $template;
+    protected $model;
+    protected $view;
+
+    /**
+     * 
+     */
+    abstract public function run(string $action, string $parameters): void;
 
 
 }
