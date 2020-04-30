@@ -8,12 +8,12 @@ declare(strict_types=1);
 
 namespace Templates;
 
-use Interfaces\ITemplate as ITemplate;
+use Interfaces\Templatable as Templatable;
 
 /**
  * 
  */
-class PatientForm implements ITemplate
+class PatientForm implements Templatable
 {
     public $data;
 
@@ -45,7 +45,7 @@ class PatientForm implements ITemplate
     /**
      * 
      */
-    public function get(): array
+    public function getRaw(): array
     {
         return $this->data;
     }

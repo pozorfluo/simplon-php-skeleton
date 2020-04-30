@@ -11,12 +11,12 @@ namespace Interfaces;
 /**
  * 
  */
-interface ITemplate
+interface Templatable
 {
     /**
      * 
      */
-    public function get(): array;
+    public function getRaw(): array;
 
     /**
      * 
