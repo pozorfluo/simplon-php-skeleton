@@ -14,7 +14,7 @@ use Helpers\DBConfig;
 /**
  * 
  */
-class HelloPdo
+class HelloPdo extends Model
 {
     protected $db_configs;
     protected $db;
