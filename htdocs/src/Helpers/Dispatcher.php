@@ -34,7 +34,7 @@ class Dispatcher
         }
 
         $this->request['uri'] = $uri;
-        echo '<pre>' . var_export($this->request, true) . '</pre>';
+        // echo '<pre>' . var_export($this->request, true) . '</pre>';
     }
 
     public function call(): void
@@ -52,7 +52,7 @@ class Dispatcher
     {
         require('src/Controllers/' . $controller_name . '.php');
         $controller_name = '\Controllers\\' . $controller_name;
-        echo '<pre>' . var_export($controller_name, true) . '</pre>';
+        // echo '<pre>' . var_export($controller_name, true) . '</pre>';
         $controller = new $controller_name();
 
         return $controller;

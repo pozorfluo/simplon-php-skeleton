@@ -6,14 +6,6 @@
 
 declare(strict_types=1);
 
-?>
-<?php
-
-/**
- * 
- */
-
-
 namespace Templates;
 
 use Interfaces\Templatable as Templatable;

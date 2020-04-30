@@ -6,14 +6,6 @@
 
 declare(strict_types=1);
 
-?>
-<?php
-
-/**
- * 
- */
-
-
 namespace Templates;
 
 use Interfaces\Templatable as Templatable;
@@ -51,7 +43,6 @@ class InlinedCss implements Templatable
         foreach ($this->data as $path) {
 
             $rendered_template .= file_get_contents($path);
-
         }
 
         $rendered_template .= '</style>';

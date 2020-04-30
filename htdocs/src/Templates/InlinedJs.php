@@ -6,6 +6,7 @@
 
 declare(strict_types=1);
 
+
 namespace Templates;
 
 use Interfaces\Templatable as Templatable;
@@ -13,7 +14,7 @@ use Interfaces\Templatable as Templatable;
 /**
  * 
  */
-class Nav implements Templatable
+class InlinedCss implements Templatable
 {
     public $data;
 
@@ -21,9 +22,9 @@ class Nav implements Templatable
      * 
      */
     public function __construct(
-        array $links = ['Project Name' => 'index.php?controller=Home']
+        array $paths = ['css/style.css']
     ) {
-        $this->data = $links;
+        $this->data = $paths;
     }
 
     /**
@@ -39,22 +40,14 @@ class Nav implements Templatable
      */
     public function render(): string
     {
-        $rendered_template = '<nav>';
-        foreach ($this->data as $link => $href) {
+        $rendered_template = '<style>';
+        foreach ($this->data as $path) {
 
-            $rendered_template .=
-                <<<TEMPLATE
-<a href="{$href}">
-    <div class="nav-button">
-        {$link}
-    </div>
-</a>
-TEMPLATE;
-
+            $rendered_template .= file_get_contents($path);
 
         }
 
-        $rendered_template .= '</nav><hr />';
+        $rendered_template .= '</style>';
         return $rendered_template;
     }
 }
