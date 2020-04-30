@@ -22,7 +22,7 @@ if (isset($_POST['killsession'])) {
     }
 }
 // toss sensitive stuff before dumping $GLOBALS
-unset($db_config);
+// unset($db_config);
 
 prettyDump($GLOBALS);
 echo '<hr />';

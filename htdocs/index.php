@@ -14,13 +14,17 @@ declare(strict_types=1);
 require 'src/Helpers/AutoLoader.php';
 require 'src/Utilities.php';
 
-use \Helpers\Dispatcher as Dispatcher;
-
+use Helpers\Dispatcher as Dispatcher;
+use Controllers\Homepage;
 
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// $home = new Homepage();
+// $home->run();
 $dispatcher = new Dispatcher();
 $dispatcher->call();
+
+require 'src/Templates/GlobalsDump.php';

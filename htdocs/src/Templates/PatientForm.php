@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Templates;
 
 use Interfaces\Templatable as Templatable;
+use Entities\Patient as Patient;
 
 /**
  * 
@@ -21,25 +22,17 @@ class PatientForm implements Templatable
      * 
      */
     public function __construct(
-        // string $id =  '',
-        string $lastname =  '',
-        string $firstname =  '',
-        string $birthdate =  '',
-        string $phone =  '',
-        string $mail =  '',
+        Patient $patient,
         string $action = '',
         string $submit =  'Submit'
     ) {
-        $this->data = [
-            // 'id' => $id,
-            'lastname' => $lastname,
-            'firstname' => $firstname,
-            'birthdate' => $birthdate,
-            'phone' => $phone,
-            'mail' => $mail,
-            'action' => $action,
-            'submit' => $submit
-        ];
+        $this->data = array_merge(
+            $patient->getData(),
+            [
+                'action' => $action,
+                'submit' => $submit
+            ]
+        );
     }
 
     /**
@@ -49,15 +42,22 @@ class PatientForm implements Templatable
     {
         return $this->data;
     }
-    
+
     /**
      * 
      */
     public function render(): void
     {
+        if ($this->data['id'] !== '') {
+            $input_id = '<input type="hidden" name="id" value="'
+                . $this->data['id']
+                . '" />';
+        } else {
+            $input_id = '';
+        }
         echo <<<VIEW
 <form action="{$this->data['action']}" method="POST">
-
+    {$input_id}
     <label for="lastname">Last Name</label>
     <input type="text"
      name="lastname"
@@ -102,23 +102,3 @@ class PatientForm implements Templatable
 VIEW;
     }
 }
-
-
-// public function __construct(
-//     ?int $id = NULL,
-//     ?string $lastname = NULL,
-//     ?string $firstname = NULL,
-//     ?string $birthdate = NULL,
-//     ?string $phone = NULL,
-//     ?string $mail = NULL,
-//     ?string $action = NULL
-// ) {
-//     $this->data = [
-//         'lastname' => $lastname ?? '',
-//         'firstname' => $firstname ?? '',
-//         'birthdate' => $birthdate ?? '',
-//         'phone' => $phone ?? '',
-//         'mail' => $mail ?? '',
-//         'action' => $action ?? htmlspecialchars($_SERVER['PHP_SELF'])
-//     ];
-// }

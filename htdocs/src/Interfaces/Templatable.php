@@ -21,5 +21,5 @@ interface Templatable
     /**
      * 
      */
-    public function render(): void;
+    public function render(): string;
 }

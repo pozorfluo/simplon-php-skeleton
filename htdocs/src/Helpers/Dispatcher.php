@@ -23,9 +23,9 @@ class Dispatcher
         // echo '<pre>' . var_export($uri, true) . '</pre>';
 
         if (strpos($uri, 'index.php') || $uri = '/') {
-            $this->request['controller']  = $_GET['controller'] ?? 'Patient';
-            $this->request['action'] = $_GET['action'] ?? '';
-            $this->request['parameters'] = $_GET['parameters'] ?? '';
+            $this->request['controller']  = $_GET['controller'] ?? 'Home';
+            $this->request['action'] = $_GET['action'] ?? 'DoThis';
+            $this->request['parameters'] = $_GET['parameters'] ?? 'WithThat';
         } else {
             $uri_bits = explode('/', $uri);
             $this->request['controller'] = $uri_bits[1];
@@ -34,7 +34,7 @@ class Dispatcher
         }
 
         $this->request['uri'] = $uri;
-        // echo '<pre>' . var_export($this->request, true) . '</pre>';
+        echo '<pre>' . var_export($this->request, true) . '</pre>';
     }
 
     public function call(): void
@@ -51,6 +51,8 @@ class Dispatcher
     public function load(string $controller_name): Controller
     {
         require('src/Controllers/' . $controller_name . '.php');
+        $controller_name = '\Controllers\\' . $controller_name;
+        echo '<pre>' . var_export($controller_name, true) . '</pre>';
         $controller = new $controller_name();
 
         return $controller;

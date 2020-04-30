@@ -17,16 +17,15 @@ require 'src/Templates/Head.php';
 
 <body>
 
-    
+
 
     <?php
 
     /* todo - [ ] Move Nav to a layout */
     $nav = new Nav([
-        'Home' => 'Home/Welcome/',
-        'Add Patient' => 'Patient/Add/',
-        'List Patient' => 'Patient/List/',
-        'Profile Patient' => 'Patient/List/'.($id_from_controller_param ?? ''),
+        'Home' => 'index.php?controller=Home',
+        'Add Patient' => 'index.php?controller=Patient&action=Add',
+        'List Patient' => 'index.php?controller=Patient&action=List',
     ]);
 
     $nav->render();
