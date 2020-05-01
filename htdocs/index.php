@@ -14,8 +14,10 @@
 
 declare(strict_types=1);
 
-require 'src/Helpers/AutoLoader.php';
-require 'src/Utilities.php';
+define('ROOT', __DIR__ . '/');
+
+require ROOT.'src/Helpers/AutoLoader.php';
+require ROOT.'src/Utilities.php';
 
 use Helpers\Dispatcher as Dispatcher;
 use Controllers\Homepage;
@@ -24,10 +26,11 @@ use Controllers\Homepage;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-
+// echo '<pre>'.var_export(ROOT, true).'</pre>';
+// echo '<pre>'.var_export(getcwd() , true).'</pre>';
+// echo '<pre>'.var_export(__DIR__ , true).'</pre>';
 
 $dispatcher = new Dispatcher();
 $dispatcher->load()->call();
 
-require 'src/Templates/GlobalsDump.php';
+require ROOT.'src/Templates/GlobalsDump.php';

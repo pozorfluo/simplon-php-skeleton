@@ -13,9 +13,9 @@ namespace Helpers;
  */
 spl_autoload_register(function (string $class): bool {
 
-    $base_dir = 'src/';
-
-    /* Not using a project prefix currently */
+    $base_dir = ROOT.'src/';
+    
+    /* Not currently using a project prefix */
 
     // $project_prefix = '';
     // $prefix_length = strlen($project_prefix);
