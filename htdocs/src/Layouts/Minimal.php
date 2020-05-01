@@ -50,8 +50,6 @@ class Minimal implements Templatable
      */
     public function render(): string
     {
-        $page_title = $this->data['page_title'] ?? 'hello-php';
-
         return <<<TEMPLATE
 <!DOCTYPE html>
 <html lang="en">

@@ -16,28 +16,26 @@ use Views\View as View;
  */
 abstract class Controller
 {
-    protected $template_parameters = [];
+    protected $parameters = [];
     protected $model;
     protected $view;
     protected $layout = "Minimal";
 
-    public function __construct()
+    public function __construct(array $parameters = [])
     {
+        $this->parameters = $parameters;
         $this->view = get_class($this);
         $namespace_end = strrpos($this->view, '\\');
         $this->view = substr($this->view, $namespace_end + 1);
-
-        // echo "<pre>Controller()</pre>";
-        // echo '<pre>' . var_export($this->view, true) . '</pre>';
     }
 
     /**
      * 
      */
-    function set(array $parameters): self
+    public function set(array $parameters): self
     {
-        $this->template_parameters = array_merge(
-            $this->template_parameters,
+        $this->parameters = array_merge(
+            $this->parameters,
             $parameters
         );
         return $this;
@@ -47,18 +45,21 @@ abstract class Controller
      */
     public function serve(): void
     {
-        /* imported collected 'variables' in current context */
-        extract($this->template_parameters);
+        /* import collected 'variables' in current context */
+        // extract($this->parameters);
 
         /* output buffering ON */
         ob_start();
         require('src/Views/' . $this->view . '.php');
         $view_name = '\Views\\' . $this->view;
-        $view = new $view_name();
+        $view = new $view_name($this->parameters);
 
+        prettyDump([$this]);
+        echo '<pre>' . var_export($this, true) . '</pre>';
+        prettyDump([$view]);
+        echo '<pre>' . var_export($view, true) . '</pre>';
 
         $computed_content = $view->compose()->render();
-        // echo '<pre>'.var_export($computed_content, true).'</pre>';
 
         require('src/Layouts/' . $this->layout . '.php');
         $layout_name = '\Layouts\\' . $this->layout;
@@ -73,5 +74,5 @@ abstract class Controller
     /**
      * 
      */
-    abstract public function run(string $action = '', string $parameters = '');
+    abstract public function run(array $parameters);
 }

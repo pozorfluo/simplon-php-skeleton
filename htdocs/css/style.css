@@ -9,6 +9,7 @@
   --color-mid: #58508d;
   --color-dark: #00405c;
   --color-shadow: rgb(73, 138, 195);
+  --max-width: 75vmin;
 }
 
 * {
@@ -25,7 +26,7 @@ body {
   color: var(--color-accent);
   /* min-width: 30rem;
   max-width: 50vw; */
-  max-width: 50rem;
+  max-width: var(--max-width);
   margin: 0 auto 0 auto;
 }
 

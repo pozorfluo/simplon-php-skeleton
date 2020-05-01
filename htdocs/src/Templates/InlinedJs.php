@@ -14,7 +14,7 @@ use Interfaces\Templatable as Templatable;
 /**
  * 
  */
-class InlinedCss implements Templatable
+class InlinedJs implements Templatable
 {
     public $data;
 
@@ -22,7 +22,7 @@ class InlinedCss implements Templatable
      * 
      */
     public function __construct(
-        array $paths = ['css/style.css']
+        array $paths = ['js/script.js']
     ) {
         $this->data = $paths;
     }
@@ -40,14 +40,14 @@ class InlinedCss implements Templatable
      */
     public function render(): string
     {
-        $rendered_template = '<style>';
+        $rendered_template = '<script>';
         foreach ($this->data as $path) {
 
             $rendered_template .= file_get_contents($path);
 
         }
 
-        $rendered_template .= '</style>';
+        $rendered_template .= '</script>';
         return $rendered_template;
     }
 }

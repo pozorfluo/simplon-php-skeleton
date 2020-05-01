@@ -24,9 +24,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// $home = new Homepage();
-// $home->run();
+
+
 $dispatcher = new Dispatcher();
-$dispatcher->call();
+$dispatcher->load()->call();
 
 require 'src/Templates/GlobalsDump.php';

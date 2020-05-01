@@ -15,8 +15,31 @@ use Interfaces\Layoutable;
  */
 abstract class View implements Layoutable
 {
-    public $data = [];
-    public $components = [];
+    protected $parameters = [];
+    protected $data = [];
+    protected $components = [];
+
+    public function __construct(array $parameters = [])
+    {
+        if (!empty($parameters)) {
+            $this->parameters = array_merge(
+                $this->parameters,
+                $parameters
+            );
+        }
+    }
+
+    /**
+     * 
+     */
+    public function set(array $parameters): self
+    {
+        $this->parameters = array_merge(
+            $this->parameters,
+            $parameters
+        );
+        return $this;
+    }
 
     /**
      * 
@@ -28,14 +51,23 @@ abstract class View implements Layoutable
             'components' => $this->components
         ];
     }
-
-    /**
-     * 
-     */
-    abstract public function compose();
     /**
      * Render components
      *   -> [string name => string rendered component]
      */
-    abstract public function render(): array;
+    public function render(): array
+    {
+        foreach ($this->components as $key => $batch) {
+            $rendered_batch = '';
+            foreach ($batch as $component) {
+                $rendered_batch .= $component->render();
+            }
+            $this->components[$key] = $rendered_batch;
+        }
+        return $this->components;
+    }
+    /**
+     * 
+     */
+    abstract public function compose();
 }

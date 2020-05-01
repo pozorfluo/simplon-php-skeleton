@@ -26,12 +26,9 @@ class Home extends Controller
     /**
      * 
      */
-    public function run(string $action = '', string $parameters = ''): void
+    public function run(array $parameters = []): void
     {
-        $this->set(array('page_title' => 'Home'))
-            ->set(['test_chain' => 'ch-chh-chaaaain'])
-            ->set(['action' => $action]);
-
+        $this->set($parameters);
         
         // echo '<pre>' . var_export($this->template_parameters, true) . '</pre>';
         // echo '<pre>' . var_export($this->view, true) . '</pre>';
