@@ -21,7 +21,7 @@ interface Validatable
     /**
      * Apply filter(s)
      */
-    public function validate(): self;
+    public function validate();
 
     /**
      * 

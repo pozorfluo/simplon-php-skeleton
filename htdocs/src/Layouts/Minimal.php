@@ -21,20 +21,17 @@ class Minimal implements Templatable
      * note
      *   Provide innocuous default value to make the template displayable
      */
-    public function __construct(
-        array $rendered_components = []
-    ) {
-        $this->data = array_merge(
-            [
-                'page_title' => 'hello-php',
-                'css' => '',
-                'nav' => '',
-                'content' => '',
-                'footer' => '',
-                'js' => ''
-            ],
-            $rendered_components
-        );
+    public function __construct(array $rendered_components = [])
+    {
+        $defaults = [
+            'page_title' => 'hello-php',
+            'css' => '',
+            'nav' => '',
+            'content' => '',
+            'footer' => '',
+            'js' => ''
+        ];
+        $this->data = array_replace($defaults, $rendered_components);
     }
 
     /**
@@ -74,4 +71,3 @@ class Minimal implements Templatable
 TEMPLATE;
     }
 }
-

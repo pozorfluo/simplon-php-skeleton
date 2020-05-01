@@ -8,16 +8,18 @@ declare(strict_types=1);
 
 namespace Views;
 
+
 use Templates\Nav;
 use Templates\Footer;
 use Templates\Checkerboard;
 use Templates\InlinedCss;
 use Templates\InlinedJs;
+use Templates\PatientForm;
 
 /**
  * 
  */
-class Home extends View
+class Patient extends View
 {
     /**
      * Define defaults, take arguments
@@ -53,10 +55,7 @@ class Home extends View
         $this->components['content'] = [
             new InlinedCss(['css/Checkerboard.css']),
             new InlinedJs(['js/Checkerboard.js']),
-            new Checkerboard(
-                intval($this->args['row_count']),
-                intval($this->args['col_count'])
-            ),
+            new PatientForm(new \Entities\Patient(), '', 'Add Patient')
         ];
 
 

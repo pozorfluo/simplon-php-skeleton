@@ -15,7 +15,7 @@ use Views\View as View;
 /**
  * 
  */
-class Home extends Controller
+class Patient extends Controller
 {
 
     // public function __construct()

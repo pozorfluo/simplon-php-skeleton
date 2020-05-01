@@ -16,14 +16,14 @@ use Views\View as View;
  */
 abstract class Controller
 {
-    protected $parameters = [];
+    protected $args = [];
     protected $model;
     protected $view;
     protected $layout = "Minimal";
 
-    public function __construct(array $parameters = [])
+    public function __construct(array $args = [])
     {
-        $this->parameters = $parameters;
+        $this->args = $args;
         $this->view = get_class($this);
         $namespace_end = strrpos($this->view, '\\');
         $this->view = substr($this->view, $namespace_end + 1);
@@ -32,11 +32,11 @@ abstract class Controller
     /**
      * 
      */
-    public function set(array $parameters): self
+    public function set(array $args): self
     {
-        $this->parameters = array_merge(
-            $this->parameters,
-            $parameters
+        $this->args = array_merge(
+            $this->args,
+            $args
         );
         return $this;
     }
@@ -46,18 +46,18 @@ abstract class Controller
     public function serve(): void
     {
         /* import collected 'variables' in current context */
-        // extract($this->parameters);
+        // extract($this->args);
 
         /* output buffering ON */
-        ob_start();
+        // ob_start();
         require('src/Views/' . $this->view . '.php');
         $view_name = '\Views\\' . $this->view;
-        $view = new $view_name($this->parameters);
+        $view = new $view_name($this->args);
 
-        prettyDump([$this]);
-        echo '<pre>' . var_export($this, true) . '</pre>';
-        prettyDump([$view]);
-        echo '<pre>' . var_export($view, true) . '</pre>';
+        // prettyDump([$this]);
+        // echo '<pre>' . var_export($this, true) . '</pre>';
+        // prettyDump([$view]);
+        // echo '<pre>' . var_export($view, true) . '</pre>';
 
         $computed_content = $view->compose()->render();
 
@@ -68,11 +68,11 @@ abstract class Controller
         echo $layout->render();
 
         /* output buffering OFF */
-        echo ob_get_clean();
+        // echo ob_get_clean();
     }
 
     /**
      * 
      */
-    abstract public function run(array $parameters);
+    abstract public function run(array $args);
 }

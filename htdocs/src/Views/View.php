@@ -15,28 +15,23 @@ use Interfaces\Layoutable;
  */
 abstract class View implements Layoutable
 {
-    protected $parameters = [];
+    protected $args = [];
     protected $data = [];
     protected $components = [];
 
-    public function __construct(array $parameters = [])
+    public function __construct(array $args = [])
     {
-        if (!empty($parameters)) {
-            $this->parameters = array_merge(
-                $this->parameters,
-                $parameters
-            );
-        }
+        $this->args = $args;
     }
 
     /**
      * 
      */
-    public function set(array $parameters): self
+    public function set(array $args): self
     {
-        $this->parameters = array_merge(
-            $this->parameters,
-            $parameters
+        $this->args = array_merge(
+            $this->args,
+            $args
         );
         return $this;
     }

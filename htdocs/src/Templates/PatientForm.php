@@ -46,7 +46,7 @@ class PatientForm implements Templatable
     /**
      * 
      */
-    public function render(): void
+    public function render(): string
     {
         if ($this->data['id'] !== '') {
             $input_id = '<input type="hidden" name="id" value="'
@@ -55,7 +55,7 @@ class PatientForm implements Templatable
         } else {
             $input_id = '';
         }
-        echo <<<VIEW
+        return <<<VIEW
 <form action="{$this->data['action']}" method="POST">
     {$input_id}
     <label for="lastname">Last Name</label>
