@@ -17,16 +17,22 @@ use Views\View as View;
 abstract class Controller
 {
     protected $args = [];
+    
     protected $model;
     protected $view;
     protected $layout = "Minimal";
 
+    protected $cache_ttl = 600; /* seconds */
+
     public function __construct(array $args = [])
     {
         $this->args = $args;
+
+        /* get default associated view name */
         $this->view = get_class($this);
         $namespace_end = strrpos($this->view, '\\');
         $this->view = substr($this->view, $namespace_end + 1);
+
     }
 
     /**

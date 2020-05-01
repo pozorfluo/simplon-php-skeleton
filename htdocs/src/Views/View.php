@@ -49,12 +49,17 @@ abstract class View implements Layoutable
     /**
      * Render components
      *   -> [string name => string rendered component]
+     * 
+     * todo
+     *   - [ ] Consider some form of memoization to avoid rendering the same 
+     *         thing used at different places twice
+     *     + [ ] Note that this only possible if render is pure
      */
     public function render(): array
     {
         foreach ($this->components as $key => $batch) {
             $rendered_batch = '';
-            
+
             foreach ($batch as $component) {
                 $rendered_batch .= $component->render();
             }

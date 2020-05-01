@@ -15,7 +15,7 @@ use Interfaces\Templatable as Templatable;
  */
 class Checkerboard implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 

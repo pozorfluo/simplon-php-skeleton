@@ -15,7 +15,7 @@ use Interfaces\Templatable as Templatable;
  */
 class Nav implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 

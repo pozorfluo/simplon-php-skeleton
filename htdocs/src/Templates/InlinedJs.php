@@ -6,7 +6,6 @@
 
 declare(strict_types=1);
 
-
 namespace Templates;
 
 use Interfaces\Templatable as Templatable;
@@ -16,7 +15,7 @@ use Interfaces\Templatable as Templatable;
  */
 class InlinedJs implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 

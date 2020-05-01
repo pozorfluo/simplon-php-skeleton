@@ -15,7 +15,7 @@ use Interfaces\Templatable as Templatable;
  */
 class Footer implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 

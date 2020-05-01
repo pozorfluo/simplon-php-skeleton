@@ -15,7 +15,7 @@ use Interfaces\Templatable as Templatable;
  */
 class InlinedCss implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 

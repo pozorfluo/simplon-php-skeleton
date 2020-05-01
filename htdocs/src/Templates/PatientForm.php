@@ -16,7 +16,7 @@ use Entities\Patient as Patient;
  */
 class PatientForm implements Templatable
 {
-    public $data;
+    protected $data;
 
     /**
      * 
