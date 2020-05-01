@@ -50,7 +50,6 @@ abstract class Controller
 
         /* output buffering ON */
         // ob_start();
-        require('src/Views/' . $this->view . '.php');
         $view_name = '\Views\\' . $this->view;
         $view = new $view_name($this->args);
 
@@ -61,7 +60,6 @@ abstract class Controller
 
         $computed_content = $view->compose()->render();
 
-        require('src/Layouts/' . $this->layout . '.php');
         $layout_name = '\Layouts\\' . $this->layout;
 
         $layout = new $layout_name($computed_content);

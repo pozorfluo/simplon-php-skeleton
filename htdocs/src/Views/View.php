@@ -54,9 +54,11 @@ abstract class View implements Layoutable
     {
         foreach ($this->components as $key => $batch) {
             $rendered_batch = '';
+            
             foreach ($batch as $component) {
                 $rendered_batch .= $component->render();
             }
+
             $this->components[$key] = $rendered_batch;
         }
         return $this->components;

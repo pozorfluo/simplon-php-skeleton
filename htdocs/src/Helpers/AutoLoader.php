@@ -7,11 +7,27 @@
 declare(strict_types=1);
 
 namespace Helpers;
+
 /**
  * 
  */
 spl_autoload_register(function (string $class): bool {
-    $file = str_replace('\\', DIRECTORY_SEPARATOR, 'src/' . $class) . '.php';
+
+    $base_dir = 'src/';
+
+    /* Not using a project prefix currently */
+
+    // $project_prefix = '';
+    // $prefix_length = strlen($project_prefix);
+    // if (strncmp($project_prefix, $class, $prefix_length) !== 0) {
+    //     return;
+    // }
+
+    // get the relative class name
+    // $class = substr($class, $prefix_length);
+
+
+    $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
     if (file_exists($file)) {
         require $file;
         return true;

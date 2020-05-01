@@ -9,6 +9,7 @@
  *     + [x] Inline css, js when rendering layout, templates
  *   - [ ] Plug in Model
  *     + [ ] Use Validatable interface to check Entity going in and out
+ *   - [ ] Implement a simple file cache
  */
 
 declare(strict_types=1);

@@ -52,7 +52,6 @@ class Dispatcher
      */
     public function load(): self
     {
-        require('src/Controllers/' . $this->request['controller'] . '.php');
         $controller_name = '\Controllers\\' . $this->request['controller'];
         $this->controller = new $controller_name();
 
