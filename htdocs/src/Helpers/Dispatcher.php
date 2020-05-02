@@ -15,13 +15,15 @@ use Exception;
  * index.php?controller=Home&action=value&p1=v1&p2=v2&pn=vn"
  *   or ?
  * /Controller/Action/p1=v1&p2=v2&pn=vn
+ * 
+ * see https://www.php.net/manual/en/function.filter-has-var.php
  */
 class Dispatcher
 {
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 600; /* seconds */
+    protected $cache_ttl = 6; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct()
@@ -36,7 +38,9 @@ class Dispatcher
             exit;
         }
 
-        $base_name = $_SERVER['QUERY_STRING'];
+        /* sanitize, default to index */
+        // $base_name = http_build_query($this->request);
+        $base_name = rawurlencode ($_SERVER['QUERY_STRING']);
         if ($base_name === '') {
             $base_name = 'index';
         }

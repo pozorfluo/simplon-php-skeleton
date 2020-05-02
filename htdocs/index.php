@@ -14,7 +14,10 @@
  *     + [ ] Handle getting hammered with requests that resolve to a valid
  *           Controller but end up swamping the cache because of distinct
  *           query strings filled with junk parameters
- *     + [ ] Handle requests resolving to super long file name more gracefully         
+ *     + [ ] Handle requests resolving to super long file name more gracefully
+ *     + [x] Check if all characters allowed in a query string are valid in
+ *           a filename
+ *       - [ ] Consider a rewrite rule or some validation
  *   - [ ] Use a configuration file
  */
 
