@@ -12,41 +12,23 @@
 
 
 .tran-bouncyOS {
-  transition: 0.3s;
+  transition: 0.5s;
   transition-timing-function: cubic-bezier(0.74, -0.73, 0.2, 1.67);
 }
 
 .tran-bouncyOS:hover {
-  transition: 0.3s;
+  transition: 0s;
+  z-index: 3;
   transition-timing-function: cubic-bezier(0.74, -0.73, 0.2, 1.67);
-  transform: scale3d(1.1, 1.05, 1.05);
+  transform: scale3d(1.15, 1.15, 1.05);
 }
 
-.tran-bouncyOS:hover span {
-  color: white;
-  opacity: 1;
-  text-shadow: white 0 -1px 10px, blueviolet 0 1px 2px,
-    darkgoldenrod 1px 0px 1px;
-}
 
 .square-container {
   perspective: 1000px;
   z-index: 3;
   height: var(--square-container);
   width: var(--square-container);
-}
-.txt-box {
-  padding-top: calc(25vh / var(--row-count));
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: blue 0 -1px 0px, red 0 -1px 5px, green 0 -2px 1px;
-}
-
-.innertxt {
-  text-align: center;
-  opacity: 0.3;
 }
 
 .square {

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Helpers;
 
-use Controllers\Controller as Controller;
+use Controllers\Controller;
 use Exception;
 
 /**
@@ -23,7 +23,7 @@ class Dispatcher
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 6; /* seconds */
+    protected $cache_ttl = 600; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct()

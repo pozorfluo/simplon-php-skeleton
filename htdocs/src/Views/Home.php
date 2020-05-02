@@ -25,8 +25,8 @@ class Home extends View
     public function __construct(array $args = [])
     {
         $defaults = [
-            'row_count' => 3,
-            'col_count' => 3,
+            'row_count' => 12,
+            'col_count' => 12,
         ];
         $this->args = array_replace($defaults, $args);
     }

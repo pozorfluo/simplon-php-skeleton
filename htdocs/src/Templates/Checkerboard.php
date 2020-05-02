@@ -57,10 +57,7 @@ TEMPLATE;
                 $rendered_template .=
                     <<<TEMPLATE
                     <div class="tran-bouncyOS">
-                        <div class="button square square-0">
-                        <div class="txt-box">
-                            <span class="innertxt"><br /></span>
-                        </div>
+                        <div class="button square">
                         </div>
                     </div>
         

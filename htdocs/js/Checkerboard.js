@@ -4,7 +4,7 @@
   function getRandomColorHex(span = 16, offset = 0) {
     offset = Math.max(Math.min(16, offset), 0);
     span = Math.max(Math.min(16 - offset, span), 0);
-    return "#000000".replace(/0/g, function () {
+    return "#DD0000".replace(/0/g, function () {
       return (Math.floor(Math.random() * span) + offset).toString(16);
     });
   }
@@ -15,7 +15,7 @@
   function* cycleColor(length) {
     const colors = [];
     for (let i = 0; i < length; i++) {
-      colors.push(getRandomColorHex(16, 12));
+      colors.push(getRandomColorHex(16, 5));
     }
 
     for (let i = 0; ; i++) {
@@ -29,8 +29,6 @@
 
   function squareClick(event, color) {
     event.currentTarget.style.backgroundColor = color;
-    let child_span = event.currentTarget.querySelector("span");
-    // child_span.innerText = color;
   }
 
   //------------------------------------------------------------------- main ---
@@ -43,9 +41,9 @@
     // static node array
     const squares = [...document.querySelectorAll(".square")];
     const square_container = document.querySelector(".square-container");
-    const color_cycler = cycleColor(9);
+    const color_cycler = cycleColor(11);
     square_container.style.backgroundColor = color_cycler.next().value;
-    
+
     for (let i = 0, length = squares.length; i < length; i++) {
       console.log(squares[i].nodeName);
       console.log(i);
@@ -65,7 +63,13 @@
         "mouseover",
         function (event) {
           const color = event.currentTarget.style.backgroundColor;
-        //   square_container.style.backgroundColor = color;
+        //   this.addEventListener(
+        //     "transitionend",
+        //     function (event) {
+        //       squareClick(event, color_cycler.next().value);
+        //     },
+        //     { once: true }
+        //   );
         },
         false
       );
