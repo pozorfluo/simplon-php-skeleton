@@ -28,21 +28,21 @@ class Dispatcher
     {
         parse_str($_SERVER['QUERY_STRING'], $this->request);
 
+        /* redirect to Home if query string specifies junk controller */
+        if ((!isset($this->request['controller']))
+            || (!is_file(ROOT . 'src/Controllers/' . $this->request['controller'] . '.php'))
+        ) {
+            header("Location: /?controller=Home");
+            exit;
+        }
+
         $base_name = $_SERVER['QUERY_STRING'];
         if ($base_name === '') {
             $base_name = 'index';
         }
 
         $this->request['cached_file'] =
-            $this->cache_path . $base_name . '.html';
-
-        /* redirect to Home if query string ask for junk */
-        if ((!isset($this->request['controller']))
-            || (!is_file(ROOT . 'src/Controllers/'
-                . $this->request['controller'] . '.php'))
-        ) {
-            $this->request['controller'] = 'Home';
-        }
+            substr($this->cache_path . $base_name, 0, 250) . '.html';
     }
 
     /**

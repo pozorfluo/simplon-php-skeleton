@@ -11,6 +11,11 @@
  *     + [ ] Use Validatable interface to check Entity going in and out
  *   - [x] Implement a simple file cache
  *     + [ ] Allow for Controller, Model, View to invalidate cached files
+ *     + [ ] Handle getting hammered with requests that resolve to a valid
+ *           Controller but end up swamping the cache because of distinct
+ *           query strings filled with junk parameters
+ *     + [ ] Handle requests resolving to super long file name more gracefully         
+ *   - [ ] Use a configuration file
  */
 
 declare(strict_types=1);
@@ -32,9 +37,6 @@ if (session_status() === PHP_SESSION_NONE) {
 // echo '<pre>'.var_export(__DIR__ , true).'</pre>';
 
 $dispatcher = new Dispatcher();
-// $dispatcher->load()->call();
-// (new Dispatcher())->call();
 $dispatcher->call()->cache();
-
 
 require ROOT . 'src/Templates/GlobalsDump.php';
