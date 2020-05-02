@@ -17,12 +17,12 @@ use Views\View as View;
 abstract class Controller
 {
     protected $args = [];
-    
+
     protected $model;
     protected $view;
     protected $layout = "Minimal";
 
-    protected $cache_ttl = 600; /* seconds */
+    protected $rendered_page = '';
 
     public function __construct(array $args = [])
     {
@@ -32,7 +32,6 @@ abstract class Controller
         $this->view = get_class($this);
         $namespace_end = strrpos($this->view, '\\');
         $this->view = substr($this->view, $namespace_end + 1);
-
     }
 
     /**
@@ -47,9 +46,11 @@ abstract class Controller
         return $this;
     }
     /**
-     * 
+     * note
+     *   Output buffering is no longer required as everything is composed and
+     *   rendered before emitting the page once
      */
-    public function serve(): void
+    public function serve(): self
     {
         /* import collected 'variables' in current context */
         // extract($this->args);
@@ -59,22 +60,40 @@ abstract class Controller
         $view_name = '\Views\\' . $this->view;
         $view = new $view_name($this->args);
 
-        // prettyDump([$this]);
-        // echo '<pre>' . var_export($this, true) . '</pre>';
-        // prettyDump([$view]);
-        // echo '<pre>' . var_export($view, true) . '</pre>';
-
         $computed_content = $view->compose()->render();
 
         $layout_name = '\Layouts\\' . $this->layout;
 
         $layout = new $layout_name($computed_content);
-        echo $layout->render();
+        // echo $layout->render();
+        $rendered_page = $layout->render();
+        echo $rendered_page;
 
+        /* keep it around for optional caching */
+        $this->rendered_page = $rendered_page;
+        
         /* output buffering OFF */
         // echo ob_get_clean();
+
+        return $this;
     }
 
+    /**
+     * note
+     *   May be called on a Controller who never (or not yet) received args,
+     *   in which case it does nothing
+     */
+    public function cache(): self
+    {
+
+        if (isset($this->args['cached_file'])) {
+            // $cached_file = fopen($this->args['cached_file'], 'w');
+            // fwrite($cached_file, $this->rendered_page);
+            // fclose($cached_file);
+            file_put_contents($this->args['cached_file'], $this->rendered_page);
+        }
+        return $this;
+    }
     /**
      * 
      */

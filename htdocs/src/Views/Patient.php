@@ -17,7 +17,7 @@ use Templates\InlinedJs;
 use Templates\PatientForm;
 
 /**
- * 
+ *
  */
 class Patient extends View
 {
@@ -66,19 +66,11 @@ class Patient extends View
                 '6x6' => '?controller=Home&action=value&row_count=6&col_count=6',
                 '12x12' => '?controller=Home&action=value&row_count=12&col_count=12',
             ]),
-            new Nav([
-                'Home' => 'index.php?controller=Home',
-                'Add Patient' => '?controller=Patient&action=Add',
-                'List Patient' => '?controller=Patient&action=List',
-                'Schedule' => '?controller=Patient&action=List',
-            ]),
-            new Nav([
-                'Hoem' => 'index.php?controller=Home',
-                'Add Patient' => '?controller=Patient&action=Add',
-                'List Patient' => '?controller=Patient&action=List',
-                'Schedule' => '?controller=Patient&action=List',
-            ])
         ];
+
+        // $object_comparison = $this->components['footer'][2] == $this->components['nav'][0];
+        // echo '<pre>'.var_export($object_comparison, true).'</pre>';
+
         return $this;
     }
 }

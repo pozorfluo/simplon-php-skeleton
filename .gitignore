@@ -8,6 +8,7 @@
 .gdb_history
 
 #project specific
+cache/
 lispy_history.txt
 test_report.yaml
 
@@ -16,6 +17,7 @@ CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Testing
+
 # Makefile
 cmake_install.cmake
 install_manifest.txt

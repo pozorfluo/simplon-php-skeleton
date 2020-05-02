@@ -53,7 +53,13 @@ abstract class View implements Layoutable
      * todo
      *   - [ ] Consider some form of memoization to avoid rendering the same 
      *         thing used at different places twice
+     *     + [ ] Hash components __construct arguments
+     *     + [ ] Build a job list with the hash of all components to be rendered
+     *     + [ ] Build a renders hashtable [hash => rendered_component]
+     *     + [ ] Render a component only if its hash does NOT exist in the table
+     *     + [ ] Emit renders walking down the job list reading from the table
      *     + [ ] Note that this only possible if render is pure
+     *     + [ ] Note that hash collision may occur and needs to be checked
      */
     public function render(): array
     {

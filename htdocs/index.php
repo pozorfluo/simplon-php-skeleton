@@ -31,6 +31,9 @@ if (session_status() === PHP_SESSION_NONE) {
 // echo '<pre>'.var_export(__DIR__ , true).'</pre>';
 
 $dispatcher = new Dispatcher();
-$dispatcher->load()->call();
+// $dispatcher->load()->call();
+// (new Dispatcher())->call();
+$dispatcher->call()->cache();
+
 
 require ROOT.'src/Templates/GlobalsDump.php';

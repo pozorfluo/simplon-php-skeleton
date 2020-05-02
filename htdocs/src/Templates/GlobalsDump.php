@@ -12,6 +12,9 @@ declare(strict_types=1);
 <form action="" method="POST">
     <input type="submit" name="killsession" value="Kill Session" />
 </form>
+<form action="" method="POST">
+    <input type="submit" name="clearcache" value="Clear Cache" />
+</form>
 
 
 <?php
@@ -20,6 +23,10 @@ if (isset($_POST['killsession'])) {
     if (session_status() === PHP_SESSION_ACTIVE) {
         session_destroy();
     }
+}
+
+if (isset($_POST['clearcache'])) {
+    $dispatcher->clearCache();
 }
 // toss sensitive stuff before dumping $GLOBALS
 // unset($db_config);
