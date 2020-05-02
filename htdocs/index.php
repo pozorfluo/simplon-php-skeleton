@@ -9,15 +9,16 @@
  *     + [x] Inline css, js when rendering layout, templates
  *   - [ ] Plug in Model
  *     + [ ] Use Validatable interface to check Entity going in and out
- *   - [ ] Implement a simple file cache
+ *   - [x] Implement a simple file cache
+ *     + [ ] Allow for Controller, Model, View to invalidate cached files
  */
 
 declare(strict_types=1);
 
 define('ROOT', __DIR__ . '/');
 
-require ROOT.'src/Helpers/AutoLoader.php';
-require ROOT.'src/Utilities.php';
+require ROOT . 'src/Helpers/AutoLoader.php';
+require ROOT . 'src/Utilities.php';
 
 use Helpers\Dispatcher as Dispatcher;
 use Controllers\Homepage;
@@ -35,5 +36,61 @@ $dispatcher = new Dispatcher();
 // (new Dispatcher())->call();
 $dispatcher->call()->cache();
 
+// // Test Source
+// function Test8_1()
+// {
+//     global $x;
+//     #$someClass =& new SomeClass2();
 
-require ROOT.'src/Templates/GlobalsDump.php';
+//     /* The Test */
+//     $t = microtime(true);
+//     $i = 0;
+//     while ($i < 1000000) {
+//         $for_true = empty($_SERVER['QUERY_STRING']);
+//         ++$i;
+//     }
+
+//     return (microtime(true) - $t);
+// }
+
+// // Test Source
+// function Test8_2()
+// {
+//     global $aHash;
+//     #$someClass =& new SomeClass2();
+
+//     /* The Test */
+//     $t = microtime(true);
+//     $i = 0;
+//     while ($i < 1000000) {
+//         $for_true = $_SERVER['QUERY_STRING'] === '';
+//         ++$i;
+//     }
+
+//     return (microtime(true) - $t);
+// }
+
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_2(), true) . '</pre>';
+// echo '--<br />';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+// echo '<pre>' . var_export(Test8_1(), true) . '</pre>';
+
+
+require ROOT . 'src/Templates/GlobalsDump.php';

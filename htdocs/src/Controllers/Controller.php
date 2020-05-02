@@ -71,7 +71,7 @@ abstract class Controller
 
         /* keep it around for optional caching */
         $this->rendered_page = $rendered_page;
-        
+
         /* output buffering OFF */
         // echo ob_get_clean();
 
@@ -87,10 +87,10 @@ abstract class Controller
     {
 
         if (isset($this->args['cached_file'])) {
-            // $cached_file = fopen($this->args['cached_file'], 'w');
-            // fwrite($cached_file, $this->rendered_page);
-            // fclose($cached_file);
-            file_put_contents($this->args['cached_file'], $this->rendered_page);
+            $cached_file = fopen($this->args['cached_file'], 'w');
+            fwrite($cached_file, $this->rendered_page);
+            fclose($cached_file);
+            // file_put_contents($this->args['cached_file'], $this->rendered_page);
         }
         return $this;
     }

@@ -63,15 +63,35 @@ abstract class View implements Layoutable
      */
     public function render(): array
     {
-        foreach ($this->components as $key => $batch) {
+        $batch_names = array_keys($this->components);
+        $batch_count = count($batch_names);
+        $i = 0;
+
+        while ($i < $batch_count) {
+            $batch_name = $batch_names[$i];
+
             $rendered_batch = '';
 
-            foreach ($batch as $component) {
-                $rendered_batch .= $component->render();
+            $component_count = count($this->components[$batch_name]);
+            $j = 0;
+            while ($j < $component_count) {
+                $rendered_batch .= $this->components[$batch_name][$j]->render();
+                $j++;
             }
 
-            $this->components[$key] = $rendered_batch;
+            $this->components[$batch_name] = $rendered_batch;
+            $i++;
         }
+
+        // foreach ($this->components as $key => $batch) {
+        //     $rendered_batch = '';
+
+        //     foreach ($batch as $component) {
+        //         $rendered_batch .= $component->render();
+        //     }
+
+        //     $this->components[$key] = $rendered_batch;
+        // }
         return $this->components;
     }
     /**

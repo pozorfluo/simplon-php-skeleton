@@ -40,6 +40,20 @@ class Entity implements Validatable
                     'options' => ['regexp' => '([A-Za-z0-9_\-\s]+)']
                 ]];
         }
+
+        // $keys = array_keys($data);
+        // $size = count($keys);
+        // $i = 0;
+        // while ($i < $size) {
+        //     $field = $keys[$i];
+        //     $this->definition[$field] = isset($definition[$field])
+        //         ? [$field, $definition[$field]]
+        //         : [$field => [
+        //             'filter' => FILTER_VALIDATE_REGEXP,
+        //             'options' => ['regexp' => '([A-Za-z0-9_\-\s]+)']
+        //         ]];
+        //     $i++;
+        // }
     }
 
     /**

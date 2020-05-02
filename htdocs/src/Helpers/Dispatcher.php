@@ -27,8 +27,13 @@ class Dispatcher
     {
         parse_str($_SERVER['QUERY_STRING'], $this->request);
 
+        $base_name = $_SERVER['QUERY_STRING'];
+        if ($base_name === '') {
+            $base_name = 'index';
+        }
+
         $this->request['cached_file'] =
-            $this->cache_path . $_SERVER['QUERY_STRING'] . '.html';
+            $this->cache_path . $base_name . '.html';
 
         if (!isset($this->request['controller'])) {
             $this->request['controller'] = 'Home';
@@ -41,8 +46,10 @@ class Dispatcher
     public function call(): self
     {
         if ($this->isCached()) {
+            // echo 'Serving Cached !';
             readfile($this->request['cached_file']);
         } else {
+            // echo 'Serving Fresh !';
             ($this->controller ?? $this->load())->run($this->request);
         }
 
@@ -56,7 +63,6 @@ class Dispatcher
         $controller_name = '\Controllers\\' . $this->request['controller'];
         unset($this->request['controller']);
         $this->controller = new $controller_name();
-        echo '<pre>' . var_export($this->controller, true) . '</pre>';
 
         return $this->controller;
     }
@@ -79,29 +85,43 @@ class Dispatcher
     public function cache(): self
     {
         ($this->controller ?? $this->load())->cache();
-        // $this->controller->cache();
-        // echo '<pre>'.var_export($this->controller, true).'</pre>';
 
         $cache_ttl_path = $this->cache_path . 'cache.ttl';
         if (!file_exists($cache_ttl_path)) {
             touch($cache_ttl_path);
         }
-        $this->invalidateCache();
+        $this->pruneCache();
 
         return $this;
     }
 
     /**
-     * 
+     * Create cache.ttl ticker if it does NOT exist
+     * If at least a ttl period has elapsed since last pruning
+     *   Delete each cached files past ttl
+     *   Reset ticker
      */
-    public function invalidateCache(): self
+    public function pruneCache(): self
     {
-        $cache_ttl_path = ROOT . 'cache.ttl';
-        if (file_exists($cache_ttl_path)) {
-            echo 'cache_ttl exists';
-        } else {
+        $cache_ttl_path = $this->cache_path . 'cache.ttl';
+
+        if (!file_exists($cache_ttl_path)) {
             touch($cache_ttl_path);
+        } else {
+            if ((time() - $this->cache_ttl) > filemtime($cache_ttl_path)) {
+                // echo 'Pruning cache !';
+                $cached_pages = glob($this->cache_path . '*.html');
+
+                foreach ($cached_pages as $cached_page) {
+                    if ((time() - $this->cache_ttl) > filemtime($cached_page)) {
+                        unlink($cached_page);
+                    }
+                }
+
+                touch($cache_ttl_path);
+            }
         }
+
         return $this;
     }
     /**
@@ -109,12 +129,13 @@ class Dispatcher
      */
     public function clearCache(): self
     {
-        $glob = glob($this->cache_path . '*.html');
-        echo '<pre>' . var_export($glob, true) . '</pre>';
+        $cached_pages = glob($this->cache_path . '*.html');
+        // echo '<pre>' . var_export($cached_pages, true) . '</pre>';
 
-        foreach ($glob as $file_path) {
-            unlink($file_path);
+        foreach ($cached_pages as $cached_page) {
+            unlink($cached_page);
         }
+
         return $this;
     }
 }
