@@ -18,7 +18,7 @@ class DBConfig
     public function __construct(string $file)
     {
         // echo '<pre>DBConfig->__construct()</pre>';
-        if (file_exists($file)) {
+        if (is_file($file)) {
             $json_configs = file_get_contents($file);
             $this->configs = json_decode($json_configs, true);
         } else {

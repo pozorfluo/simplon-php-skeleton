@@ -1,6 +1,6 @@
-php_value display_errors On
-php_value mbstring.http_input auto
-php_value date.timezone Europe/Paris
+# php_value display_errors On
+# php_value mbstring.http_input auto
+# php_value date.timezone Europe/Paris
 
 # secure .htaccess
 <Files .htaccess>
@@ -21,15 +21,15 @@ RewriteEngine On
 RewriteBase /
 
 # serve request for existing files, links, directories
-RewriteCond %{REQUEST_FILENAME} -s [OR]
-RewriteCond %{REQUEST_FILENAME} -l [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^.*$ - [L]
+# RewriteCond %{REQUEST_FILENAME} -s [OR]
+# RewriteCond %{REQUEST_FILENAME} -l [OR]
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^.*$ - [L]
 
 # rewrite all other valid queries to parameterized index.php
-RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1 [L]
+# RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1 [L]
 
 # serve version according to platform
 # see https://developers.whatismybrowser.com/useragents/explore/
 # RewriteCond "%{HTTP_USER_AGENT}" "(iPhone|iPad|Android)"
-#RewriteRule ^(.*)$ $1&mobile=1 [L, QSA]
+# RewriteRule ^(.*)$ $1&mobile=1 [L, QSA]

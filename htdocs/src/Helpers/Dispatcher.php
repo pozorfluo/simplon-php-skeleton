@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Helpers;
 
 use Controllers\Controller as Controller;
+use Exception;
 
 /**
  * index.php?controller=Home&action=value&p1=v1&p2=v2&pn=vn"
@@ -35,7 +36,11 @@ class Dispatcher
         $this->request['cached_file'] =
             $this->cache_path . $base_name . '.html';
 
-        if (!isset($this->request['controller'])) {
+        /* redirect to Home if query string ask for junk */
+        if ((!isset($this->request['controller']))
+            || (!is_file(ROOT . 'src/Controllers/'
+                . $this->request['controller'] . '.php'))
+        ) {
             $this->request['controller'] = 'Home';
         }
     }
@@ -73,7 +78,7 @@ class Dispatcher
     public function isCached(): bool
     {
         $file_path = $this->request['cached_file'];
-        return file_exists($file_path)
+        return is_file($file_path)
             && (time() - $this->cache_ttl) < filemtime($file_path);
     }
 
@@ -87,7 +92,7 @@ class Dispatcher
         ($this->controller ?? $this->load())->cache();
 
         $cache_ttl_path = $this->cache_path . 'cache.ttl';
-        if (!file_exists($cache_ttl_path)) {
+        if (!is_file($cache_ttl_path)) {
             touch($cache_ttl_path);
         }
         $this->pruneCache();
@@ -105,7 +110,7 @@ class Dispatcher
     {
         $cache_ttl_path = $this->cache_path . 'cache.ttl';
 
-        if (!file_exists($cache_ttl_path)) {
+        if (!is_file($cache_ttl_path)) {
             touch($cache_ttl_path);
         } else {
             if ((time() - $this->cache_ttl) > filemtime($cache_ttl_path)) {
