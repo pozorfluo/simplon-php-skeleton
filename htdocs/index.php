@@ -10,7 +10,7 @@
  * 
  * todo
  *   - [x] Redirect to parameterized index.php
- *   - [x] Use Dispatch to call Controller/Action/Param
+ *   - [x] Use Dispatcher to call Controller/Action/Param
  *   - [x] Use Controller to request, filter, hand over Model data
  *   - [x] Use View to compose model data over layout, template
  *     + [x] Inline css, js when rendering layout, templates
@@ -25,7 +25,7 @@
  *     + [x] Check if all characters allowed in a query string are valid in
  *           a filename
  *       - [ ] Consider a rewrite rule or some validation
- *   - [ ] Use a configuration file
+ *   - [x] Use a configuration file
  *   - [ ] Considered supporting Deferred components that are rendered via Js 
  *         hooks and placeholders after all regular components are fist pushed 
  *         and painted.
@@ -49,8 +49,11 @@ if (session_status() === PHP_SESSION_NONE) {
  * Get list of registered components, database configs, etc... from config file
  * or provide/build some defaults
  */
+$t = microtime(true);
+
 $config_path = ROOT . '.env';
 $config_exists = is_file($config_path);
+
 
 if ($config_exists) {
     $config = json_decode(file_get_contents($config_path), true);
@@ -88,26 +91,34 @@ if (!isset($config['db_configs'])) {
     echo 'db_configs config missing ! Defaults emitted.<br />';
 }
 
+$time_spent['config'] = (microtime(true) - $t);
 
-// echo '<pre>' . var_export($config, true) . '</pre>';
-// echo '<pre>'.var_export(ROOT, true).'</pre>';
-// echo '<pre>'.var_export(getcwd() , true).'</pre>';
-// echo '<pre>'.var_export(__DIR__ , true).'</pre>';
 //---------------------------------------------------------------------- run
+$t = microtime(true);
+
 $dispatcher = new Dispatcher($config);
 $dispatcher->call()->cache();
 
+$time_spent['serving_page'] = (microtime(true) - $t);
 //------------------------------------------------------------------- config
 /**
  * Serialize config to file if needed once the page is served 
  */
+$t = microtime(true);
+
 if (!$config_exists) {
-    $config_file= fopen($config_path, 'w');
+    $config_file = fopen($config_path, 'w');
     fwrite($config_file, json_encode($config));
     fclose($config_file);
 }
 
+$time_spent['serialize_config'] = (microtime(true) - $t);
+
 
 //-------------------------------------------------------------------- debug
-require ROOT . 'src/Utilities.php';
+$t = microtime(true);
+
+require ROOT . 'src/Helpers/Utilities.php';
 require ROOT . 'src/Templates/GlobalsDump.php';
+
+$time_spent['display_debug'] = (microtime(true) - $t);

@@ -39,6 +39,11 @@ class Dispatcher
         }
 
         /* sanitize, default to index */
+        /**
+         * todo
+         *   - [ ] Validate query against whitelist of registered components
+         *         from config or redirect
+         */
         // $base_name = http_build_query($this->request);
         $base_name = rawurlencode($_SERVER['QUERY_STRING']);
         if ($base_name === '') {
