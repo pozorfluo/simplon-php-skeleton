@@ -60,6 +60,7 @@ abstract class View implements Layoutable
      *     + [ ] Emit renders walking down the job list reading from the table
      *     + [ ] Note that this only possible if render is pure
      *     + [ ] Note that hash collision may occur and needs to be checked
+     *   - [ ] See https://www.php.net/manual/en/book.memcached.php
      */
     public function render(): array
     {

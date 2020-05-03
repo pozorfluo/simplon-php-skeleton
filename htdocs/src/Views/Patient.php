@@ -53,8 +53,6 @@ class Patient extends View
         ];
 
         $this->components['content'] = [
-            new InlinedCss(['css/Checkerboard.css']),
-            new InlinedJs(['js/Checkerboard.js']),
             new PatientForm(new \Entities\Patient(), '', 'Add Patient')
         ];
 

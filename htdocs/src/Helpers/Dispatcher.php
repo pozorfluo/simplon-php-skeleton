@@ -23,7 +23,7 @@ class Dispatcher
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 600; /* seconds */
+    protected $cache_ttl = 3; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct()
@@ -40,7 +40,7 @@ class Dispatcher
 
         /* sanitize, default to index */
         // $base_name = http_build_query($this->request);
-        $base_name = rawurlencode ($_SERVER['QUERY_STRING']);
+        $base_name = rawurlencode($_SERVER['QUERY_STRING']);
         if ($base_name === '') {
             $base_name = 'index';
         }
