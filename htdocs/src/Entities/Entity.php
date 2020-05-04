@@ -37,10 +37,10 @@ class Entity implements Validatable
         foreach (array_keys($data) as $field) {
             $this->definitions[$field] = isset($definitions[$field])
                 ? $definitions[$field]
-                : [$field => [
+                : [
                     'filter' => FILTER_VALIDATE_REGEXP,
-                    'options' => ['regexp' => '([A-Za-z0-9_\-\s]+)']
-                ]];
+                    'options' => ['regexp' => '/^([A-Za-z0-9_\-\s]+)$/']
+                ];
 
             // echo '<pre>' . var_export($this->definitions[$field], true) . '</pre>';
         }
@@ -54,7 +54,7 @@ class Entity implements Validatable
         //         ? [$field, $definitions[$field]]
         //         : [$field => [
         //             'filter' => FILTER_VALIDATE_REGEXP,
-        //             'options' => ['regexp' => '([A-Za-z0-9_\-\s]+)']
+        //             'options' => ['regexp' => '/^([A-Za-z0-9_\-\s]+)$/']
         //         ]];
         //     $i++;
         // }

@@ -13,6 +13,9 @@ namespace Entities;
  */
 class Patient extends Entity
 {
+    /**
+     * 
+     */
     function __construct(
         string $id =  '',
         string $lastname =  '',
@@ -34,11 +37,11 @@ class Patient extends Entity
                 'id' => FILTER_VALIDATE_INT,
                 'phone' => [
                     'filter' => FILTER_VALIDATE_REGEXP,
-                    'options' => ['regexp' => '(^[0-9]{10}$)']
+                    'options' => ['regexp' => '/^([0-9]{10})$/']
                 ],
                 'birthdate' => [
                     'filter' => FILTER_VALIDATE_REGEXP,
-                    'options' => ['regexp' => '(^[0-9]{4}-[0-9]{2}-[0-9]{2}$)']
+                    'options' => ['regexp' => '/^([0-9]{4}-[0-9]{2}-[0-9]{2})$/']
                 ],
                 'mail' => FILTER_VALIDATE_EMAIL,
             ]

@@ -28,6 +28,7 @@ class HelloPdo extends Model
                             `clients`;"
         ],
     ];
+    
     /**
      * 
      */
