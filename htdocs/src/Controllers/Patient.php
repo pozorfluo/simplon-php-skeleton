@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Models\Model as Model;
-use Views\View as View;
+use Models\Model;
+use Views\View;
 
 
 /**

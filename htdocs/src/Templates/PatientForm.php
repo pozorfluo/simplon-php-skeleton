@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Templates;
 
-use Interfaces\Templatable as Templatable;
-use Entities\Patient as Patient;
+use Interfaces\Templatable;
+use Entities\Patient;
 
 /**
  * 

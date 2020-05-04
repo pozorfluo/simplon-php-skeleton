@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Layouts;
 
-use Interfaces\Templatable as Templatable;
+use Interfaces\Templatable;
 
 /**
  * 

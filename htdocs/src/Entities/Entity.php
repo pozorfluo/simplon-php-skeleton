@@ -13,6 +13,10 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
 /**
+ * note
+ *   Default filter only allows a string containing 
+ *   A-Z, a-z, 0-9, space, underscore, dash
+ * 
  * see https://www.php.net/manual/en/function.filter-var-array.php
  */
 class Entity implements Validatable
@@ -101,19 +105,27 @@ class Entity implements Validatable
     }
 
     /**
-     * Apply filter(s)
+     * Return filtered data, do not change internal state
      */
-    public function filter(): self
+    public function getFiltered(): array
     {
-        $this->data = filter_var_array($this->data, $this->definitions);
-        return $this;
+        return filter_var_array($this->data, $this->definitions);
     }
+
     /**
-     * Apply filter(s)
+     * Apply filters
+     * 
+     * note
+     *   Raw data of a field is lost if its filter fails !
      */
     public function validate(): self
     {
         $this->data = filter_var_array($this->data, $this->definitions);
+        $this->is_valid = !in_array(
+            false,
+            filter_var_array($this->data, $this->definitions),
+            true // strict
+        );
         return $this;
     }
 }
