@@ -34,10 +34,12 @@
   //------------------------------------------------------------------- main ---
   /**
    * DOMContentLoaded loaded !
+   * 
+   * todo
+   *   - [ ] Check your own gradient onhover generator demo, it was much more
+   *         responsive
    */
   window.addEventListener("DOMContentLoaded", function (event) {
-    console.log("DOM fully loaded and parsed");
-
     // static node array
     const squares = [...document.querySelectorAll(".square")];
     const square_container = document.querySelector(".square-container");
@@ -45,8 +47,6 @@
     square_container.style.backgroundColor = color_cycler.next().value;
 
     for (let i = 0, length = squares.length; i < length; i++) {
-      console.log(squares[i].nodeName);
-      console.log(i);
       squares[i].style.backgroundColor = color_cycler.next().value;
 
       //------------------------------------------------------------ click

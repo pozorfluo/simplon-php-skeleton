@@ -43,7 +43,10 @@ class Minimal implements Templatable
     }
 
     /**
-     * 
+     * const img = event.currentTarget;
+     * setInterval(function () {
+     *     removeSpinner(img);
+     * }, 2000);
      */
     public function render(): string
     {
@@ -55,6 +58,13 @@ class Minimal implements Templatable
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{$this->data['page_title']}></title>
+    <style>
+    .loading {
+        /* filter: opacity(50%); */
+        background : transparent url('resources/images/spinner.svg')  no-repeat scroll center center;
+        background-blend-mode: multiply;
+    }
+    </style>
     {$this->data['css']}
 </head>
 
@@ -65,6 +75,28 @@ class Minimal implements Templatable
     
     {$this->data['footer']}
 
+    <script>
+    (function () {
+        "use strict";
+        const images = [...document.querySelectorAll("img")];
+      
+        function removeSpinner(event) {
+          event.currentTarget.classList.remove("loading");
+        }
+      
+        for (let i = 0, length = images.length; i < length; i++) {
+          if (!images[i].complete) {
+            images[i].addEventListener(
+              "load",
+              function (event) {
+                removeSpinner(event);
+              },
+              false
+            );
+          }
+        }
+      })();
+    </script>
     {$this->data['js']}
 </body>
 </html>

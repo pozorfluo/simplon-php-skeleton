@@ -40,8 +40,8 @@ class InlinedJs implements Templatable
     public function render(): string
     {
         $rendered_template = '<script>';
+        
         foreach ($this->data as $path) {
-
             $rendered_template .= file_get_contents($path);
 
         }

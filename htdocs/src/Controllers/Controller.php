@@ -74,22 +74,23 @@ abstract class Controller
 
         /* test and placeholder for deferred components */
         /* optional output buffering */
-        // if (ob_get_level() == O) {ob_start()};
-        for ($i = 0; $i < 3; $i++) {
-            echo '<h2>DEFERRED COMPONENT PLACEHOLDER</h2>';
-            /**
-             * note
-             *   Some padding may be necessary to force the webserver and
-             *   client browser to push current output.
-             * 
-             *   Client browser have different schemes for output bufffering
-             */
-            echo str_pad('', 4096);
-            // ob_flush();
-            flush();
-            sleep(1);
-        }
-        // ob_end_flush();
+        // // if (ob_get_level() == O) {ob_start()};
+        // for ($i = 0; $i < 3; $i++) {
+        //     echo '<h2>DEFERRED COMPONENT PLACEHOLDER</h2>';
+        //     echo '<img src="resources/images/spinner.svg" alt="loading !">';
+        //     /**
+        //      * note
+        //      *   Some padding may be necessary to force the webserver and
+        //      *   client browser to push current output.
+        //      * 
+        //      *   Client browser have different schemes for output bufffering
+        //      */
+        //     echo str_pad('', 4096);
+        //     // ob_flush();
+        //     flush();
+        //     sleep(1);
+        // }
+        // // ob_end_flush();
 
         /* output buffering OFF */
         // echo ob_get_clean();

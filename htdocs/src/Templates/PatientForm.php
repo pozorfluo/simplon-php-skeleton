@@ -55,7 +55,7 @@ class PatientForm implements Templatable
         } else {
             $input_id = '';
         }
-        return <<<VIEW
+        return <<<TEMPLATE
 <form action="{$this->data['action']}" method="POST">
     {$input_id}
     <label for="lastname">Last Name</label>
@@ -99,6 +99,6 @@ class PatientForm implements Templatable
 
     <input type="submit" value="{$this->data['submit']}" />
 </form>    
-VIEW;
+TEMPLATE;
     }
 }

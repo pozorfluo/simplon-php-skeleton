@@ -16,6 +16,7 @@
  *     + [x] Inline css, js when rendering layout, templates
  *   - [ ] Plug in Model
  *     + [ ] Use Validatable interface to check Entity going in and out
+ *   - [x] Use a configuration file
  *   - [x] Implement a simple file cache
  *     + [ ] Allow for Controller, Model, View to invalidate cached files
  *     + [ ] Handle getting hammered with requests that resolve to a valid
@@ -25,10 +26,11 @@
  *     + [x] Check if all characters allowed in a query string are valid in
  *           a filename
  *       - [ ] Consider a rewrite rule or some validation
- *   - [x] Use a configuration file
+ *     + [ ] Use the configured components as a white list
  *   - [ ] Considered supporting Deferred components that are rendered via Js 
  *         hooks and placeholders after all regular components are fist pushed 
  *         and painted.
+ *   - [ ] Test run Templates using and rendering other Templates
  */
 
 declare(strict_types=1);
