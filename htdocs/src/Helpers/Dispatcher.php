@@ -23,7 +23,7 @@ class Dispatcher
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 600; /* seconds */
+    protected $cache_ttl = 6; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct()
@@ -55,7 +55,12 @@ class Dispatcher
     }
 
     /**
-     * 
+     * todo
+     *   - [x] Figure out how to prevent a call to a method that does
+     *         NOT represent an action ?!
+     *     + [x] Consider prepending / appending with 'run' or Action' 
+     *           both to make it clear what is meant to be a callable 
+     *           action and thwart malicious requests
      */
     public function call(): self
     {
@@ -64,7 +69,22 @@ class Dispatcher
             readfile($this->request['cached_file']);
         } else {
             // echo 'Serving Fresh !';
-            ($this->controller ?? $this->load())->run($this->request);
+
+            /* 'escaping' and providing default action */
+            $this->request['action'] =
+                'run' . ($this->request['action'] ?? 'Default');
+
+            /* use existing controller or load */ 
+            if (method_exists($this->controller ?? $this->load(), $this->request['action'])) {
+                /* requested action exists, run it */
+                $this->controller->{$this->request['action']}($this->request);
+            } else { 
+                /* run default action */
+                $this->controller->runDefault($this->request);
+            }
+
+            echo '<pre>' . var_export($this->request['action'], true) . '</pre><hr />';
+            // ($this->controller ?? $this->load())->run($this->request);
         }
 
         return $this;

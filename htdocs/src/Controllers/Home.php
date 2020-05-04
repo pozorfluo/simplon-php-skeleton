@@ -27,7 +27,7 @@ class Home extends Controller
     /**
      * 
      */
-    public function run(array $args = []): void
+    public function runDefault(array $args = []): void
     {
         $this->set($args);
         

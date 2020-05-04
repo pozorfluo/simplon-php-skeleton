@@ -28,10 +28,13 @@ abstract class Controller
     {
         $this->args = $args;
 
-        /* get default associated view name */
-        $this->view = get_class($this);
-        $namespace_end = strrpos($this->view, '\\');
-        $this->view = substr($this->view, $namespace_end + 1);
+        /* get default associated view, model name */
+        $associated_class = get_class($this);
+        $namespace_end = strrpos($associated_class, '\\');
+        $associated_class = substr($associated_class, $namespace_end + 1);
+
+        $this->model = $associated_class;
+        $this->view = $associated_class;
     }
 
     /**
@@ -62,8 +65,8 @@ abstract class Controller
 
         $computed_content = $view->compose()->render();
 
+        /* view may set the layout */
         $layout_name = '\Layouts\\' . $this->layout;
-
         $layout = new $layout_name($computed_content);
         // echo $layout->render();
         $rendered_page = $layout->render();
@@ -117,5 +120,5 @@ abstract class Controller
     /**
      * 
      */
-    abstract public function run(array $args);
+    abstract public function runDefault(array $args);
 }

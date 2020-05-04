@@ -98,23 +98,23 @@ if (!isset($config['db_configs'])) {
 $time_spent['config'] = (microtime(true) - $t);
 
 //--------------------------------------------------------------- playground
-use Entities\Patient;
+// use Entities\Patient;
 
-$test_entity = new Patient(
-    '10', //strval(rand(0, 9999)).
-    'D' . str_shuffle('ubois') . ' de la M' . str_shuffle('oquette'),
-    'Jdean-Mi' . str_shuffle('michelou'),
-    date('Y-m-d'). 'xdf',
-    strval(rand(1111111111, 9999999999)).'f',
-    'jean-mi' . strval(rand(11, 999)) . '@@caramail.com'
-);
+// $test_entity = new Patient(
+//     '10', //strval(rand(0, 9999)).
+//     'D' . str_shuffle('ubois') . ' de la M' . str_shuffle('oquette'),
+//     'Jdean-Mi' . str_shuffle('michelou'),
+//     date('Y-m-d'). 'xdf',
+//     strval(rand(1111111111, 9999999999)).'f',
+//     'jean-mi' . strval(rand(11, 999)) . '@@caramail.com'
+// );
 
 
-echo '<pre>'.var_export($test_entity->isValid(), true).'</pre><hr />';
-echo '<pre>'.var_export($test_entity->getData(), true).'</pre><hr />';
-echo '<pre>'.var_export($test_entity->getDefinitions(), true).'</pre><hr />';
-echo '<pre>'.var_export($test_entity->getFiltered(), true).'</pre><hr />';
-echo '<pre>'.var_export($test_entity->validate()->getData(), true).'</pre><hr />';
+// echo '<pre>'.var_export($test_entity->isValid(), true).'</pre><hr />';
+// echo '<pre>'.var_export($test_entity->getData(), true).'</pre><hr />';
+// echo '<pre>'.var_export($test_entity->getDefinitions(), true).'</pre><hr />';
+// echo '<pre>'.var_export($test_entity->getFiltered(), true).'</pre><hr />';
+// echo '<pre>'.var_export($test_entity->validate()->getData(), true).'</pre><hr />';
 
 
 //---------------------------------------------------------------------- run
