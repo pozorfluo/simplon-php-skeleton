@@ -118,7 +118,8 @@ abstract class Controller
         return $this;
     }
     /**
-     * 
+     * note
+     *   Prepend all actions meant to be callable by a request with 'run'
      */
     abstract public function runDefault(array $args);
 }

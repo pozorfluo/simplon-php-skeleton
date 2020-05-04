@@ -42,7 +42,22 @@ class Patient extends Controller
 
 
         echo '<h2>LIST !!!</h2>';
-        
+        echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
+
+        $this->serve();
+    }
+
+    /**
+     * 
+     */
+    public function runAdd(array $args = []): void
+    {
+        $this->set($args);
+
+
+        echo '<h2>Add !!!</h2>';
+        echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
+
         $this->serve();
     }
 }

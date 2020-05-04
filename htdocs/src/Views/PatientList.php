@@ -19,7 +19,7 @@ use Templates\PatientForm;
 /**
  *
  */
-class Patient extends View
+class PatientList extends View
 {
     /**
      * Define defaults, take arguments
@@ -27,21 +27,10 @@ class Patient extends View
     public function __construct(array $args = [])
     {
         $defaults = [
-            'id' => '',
-            'action' => '?controller=Patient&action=Add',
-            'submit' => 'Add Patient'
+            'row_count' => 3,
+            'col_count' => 3,
         ];
         $this->args = array_replace($defaults, $args);
-
-        /**
-         * todo
-         *   - [ ] Decide  or Controller if View takes care of user input
-         *     + [ ] Do what seems to split the load in a convenient way, 
-         *           litterature is full of messy opinions
-         *     + [ ] Try in the View, keep 'massaging and displaying' tight
-         *           and close together !
-         *       
-         */
     }
     /**
      * todo

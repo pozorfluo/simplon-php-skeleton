@@ -26,30 +26,27 @@ class Dispatcher
     protected $cache_ttl = 6; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
-    public function __construct()
+    public function __construct(array $config)
     {
         parse_str($_SERVER['QUERY_STRING'], $this->request);
 
-        /* redirect to Home if query string specifies junk controller */
-        if ((!isset($this->request['controller']))
-            || (!is_file(ROOT . 'src/Controllers/' . $this->request['controller'] . '.php'))
-        ) {
+        /**
+         * Validate query against whitelist of registered components
+         * Redirect to Home if query string specifies junk controller
+         */
+        if ((!isset($this->request['controller'])
+            || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {
             header("Location: /?controller=Home");
             exit;
         }
 
         /* sanitize, default to index */
-        /**
-         * todo
-         *   - [ ] Validate query against whitelist of registered components
-         *         from config or redirect
-         */
-        // $base_name = http_build_query($this->request);
         $base_name = rawurlencode($_SERVER['QUERY_STRING']);
         if ($base_name === '') {
             $base_name = 'index';
         }
 
+        $this->request['db_configs'] = $config['db_configs'];
         $this->request['cached_file'] =
             substr($this->cache_path . $base_name, 0, 250) . '.html';
     }
@@ -69,26 +66,27 @@ class Dispatcher
             readfile($this->request['cached_file']);
         } else {
             // echo 'Serving Fresh !';
-
             /* 'escaping' and providing default action */
             $this->request['action'] =
                 'run' . ($this->request['action'] ?? 'Default');
 
-            /* use existing controller or load */ 
-            if (method_exists($this->controller ?? $this->load(), $this->request['action'])) {
+            /* use existing controller or load one */
+            if (method_exists(
+                $this->controller ?? $this->load(),
+                $this->request['action']
+            )) {
                 /* requested action exists, run it */
                 $this->controller->{$this->request['action']}($this->request);
-            } else { 
+            } else {
                 /* run default action */
+                $this->request['action'] = 'runDefault';
                 $this->controller->runDefault($this->request);
             }
-
-            echo '<pre>' . var_export($this->request['action'], true) . '</pre><hr />';
-            // ($this->controller ?? $this->load())->run($this->request);
         }
 
         return $this;
     }
+
     /**
      * 
      */
