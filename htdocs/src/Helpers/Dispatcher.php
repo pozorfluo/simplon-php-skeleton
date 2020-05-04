@@ -23,7 +23,7 @@ class Dispatcher
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 3; /* seconds */
+    protected $cache_ttl = 600; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct()

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Entities;
 
-use Interfaces\Validatable as Validatable;
+use Interfaces\Validatable;
 
 /**
  * see https://www.php.net/manual/en/function.filter-var-array.php

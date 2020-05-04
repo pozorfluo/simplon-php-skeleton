@@ -31,6 +31,7 @@
  *         hooks and placeholders after all regular components are fist pushed 
  *         and painted.
  *   - [ ] Test run Templates using and rendering other Templates
+ *   - [ ] Add a project specific QueryString builder to simplify link creation
  */
 
 declare(strict_types=1);
@@ -95,6 +96,20 @@ if (!isset($config['db_configs'])) {
 
 $time_spent['config'] = (microtime(true) - $t);
 
+//--------------------------------------------------------------- playground
+use Entities\Patient;
+
+$test_entity = new Patient(
+    strval(rand(0, 9999)),
+    'D' . str_shuffle('ubois') . ' de la M' . str_shuffle('oquette'),
+    'Jean-Boursin',
+    date('Y-m-d'),
+    strval(rand(1111111111, 9999999999)),
+    'jean-mi' . strval(rand(11, 999)) . '@caramail.com'
+);
+
+// echo '<pre>'.var_export(FILTER_VALIDATE_REGEXP, true).'</pre>';
+// echo '<pre>'.var_export($test_entity, true).'</pre>';
 //---------------------------------------------------------------------- run
 $t = microtime(true);
 

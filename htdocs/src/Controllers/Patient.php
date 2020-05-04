@@ -23,6 +23,7 @@ class Patient extends Controller
     //     parent::__construct();
     //     echo '<pre>Home()</pre>';
     // }
+    
     /**
      * 
      */

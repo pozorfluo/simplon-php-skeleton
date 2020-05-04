@@ -23,6 +23,7 @@ class Home extends Controller
     //     parent::__construct();
     //     echo '<pre>Home()</pre>';
     // }
+    
     /**
      * 
      */

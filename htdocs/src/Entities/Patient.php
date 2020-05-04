@@ -31,12 +31,12 @@ class Patient extends Entity
                 'mail' => $mail
             ],
             [
-                $id => FILTER_VALIDATE_INT,
-                $phone => [
+                'id' => FILTER_VALIDATE_INT,
+                'phone' => [
                     'filter' => FILTER_VALIDATE_REGEXP,
                     'options' => ['regexp' => '([0-9]{10})']
                 ],
-                $mail => FILTER_VALIDATE_EMAIL,
+                'mail' => FILTER_VALIDATE_EMAIL,
             ]
         );
     }

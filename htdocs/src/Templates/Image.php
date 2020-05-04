@@ -12,7 +12,7 @@ use Interfaces\Templatable as Templatable;
 
 /**
  * todo
- *   - [ ] Add js spinner script once and only if an Image or RemoteImage
+ *   - [x] Add js spinner script once and only if an Image or RemoteImage
  *         component is used
  */
 class Image implements Templatable
