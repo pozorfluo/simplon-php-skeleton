@@ -32,6 +32,7 @@
  *         and painted.
  *   - [ ] Test run Templates using and rendering other Templates
  *   - [ ] Add a project specific QueryString builder to simplify link creation
+ *   - [ ] Write the test suite Entity->isValid(), validate() deserves
  */
 
 declare(strict_types=1);
@@ -42,6 +43,7 @@ require ROOT . 'src/Helpers/AutoLoader.php';
 
 use Helpers\Dispatcher as Dispatcher;
 use Controllers\Homepage;
+use Entities\Entity;
 
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
@@ -100,16 +102,20 @@ $time_spent['config'] = (microtime(true) - $t);
 use Entities\Patient;
 
 $test_entity = new Patient(
-    strval(rand(0, 9999)),
+    '10', //strval(rand(0, 9999)).
     'D' . str_shuffle('ubois') . ' de la M' . str_shuffle('oquette'),
-    'Jean-Boursin',
+    'Jean-Mi' . str_shuffle('michelou'),
     date('Y-m-d'),
-    strval(rand(1111111111, 9999999999)),
+    strval(rand(1111111111, 9999999999)).'f',
     'jean-mi' . strval(rand(11, 999)) . '@caramail.com'
 );
 
-// echo '<pre>'.var_export(FILTER_VALIDATE_REGEXP, true).'</pre>';
-// echo '<pre>'.var_export($test_entity, true).'</pre>';
+
+echo '<pre>'.var_export($test_entity->isValid(), true).'</pre><hr />';
+echo '<pre>'.var_export($test_entity->getData(), true).'</pre><hr />';
+echo '<pre>'.var_export($test_entity->validate()->getData(), true).'</pre><hr />';
+
+
 //---------------------------------------------------------------------- run
 $t = microtime(true);
 
