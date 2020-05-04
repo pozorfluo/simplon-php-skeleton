@@ -57,7 +57,7 @@ class Image implements Templatable
             $this->data['height'] = $height;
         }
 
-        $this->data['class'] = 'loading ' . $class;
+        $this->data['class'] = $class;
     }
 
     /**

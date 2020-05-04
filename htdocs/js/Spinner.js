@@ -8,10 +8,11 @@
 
   for (let i = 0, length = images.length; i < length; i++) {
     if (!images[i].complete) {
+      images[i].classList.add("loading");
       images[i].addEventListener(
         "load",
         function (event) {
-          setTimeout(removeSpinner(event), 3000);
+          removeSpinner(event);
         },
         false
       );

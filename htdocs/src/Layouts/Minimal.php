@@ -86,6 +86,7 @@ class Minimal implements Templatable
       
         for (let i = 0, length = images.length; i < length; i++) {
           if (!images[i].complete) {
+            images[i].classList.add("loading");
             images[i].addEventListener(
               "load",
               function (event) {
