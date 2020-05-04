@@ -36,15 +36,26 @@ class Dispatcher
          */
         if ((!isset($this->request['controller'])
             || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {
-            header("Location: /?controller=Home");
-            exit;
+            // header("Location: /?controller=Home");
+            // exit;
+            
+            /**
+             * note
+             *   Can we avoid a redirection and pretend it is ok ? 
+             *   If you need to remember this happened :
+             *     Compare QUERY_STRING and REQUEST_URI :wink:
+             **/
+            $this->request['controller'] = 'Home';
+            $_SERVER['QUERY_STRING'] = 'controller=Home';
         }
 
-        /* sanitize, default to index */
+        /* sanitize */
         $base_name = rawurlencode($_SERVER['QUERY_STRING']);
-        if ($base_name === '') {
-            $base_name = 'index';
-        }
+
+        /* no need to default to index anymore */
+        // if ($base_name === '') {
+        //     $base_name = 'index';
+        // }
 
         $this->request['db_configs'] = $config['db_configs'];
         $this->request['cached_file'] =

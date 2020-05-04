@@ -27,8 +27,8 @@ class Patient extends Controller
 
         // ($this->args['action'])()
 
-        echo '<pre>' . var_export($this->args, true) . '</pre><hr />';
-        echo '<pre>' . var_export($this, true) . '</pre><hr />';
+        // echo '<pre>' . var_export($this->args, true) . '</pre><hr />';
+        // echo '<pre>' . var_export($this, true) . '</pre><hr />';
 
 
         $this->serve();
@@ -41,8 +41,8 @@ class Patient extends Controller
         $this->set($args);
 
 
-        echo '<h2>LIST !!!</h2>';
-        echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
+        // echo '<h2>LIST !!!</h2>';
+        // echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
 
         $this->serve();
     }
@@ -55,8 +55,8 @@ class Patient extends Controller
         $this->set($args);
 
 
-        echo '<h2>Add !!!</h2>';
-        echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
+        // echo '<h2>Add !!!</h2>';
+        // echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
 
         $this->serve();
     }

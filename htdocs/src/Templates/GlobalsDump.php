@@ -29,14 +29,14 @@ if (isset($_POST['clearcache'])) {
     $dispatcher->clearCache();
 }
 // toss sensitive stuff before dumping $GLOBALS
-// unset($db_config);
+unset($config);
 
 
 // hello opcache
 $op_cache_status = opcache_get_status();
 $loaded_extensions = get_loaded_extensions();
 
-prettyDump($GLOBALS);
+// prettyDump($GLOBALS);
 echo '<hr />';
 echo "<pre>running     : {$_SERVER['HTTP_USER_AGENT']}</pre>";
 echo "<pre>user ip     : {$_SERVER['REMOTE_ADDR']}</pre>";

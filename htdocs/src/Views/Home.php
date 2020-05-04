@@ -61,12 +61,12 @@ class Home extends View
             new Image('resources/images/cross.svg', 'a red cross'),
             new Image('resources/images/cross.svg', 'a red cross', 64, 64),
             new Image('resources/images/cross.svg', 'a red cross', 128, 128),
-            new Image(
-                'resources/images/large-dummy-img.png',
-                'this should take some time to load',
-                480,
-                270
-            ),
+            // new Image(
+            //     'resources/images/large-dummy-img.png',
+            //     'this should take some time to load',
+            //     480,
+            //     270
+            // ),
         ];
 
 
