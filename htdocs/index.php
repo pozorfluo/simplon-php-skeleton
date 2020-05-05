@@ -75,6 +75,34 @@ use Entities\Entity;
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    /* generate a CRSF guard token */
+    if(empty($_SESSION['token'])) {
+        $_SESSION['token'] = bin2hex(random_bytes(32));
+    }
+
+    /**
+     * note
+     *   Add an hidden input in forms :
+     * 
+     *     <input type="hidden" name="token" value="{$_SESSION['token']} />
+     * 
+     *   Verify token :
+     * 
+     *     if (!empty($_POST['token'])) {
+     *         if (hash_equals($_SESSION['token'], $_POST['token'])){
+     *             // good to go
+     *         } else {
+     *             // something might be up
+     *         }
+     *     }
+     *   
+     * 
+     *   Use per form :
+     *     
+     *     hash_hmac('sha256', '/form.php', $_SESSION['another_token']);
+     * 
+     *     ( see available crypto algos with hash_hmac_algos() )
+     */
 }
 //------------------------------------------------------------------- config
 /**
