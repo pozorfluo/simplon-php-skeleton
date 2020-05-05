@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Views;
 
+use Controllers\Controller;
 use Templates\Nav;
 use Templates\Footer;
 use Templates\Checkerboard;
@@ -23,13 +24,15 @@ class Home extends View
     /**
      * Define defaults, take arguments
      */
-    public function __construct(array $args = [])
+    // public function __construct(array $args = [])
+    public function __construct(Controller $controller)
     {
+        parent::__construct($controller);
         $defaults = [
             'row_count' => 12,
             'col_count' => 12,
         ];
-        $this->args = array_replace($defaults, $args);
+        $this->args = array_replace($defaults, $this->args);
     }
     /**
      * todo
@@ -45,8 +48,8 @@ class Home extends View
         $this->components['nav'] = [
             new Nav([
                 'Home' => 'index.php?controller=Home',
-                'Add Patient' => '?controller=Patient&action=Add',
                 'List Patient' => '?controller=Patient&action=List',
+                'Add Patient' => '?controller=Patient&action=Add',
                 'Schedule' => '?controller=Patient&action=List',
             ])
         ];

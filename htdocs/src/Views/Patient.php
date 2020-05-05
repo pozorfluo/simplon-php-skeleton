@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Views;
 
-
+use Controllers\Controller;
 use Templates\Nav;
 use Templates\Footer;
 use Templates\Checkerboard;
@@ -24,14 +24,15 @@ class Patient extends View
     /**
      * Define defaults, take arguments
      */
-    public function __construct(array $args = [])
+    public function __construct(Controller $controller)
     {
+        parent::__construct($controller);
         $defaults = [
             'id' => '',
             'action' => '?controller=Patient&action=Add',
             'submit' => 'Add Patient'
         ];
-        $this->args = array_replace($defaults, $args);
+        $this->args = array_replace($defaults, $this->args);
 
         /**
          * todo

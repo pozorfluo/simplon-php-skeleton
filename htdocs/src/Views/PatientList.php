@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Views;
 
-
+use Controllers\Controller;
 use Templates\Nav;
 use Templates\Footer;
 use Templates\Checkerboard;
@@ -25,10 +25,11 @@ class PatientList extends View
     /**
      * Define defaults, take arguments
      */
-    public function __construct(array $args = [])
+    public function __construct(Controller $controller)
     {
+        parent::__construct($controller);
         $defaults = [];
-        $this->args = array_replace($defaults, $args);
+        $this->args = array_replace($defaults, $this->args);
     }
     /**
      * todo

@@ -43,7 +43,7 @@
  *     + [x] Link messages and users tables
  *     + [ ] Add minichat db configuration to .env
  *   - [ ] Rough an API for Minichat
- *     + [ ] Extend Controller with a base API abstract class
+ *     + [x] Extend Controller with a base API abstract class
  *     + [ ] Flesh out a Minichat API extenting base API
  *     + [ ] Add the companion Model extending PDOModel
  *     + [ ] Test by looking at status response / json output

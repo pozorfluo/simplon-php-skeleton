@@ -16,7 +16,7 @@ use Views\View;
  */
 abstract class Controller
 {
-    protected $args = [];
+    public $args = [];
 
     protected $model;
     protected $view;
@@ -33,8 +33,14 @@ abstract class Controller
         $namespace_end = strrpos($associated_class, '\\');
         $associated_class = substr($associated_class, $namespace_end + 1);
 
-        $this->model = $associated_class;
-        $this->view = $associated_class;
+        /**
+         * note 
+         *   Store class names but defer loading
+         *   Allow something downstream to change the associated model/view
+         *   Lazy load -> when and if needed at all
+         */
+        $this->request['model'] = $associated_class;
+        $this->request['view'] = $associated_class;
     }
 
     /**
@@ -48,6 +54,40 @@ abstract class Controller
         );
         return $this;
     }
+
+    /**
+     * 
+     */
+    public function loadModel(): Model
+    {
+        $model_name = '\Models\\' . $this->request['model'];
+        /**
+         * todo
+         *   - [ ] Decide if $this->request['model'] is worth keeping 
+         *         around / spending time to discard?
+         */
+        // unset($this->request['model']);
+        $this->model = new $model_name();
+
+        return $this->model;
+    }
+    /**
+     * 
+     */
+    public function loadView(): View
+    {
+        $view_name = '\Views\\' . $this->request['view'];
+        /**
+         * todo
+         *   - [ ] Decide if $this->request['model'] is worth keeping 
+         *         around / spending time to discard?
+         */
+        // unset($this->request['view']);
+        $this->view = new $view_name($this);
+
+        return $this->view;
+    }
+
     /**
      * note
      *   Output buffering is no longer required as everything is composed and
@@ -60,15 +100,14 @@ abstract class Controller
 
         /* output buffering ON */
         // ob_start();
-        $view_name = '\Views\\' . $this->view;
-        $view = new $view_name($this->args);
-
-        $computed_content = $view->compose()->render();
+        $computed_content = ($this->view ?? $this->loadView())
+            ->compose()
+            ->render();
 
         /* view may set the layout */
         $layout_name = '\Layouts\\' . $this->layout;
         $layout = new $layout_name($computed_content);
-        // echo $layout->render();
+
         $rendered_page = $layout->render();
         echo $rendered_page;
 

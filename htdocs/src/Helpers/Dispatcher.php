@@ -38,7 +38,7 @@ class Dispatcher
             || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {
             // header("Location: /?controller=Home");
             // exit;
-            
+
             /**
              * note
              *   Can we avoid a redirection and pretend it is ok ? 
@@ -47,6 +47,12 @@ class Dispatcher
              **/
             $this->request['controller'] = 'Home';
             $_SERVER['QUERY_STRING'] = 'controller=Home';
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SERVER['HTTP_X_HTTP_METHOD'])) {
+            $this->request['method'] = $_SERVER['HTTP_X_HTTP_METHOD'];
+        } else {
+            $this->request['method'] = $_SERVER['REQUEST_METHOD'];
         }
 
         /* sanitize */
@@ -60,6 +66,8 @@ class Dispatcher
         $this->request['db_configs'] = $config['db_configs'];
         $this->request['cached_file'] =
             substr($this->cache_path . $base_name, 0, 250) . '.html';
+
+        // echo '<pre>' . var_export($this->request, true) . '</pre><hr />';
     }
 
     /**
