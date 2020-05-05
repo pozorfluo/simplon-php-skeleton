@@ -41,33 +41,42 @@ class Checkerboard implements Templatable
     {
         $css_col_width = 'col-' . intdiv(12, $this->data['col_count']);
 
-        $rendered_template = <<<TEMPLATE
-        <style>:root {
-            --row-count: {$this->data['row_count']};
-            --col-count: {$this->data['col_count']};
-          }</style>
-          <div class="square-container"><div class="row">
+        $rendered_template = 
+<<<TEMPLATE
+<style>:root {
+    --row-count: {$this->data['row_count']};
+    --col-count: {$this->data['col_count']};
+}</style>
+<div class="square-container"><div class="row">
 TEMPLATE;
 
 
         for ($col = $this->data['col_count']; $col >= 1; $col--) {
-            $rendered_template .= '<div class="' . $css_col_width . '"><div>';
+            $rendered_template .=
+<<<TEMPLATE
+<div class="{$css_col_width}"><div>
+TEMPLATE;
 
             for ($row = $this->data['row_count']; $row >= 1; $row--) {
                 $rendered_template .=
-                    <<<TEMPLATE
-                    <div class="tran-bouncyOS">
-                        <div class="button square">
-                        </div>
-                    </div>
-        
+<<<TEMPLATE
+<div class="tran-bouncyOS">
+    <div class="button square">
+    </div>
+</div>
 TEMPLATE;
             }
 
-            $rendered_template .= '</div></div>';
+            $rendered_template .= 
+<<<TEMPLATE
+</div></div>
+TEMPLATE;
         }
 
-        $rendered_template .= '</div></div>';
+        $rendered_template .= 
+<<<TEMPLATE
+</div></div>
+TEMPLATE;
         return $rendered_template;
     }
 }

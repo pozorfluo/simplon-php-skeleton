@@ -14,7 +14,7 @@ use Templates\Footer;
 use Templates\Checkerboard;
 use Templates\InlinedCss;
 use Templates\InlinedJs;
-use Templates\PatientForm;
+use Templates\Table;
 
 /**
  *
@@ -53,7 +53,8 @@ class PatientList extends View
         ];
 
         $this->components['content'] = [
-            new PatientForm(new \Entities\Patient(), '', 'Add Patient')
+            new Table(array_fill(0, 10, array_fill(0, 8, '-'))),
+            new Table(array_fill(0, 20, ['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-'])),
         ];
 
 

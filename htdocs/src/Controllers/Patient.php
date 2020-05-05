@@ -38,7 +38,9 @@ class Patient extends Controller
      */
     public function runList(array $args = []): void
     {
+        $this->view = 'PatientList';
         $this->set($args);
+        // echo '<pre>'.var_export($this, true).'</pre><hr />';
 
 
         // echo '<h2>LIST !!!</h2>';

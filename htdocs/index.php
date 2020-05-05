@@ -146,3 +146,7 @@ require ROOT . 'src/Helpers/Utilities.php';
 require ROOT . 'src/Templates/GlobalsDump.php';
 
 $time_spent['display_debug'] = (microtime(true) - $t);
+echo "<pre>config           : {$time_spent['config']}</pre>";
+echo "<pre>serving_page     : {$time_spent['serving_page']}</pre>";
+echo "<pre>serialize_config : {$time_spent['serialize_config']}</pre>";
+echo "<pre>display_debug    : {$time_spent['display_debug']}</pre>";
