@@ -14,9 +14,10 @@
  *   - [x] Use Controller to request, filter, hand over Model data
  *   - [x] Use View to compose model data over layout, template
  *     + [x] Inline css, js when rendering layout, templates
- *   - [ ] Plug in Model
+ *   - [x] Plug in Model
  *     + [ ] Use Validatable interface to check Entity going in and out
  *   - [x] Use a configuration file
+ *     + [x] Define a named constant to force config update
  *   - [x] Implement a simple file cache
  *     + [ ] Allow for Controller, Model, View to invalidate cached files
  *     + [ ] Handle getting hammered with requests that resolve to a valid
@@ -26,18 +27,45 @@
  *     + [x] Check if all characters allowed in a query string are valid in
  *           a filename
  *       - [ ] Consider a rewrite rule or some validation
- *     + [ ] Use the configured components as a white list
- *   - [ ] Considered supporting Deferred components that are rendered via Js 
+ *     + [x] Use the configured components as controller white list
+ *     + [x] Use existing controller methods as an action white list
+ *   - [x] Consider supporting Deferred components that are rendered via Js 
  *         hooks and placeholders after all regular components are fist pushed 
  *         and painted.
+ *   - [x] Consider Deferred components via Js/Ajax
  *   - [ ] Test run Templates using and rendering other Templates
  *   - [ ] Add a project specific QueryString builder to simplify link creation
  *   - [ ] Write the test suite Entity->isValid(), validate() deserves
+ * 
+ *   - [x] Create minichat database
+ *     + [x] Create messages table
+ *     + [x] Create users table
+ *     + [x] Link messages and users tables
+ *     + [ ] Add minichat db configuration to .env
+ *   - [ ] Rough an API for Minichat
+ *     + [ ] Extend Controller with a base API abstract class
+ *     + [ ] Flesh out a Minichat API extenting base API
+ *     + [ ] Add the companion Model extending PDOModel
+ *     + [ ] Test by looking at status response / json output
+ *   - [ ] Rough a Minichat View
+ *     + [ ] Add a deferred component to display Minichat message
+ *     + [ ] Use Ajax in that component to poll Minichat API periodically
+ *       - [ ] Keep it 'lazy'
+ *       - [ ] Use something like setTimeout in promise resolution instead of
+ *             setInterval in order not to hammer the API
+ *   - [ ] Consider adding a cache layer between the Minichat API and the 
+ *         model/DB
+ *     + [ ] Use something like cached json
+ *     + [ ] Update/Serve cached json
+ *     + [ ] Batch updates to the DB
+ *   
  */
 
 declare(strict_types=1);
 
 define('ROOT', __DIR__ . '/');
+define('DEV_FORCE_CONFIG_UPDATE', true);
+define('DEV_GLOBALS_DUMP', true);
 
 require ROOT . 'src/Helpers/AutoLoader.php';
 
@@ -63,7 +91,7 @@ if ($config_exists) {
     $config = json_decode(file_get_contents($config_path), true);
 }
 
-if (!isset($config['components'])) {
+if (!isset($config['components']) || DEV_FORCE_CONFIG_UPDATE) {
     $src_dir = new RecursiveDirectoryIterator(ROOT . 'src/');
     $iterator = new RecursiveIteratorIterator($src_dir);
     $php_files = new RegexIterator(
@@ -72,12 +100,15 @@ if (!isset($config['components'])) {
         RecursiveRegexIterator::GET_MATCH
     );
 
+    /* reset for DEV_FORCE_CONFIG_UPDATE */
+    $config['components'] = [];
+
     foreach ($php_files as $php_file) {
         $component = array_slice(explode('/', $php_file[0]), -2);
         $config['components'][$component[0]][] = substr($component[1], 0, -4);
     }
     $config_exists = false;
-    echo 'components config missing ! Defaults emitted. <br />';
+    // echo 'components config missing ! Defaults emitted. <br />';
 }
 if (!isset($config['db_configs'])) {
     $config['db_configs'] = [
@@ -92,7 +123,7 @@ if (!isset($config['db_configs'])) {
         ]
     ];
     $config_exists = false;
-    echo 'db_configs config missing ! Defaults emitted.<br />';
+    // echo 'db_configs config missing ! Defaults emitted.<br />';
 }
 
 $time_spent['config'] = (microtime(true) - $t);
@@ -146,7 +177,10 @@ require ROOT . 'src/Helpers/Utilities.php';
 require ROOT . 'src/Templates/GlobalsDump.php';
 
 $time_spent['display_debug'] = (microtime(true) - $t);
+$time_spent['total'] = array_sum($time_spent);
+
 echo "<pre>config           : {$time_spent['config']}</pre>";
 echo "<pre>serving_page     : {$time_spent['serving_page']}</pre>";
 echo "<pre>serialize_config : {$time_spent['serialize_config']}</pre>";
 echo "<pre>display_debug    : {$time_spent['display_debug']}</pre>";
+echo "<pre>total            : {$time_spent['total']}</pre>";

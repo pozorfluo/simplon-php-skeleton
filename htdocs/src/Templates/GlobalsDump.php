@@ -30,13 +30,25 @@ if (isset($_POST['clearcache'])) {
 }
 // toss sensitive stuff before dumping $GLOBALS
 unset($config);
-
+foreach($GLOBALS['_ENV'] as $key => $value) {
+    if (preg_match('/pass/i', $key)) {
+        $GLOBALS['_ENV'][$key] = '****************';
+    }
+}
+foreach($GLOBALS['_SERVER'] as $key => $value) {
+    if (preg_match('/pass/i', $key)) {
+        $GLOBALS['_SERVER'][$key] = '****************';
+    }
+}
 
 // hello opcache
 $op_cache_status = opcache_get_status();
 $loaded_extensions = get_loaded_extensions();
 
-// prettyDump($GLOBALS);
+if (DEV_GLOBALS_DUMP) {
+    prettyDump($GLOBALS);
+}
+
 echo '<hr />';
 echo "<pre>running     : {$_SERVER['HTTP_USER_AGENT']}</pre>";
 echo "<pre>user ip     : {$_SERVER['REMOTE_ADDR']}</pre>";

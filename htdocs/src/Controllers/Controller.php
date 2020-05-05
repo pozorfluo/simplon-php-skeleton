@@ -75,9 +75,16 @@ abstract class Controller
         /* keep it around for optional caching */
         $this->rendered_page = $rendered_page;
 
-        /* test and placeholder for deferred components */
+        /* test and placeholder for deferred components ----------------------*/
+        /**
+         *   - [ ] Consider this is probably only useful for components that
+         *         take a while to render
+         *   - [ ] Consider usin Js/Ajax to make that part asynchronous,
+         *         especially if it hits DB
+         */
         /* optional output buffering */
         // // if (ob_get_level() == O) {ob_start()};
+
         // for ($i = 0; $i < 3; $i++) {
         //     echo '<h2>DEFERRED COMPONENT PLACEHOLDER</h2>';
         //     echo '<img src="resources/images/spinner.svg" alt="loading !">';
@@ -94,6 +101,13 @@ abstract class Controller
         //     sleep(1);
         // }
         // // ob_end_flush();
+
+        /* close the session -------------------------------------------------*/
+        // session_write_close();
+        /**
+         * todo
+         *   - [ ] Use Js/Ajax
+         */
 
         /* output buffering OFF */
         // echo ob_get_clean();
