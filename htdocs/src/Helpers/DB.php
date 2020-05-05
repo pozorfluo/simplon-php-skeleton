@@ -50,6 +50,7 @@ class DB
                 $password,
                 $options
             );
+            // echo '<pre>'.var_export($this, true).'</pre><hr />';
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage(), (int) $e->getCode());
             // echo 'PDO Error : ' . $e->getMessage() . '<br/>';

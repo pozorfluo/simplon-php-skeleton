@@ -26,10 +26,7 @@ class PatientList extends View
      */
     public function __construct(array $args = [])
     {
-        $defaults = [
-            'row_count' => 3,
-            'col_count' => 3,
-        ];
+        $defaults = [];
         $this->args = array_replace($defaults, $args);
     }
     /**
@@ -53,6 +50,7 @@ class PatientList extends View
         ];
 
         $this->components['content'] = [
+            new Table($this->args['data']),
             new Table(array_fill(0, 10, array_fill(0, 8, '-'))),
             new Table(array_fill(0, 20, ['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-'])),
         ];

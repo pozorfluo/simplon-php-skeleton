@@ -8,7 +8,8 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Models\Model;
+use Helpers\DBConfig;
+use Models\PDOModel;
 use Views\View;
 
 
@@ -40,12 +41,42 @@ class Patient extends Controller
     {
         $this->view = 'PatientList';
         $this->set($args);
-        // echo '<pre>'.var_export($this, true).'</pre><hr />';
+        // echo '<pre>' . var_export($this, true) . '</pre><hr />';
 
 
         // echo '<h2>LIST !!!</h2>';
         // echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
 
+        $db_config = new DBConfig($this->args['db_configs']);
+        $model = new PDOModel($db_config);
+
+    //     for($i=0; $i<50; $i++){
+    //     $results =  $model->execute(
+    //         'patients',
+    //         "INSERT INTO 
+    //                     `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
+    //                 VALUES
+    //                     (?, ?, ?, ?, ?)
+    //                     ;",
+    //         [
+    //             'lastname_' . substr(md5(strval(rand())), 0, 7),
+    //             'firstname_' . substr(md5(strval(rand())), 0, 7),
+    //             date('Y-m-d'),
+    //             date('is-U'), // used as test phone
+    //             substr(md5(strval(rand())), 0, 7) . '@mail.com',
+    //         ]
+    //     );
+    // }
+
+        $results =  $model->execute(
+            'patients',
+            "SELECT
+                *
+            FROM 
+                `patients`;"
+        );
+        // echo '<pre>' . var_export($results, true) . '</pre><hr />';
+        $this->set(['data' => $results]);
         $this->serve();
     }
 

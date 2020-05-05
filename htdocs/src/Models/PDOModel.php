@@ -23,21 +23,18 @@ class PDOModel extends Model
      * 
      */
     public function __construct(
-        DBConfig $db_configs,
-        array $exercises = []
+        DBConfig $db_configs
     ) {
-        // echo '<pre>HelloPdo->__construct()</pre>';
         $this->db_configs = $db_configs;
-        $this->exercises = array_replace($this->exercises, $exercises);
     }
 
     /**
-     * 
+     * todo
+     *   - [ ] Avoid instancing a DB everytime if config is up and adequate
      */
     private function useConfig(string $config_name): bool
     {
         // echo '<pre>HelloPdo->useConfig() ' . $config_name . '</pre>';
-
         $this->db = $this->db_configs->get($config_name);
         return !is_null($this->db);
     }
@@ -62,7 +59,7 @@ class PDOModel extends Model
                 return $statement->fetchAll();
             }
         }
-        echo '<pre>HelloPdo->execute() error : Could not select db.</pre>';
+        // echo '<pre>HelloPdo->execute() error : Could not select db.</pre>';
         return null;
     }
 
@@ -83,7 +80,7 @@ class PDOModel extends Model
         } catch (Exception $e) {
             $this->db->pdo->rollback();
             // throw $e;
-            echo '<pre>HelloPdo->transaction() error : failed :/ .</pre>';
+            // echo '<pre>HelloPdo->transaction() error : failed :/ .</pre>';
             return null;
         }
     }
