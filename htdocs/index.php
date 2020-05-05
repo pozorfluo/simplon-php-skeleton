@@ -41,10 +41,10 @@
  *     + [x] Create messages table
  *     + [x] Create users table
  *     + [x] Link messages and users tables
- *     + [ ] Add minichat db configuration to .env
- *   - [ ] Rough an API for Minichat
+ *     + [x] Add minichat db configuration to .env
+ *   - [x] Rough an API for Minichat
  *     + [x] Extend Controller with a base API abstract class
- *     + [ ] Flesh out a Minichat API extenting base API
+ *     + [x] Flesh out a Minichat API extenting base API
  *     + [ ] Add the companion Model extending PDOModel
  *     + [ ] Test by looking at status response / json output
  *   - [ ] Rough a Minichat View
@@ -76,7 +76,7 @@ use Entities\Entity;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     /* generate a CRSF guard token */
-    if(empty($_SESSION['token'])) {
+    if (empty($_SESSION['token'])) {
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }
 
@@ -201,14 +201,16 @@ $time_spent['serialize_config'] = (microtime(true) - $t);
 //-------------------------------------------------------------------- debug
 $t = microtime(true);
 
-require ROOT . 'src/Helpers/Utilities.php';
-require ROOT . 'src/Templates/GlobalsDump.php';
+if (!headers_sent()) {
+    require ROOT . 'src/Helpers/Utilities.php';
+    require ROOT . 'src/Templates/GlobalsDump.php';
 
-$time_spent['display_debug'] = (microtime(true) - $t);
-$time_spent['total'] = array_sum($time_spent);
+    $time_spent['display_debug'] = (microtime(true) - $t);
+    $time_spent['total'] = array_sum($time_spent);
 
-echo "<pre>config           : {$time_spent['config']}</pre>";
-echo "<pre>serving_page     : {$time_spent['serving_page']}</pre>";
-echo "<pre>serialize_config : {$time_spent['serialize_config']}</pre>";
-echo "<pre>display_debug    : {$time_spent['display_debug']}</pre>";
-echo "<pre>total            : {$time_spent['total']}</pre>";
+    echo "<pre>config           : {$time_spent['config']}</pre>";
+    echo "<pre>serving_page     : {$time_spent['serving_page']}</pre>";
+    echo "<pre>serialize_config : {$time_spent['serialize_config']}</pre>";
+    echo "<pre>display_debug    : {$time_spent['display_debug']}</pre>";
+    echo "<pre>total            : {$time_spent['total']}</pre>";
+}

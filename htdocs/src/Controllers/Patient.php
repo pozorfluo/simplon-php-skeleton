@@ -51,6 +51,7 @@ class Patient extends Controller
          * todo
          *   - [ ] Consider this may fit better in the Model now we have 2-way
          *         communication
+         *   - [ ] See how View is run in server() and Controller->loadModel()
          */
         $db_config = new DBConfig($this->args['db_configs']);
         $model = new PDOModel($db_config);

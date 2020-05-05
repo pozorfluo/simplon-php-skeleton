@@ -18,15 +18,26 @@ class PDOModel extends Model
 {
     protected $db_configs;
     protected $db;
-    
+
     /**
      * 
      */
-    public function __construct(
-        DBConfig $db_configs
-    ) {
-        $this->db_configs = $db_configs;
+    /**
+     * Define defaults, take arguments
+     */
+    // public function __construct(array $args = [])
+    public function __construct($controller)
+    {
+        parent::__construct($controller);
+        $defaults = [];
+        $this->args = array_replace($defaults, $this->args);
     }
+
+    // public function __construct(
+    //     DBConfig $db_configs
+    // ) {
+    //     $this->db_configs = $db_configs;
+    // }
 
     /**
      * todo

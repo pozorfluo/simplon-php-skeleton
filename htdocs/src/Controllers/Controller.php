@@ -67,7 +67,7 @@ abstract class Controller
          *         around / spending time to discard?
          */
         // unset($this->request['model']);
-        $this->model = new $model_name();
+        $this->model = new $model_name($this);
 
         return $this->model;
     }

@@ -57,7 +57,9 @@ abstract class View implements Layoutable
     }
 
     /**
-     * 
+     * todo
+     *   - [ ] Discard $this->data if you do NOT process it before emitting it
+     *         to $this->args['data']
      */
     public function getRaw(): array
     {

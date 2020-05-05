@@ -41,8 +41,7 @@ abstract class API extends Controller
     {
         parent::__construct($args);
 
-        echo '<pre>new API ()</pre>';
-
+        
         /**
          * todo
          *   - [ ] Allow and handle CORS
@@ -51,10 +50,11 @@ abstract class API extends Controller
          */
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: *');
-
+        
         header('Content-Type: application/json');
+        // echo '<pre>new API ()</pre>';
     }
-
+    
     /**
      * Return the status string for a given status code
      *   1xx Informational

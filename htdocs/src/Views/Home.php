@@ -75,6 +75,7 @@ class Home extends View
 
         $this->components['footer'] = [
             new Footer([
+                'Minichat' => '?controller=MinichatAPI',
                 '1x1' => '?controller=Home&action=value&row_count=1&col_count=1',
                 '3x3' => '?controller=Home&action=value&row_count=3&col_count=3',
                 '6x6' => '?controller=Home&action=value&row_count=6&col_count=6',

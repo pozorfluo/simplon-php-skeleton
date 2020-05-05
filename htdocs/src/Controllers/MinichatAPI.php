@@ -13,15 +13,15 @@ use Models\Model;
 /**
  * 
  */
-abstract class MinichatAPI extends API
+class MinichatAPI extends API
 {
     public function __construct(array $args = [])
     {
         parent::__construct($args);
 
-        echo '<pre>new MinichatAPI ()</pre>';
-
-        echo '<pre>'.var_export($args, true).'</pre><hr />';
+        
+        // echo '<pre>new MinichatAPI ()</pre>';
+        // echo '<pre>' . var_export($args, true) . '</pre><hr />';
     }
 
     /**
@@ -101,19 +101,21 @@ abstract class MinichatAPI extends API
      */
     public function runDefault(array $args = []): void
     {
-            /* 'escaping' and providing default action */
-            $this->args['method'] =
-                'op' . ($this->args['action'] ?? 'Fetch');
+        /* 'escaping' and providing default action */
+        $this->args['method'] =
+            'op' . ($this->args['action'] ?? 'Fetch');
 
-            /* use existing model or load one */
-            if (method_exists(
-                $this->model ?? $this->loadModel(),
-                $this->request['method']
-            )) {
-                /* requested mode of operation exists, run it */
-                $this->model->{$this->args['method']}($this);
-            } else {
-                /* mode of operation does NOT exist on this endpoint */
-                $this->emit(['no can do'], 405);
-            }
+        /* use existing model or load one */
+        if (method_exists(
+            $this->model ?? $this->loadModel(),
+            $this->args['method']
+        )) {
+            /* requested mode of operation exists, run it */
+            $this->emit(['not implemented yet'], 405);
+            // $this->model->{$this->args['method']}($this);
+        } else {
+            /* mode of operation does NOT exist on this endpoint */
+            $this->emit(['no can do'], 405);
+        }
+    }
 }
