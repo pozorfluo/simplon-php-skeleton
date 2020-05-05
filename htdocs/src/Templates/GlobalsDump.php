@@ -28,6 +28,8 @@ if (isset($_POST['killsession'])) {
 if (isset($_POST['clearcache'])) {
     $dispatcher->clearCache();
 }
+
+if (DEV_GLOBALS_DUMP) {
 // toss sensitive stuff before dumping $GLOBALS
 unset($config);
 foreach($GLOBALS['_ENV'] as $key => $value) {
@@ -45,7 +47,7 @@ foreach($GLOBALS['_SERVER'] as $key => $value) {
 $op_cache_status = opcache_get_status();
 $loaded_extensions = get_loaded_extensions();
 
-if (DEV_GLOBALS_DUMP) {
+
     prettyDump($GLOBALS);
 }
 

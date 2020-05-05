@@ -65,7 +65,7 @@ declare(strict_types=1);
 
 define('ROOT', __DIR__ . '/');
 define('DEV_FORCE_CONFIG_UPDATE', true);
-define('DEV_GLOBALS_DUMP', true);
+define('DEV_GLOBALS_DUMP', false);
 
 require ROOT . 'src/Helpers/AutoLoader.php';
 

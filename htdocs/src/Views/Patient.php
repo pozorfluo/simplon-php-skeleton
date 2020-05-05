@@ -51,7 +51,7 @@ class Patient extends View
     {
 
         $this->components['css'] = [
-            new InlinedCss(['css/style.css'])
+            new InlinedCss(['css/style.min.css'])
         ];
 
         $this->components['nav'] = [

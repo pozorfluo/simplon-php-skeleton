@@ -15,6 +15,7 @@ use Templates\Checkerboard;
 use Templates\InlinedCss;
 use Templates\InlinedJs;
 use Templates\Table;
+use Templates\Image;
 
 /**
  *
@@ -37,7 +38,7 @@ class PatientList extends View
     {
 
         $this->components['css'] = [
-            new InlinedCss(['css/style.css'])
+            new InlinedCss(['css/style.min.css'])
         ];
 
         $this->components['nav'] = [
@@ -53,6 +54,12 @@ class PatientList extends View
             new Table($this->args['data']),
             new Table(array_fill(0, 10, array_fill(0, 8, '-'))),
             new Table(array_fill(0, 20, ['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-'])),
+            new Image(
+                'resources/images/large-dummy-img.png',
+                'this should take some time to load',
+                480,
+                270
+            ),
         ];
 
 

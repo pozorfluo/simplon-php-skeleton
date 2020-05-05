@@ -36,7 +36,8 @@ class Image implements Templatable
         string $alt = '',
         ?int $width = NULL,
         ?int $height = NULL,
-        string $class = ''
+        string $class = '',
+        bool $lazy = true
     ) {
         $img_path = ROOT . $path;
 
@@ -58,6 +59,7 @@ class Image implements Templatable
         }
 
         $this->data['class'] = $class;
+        $this->data['lazy'] = $lazy;
     }
 
     /**
@@ -110,6 +112,7 @@ class Image implements Templatable
      */
     public function render(): string
     {
+        $this->data['lazy'] ? $lazy = 'loading="lazy"' : $lazy = '';
         return <<<TEMPLATE
 <img
     src="{$this->data['path']}"
@@ -117,6 +120,7 @@ class Image implements Templatable
     width="{$this->data['width']}"
     height="{$this->data['height']}"
     class="{$this->data['class']}"
+    {$lazy}
 />
 TEMPLATE;
     }

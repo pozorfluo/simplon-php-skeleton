@@ -59,11 +59,7 @@ class Minimal implements Templatable
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{$this->data['page_title']}></title>
     <style>
-    .loading {
-        /* filter: opacity(50%); */
-        background : transparent url('resources/images/spinner.svg')  no-repeat scroll center center;
-        background-blend-mode: multiply;
-    }
+    .loading {filter: opacity(50%);background : transparent url('resources/images/spinner.svg')  no-repeat scroll center center; background-blend-mode: multiply;}
     </style>
     {$this->data['css']}
 </head>
@@ -76,27 +72,7 @@ class Minimal implements Templatable
     {$this->data['footer']}
 
     <script>
-    (function () {
-        "use strict";
-        const images = [...document.querySelectorAll("img")];
-      
-        function removeSpinner(event) {
-          event.currentTarget.classList.remove("loading");
-        }
-      
-        for (let i = 0, length = images.length; i < length; i++) {
-          if (!images[i].complete) {
-            images[i].classList.add("loading");
-            images[i].addEventListener(
-              "load",
-              function (event) {
-                removeSpinner(event);
-              },
-              false
-            );
-          }
-        }
-      })();
+    !function(){"use strict";const images=[...document.querySelectorAll("img")];function removeSpinner(event){event.currentTarget.classList.remove("loading")}for(let i=0,length=images.length;i<length;i++)images[i].complete||(images[i].classList.add("loading"),images[i].addEventListener("load",(function(event){removeSpinner(event)}),!1))}();
     </script>
     {$this->data['js']}
 </body>

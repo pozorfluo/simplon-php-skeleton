@@ -39,7 +39,7 @@ class Home extends View
     {
 
         $this->components['css'] = [
-            new InlinedCss(['css/style.css'])
+            new InlinedCss(['css/style.min.css'])
         ];
 
         $this->components['nav'] = [
@@ -52,8 +52,8 @@ class Home extends View
         ];
 
         $this->components['content'] = [
-            new InlinedCss(['css/Checkerboard.css']),
-            new InlinedJs(['js/Checkerboard.js']),
+            new InlinedCss(['css/Checkerboard.min.css']),
+            new InlinedJs(['js/Checkerboard.min.js']),
             new Checkerboard(
                 intval($this->args['row_count']),
                 intval($this->args['col_count'])
