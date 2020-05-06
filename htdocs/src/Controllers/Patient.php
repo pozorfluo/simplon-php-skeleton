@@ -37,7 +37,7 @@ class Patient extends Controller
     public function runList(array $args = []): void
     {
         $this->set($args);
-        $this->request['view'] = 'PatientList';
+        $this->args['view'] = 'PatientList';
 
         $model = new DBPDO($this);
 

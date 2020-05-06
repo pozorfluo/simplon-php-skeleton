@@ -66,8 +66,6 @@ class Dispatcher
         $this->request['db_configs'] = $config['db_configs'];
         $this->request['cached_file'] =
             substr($this->cache_path . $base_name, 0, 250) . '.html';
-
-        // echo '<pre>' . var_export($this->request, true) . '</pre><hr />';
     }
 
     /**

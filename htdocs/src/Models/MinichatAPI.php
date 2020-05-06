@@ -16,7 +16,10 @@ use Helpers\DBConfig;
  */
 class MinichatAPI extends DBPDO
 {
-   public function opFetch() {
-       return 'Fetch : not implemented yet';
-   }
+    public function opGET()
+    {
+        $this->controller->set(['status_code' => 405]);
+        // $this->args['status_code'] = 405;
+        return ['Fetch : not implemented yet'];
+    }
 }

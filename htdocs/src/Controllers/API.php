@@ -126,6 +126,30 @@ abstract class API extends Controller
         return $this;
     }
 
+    public function call(): self
+    {
+        /* 'escaping' and providing default action */
+        $this->args['method'] =
+            'op' . ($this->args['method'] ?? 'Fetch');
+
+        /* use existing model or load one */
+        if (method_exists(
+            $this->model ?? $this->loadModel($this),
+            $this->args['method']
+        )) {
+            /* requested mode of operation exists, run it */
+            // $this->emit(['not implemented yet'], 405);
+            // echo '<pre>'.var_export($this, true).'</pre><hr />';
+
+            // $this->model->{$this->args['method']}();
+            $this->emit($this->model->{$this->args['method']}(), $this->args['status_code']);
+        } else {
+            /* mode of operation does NOT exist on this endpoint */
+            $this->emit(['no can do'], 405);
+        }
+
+        return $this;
+    }
     /**
      * note
      *   Overriding Controller->cache()

@@ -39,8 +39,9 @@ abstract class Controller
          *   Allow something downstream to change the associated model/view
          *   Lazy load -> when and if needed at all
          */
-        $this->request['model'] = $associated_class;
-        $this->request['view'] = $associated_class;
+        $this->args['model'] = $associated_class;
+        $this->args['view'] = $associated_class;
+
     }
 
     /**
@@ -60,13 +61,13 @@ abstract class Controller
      */
     public function loadModel(): Model
     {
-        $model_name = '\Models\\' . $this->request['model'];
+        $model_name = '\Models\\' . $this->args['model'];
         /**
          * todo
-         *   - [ ] Decide if $this->request['model'] is worth keeping 
+         *   - [ ] Decide if $this->args['model'] is worth keeping 
          *         around / spending time to discard?
          */
-        // unset($this->request['model']);
+        // unset($this->args['model']);
         $this->model = new $model_name($this);
 
         return $this->model;
@@ -76,13 +77,13 @@ abstract class Controller
      */
     public function loadView(): View
     {
-        $view_name = '\Views\\' . $this->request['view'];
+        $view_name = '\Views\\' . $this->args['view'];
         /**
          * todo
-         *   - [ ] Decide if $this->request['model'] is worth keeping 
+         *   - [ ] Decide if $this->args['model'] is worth keeping 
          *         around / spending time to discard?
          */
-        // unset($this->request['view']);
+        // unset($this->args['view']);
         $this->view = new $view_name($this);
 
         return $this->view;
