@@ -179,7 +179,6 @@ class Dispatcher
     public function clearCache(): self
     {
         $cached_pages = glob($this->cache_path . '*.html');
-        // echo '<pre>' . var_export($cached_pages, true) . '</pre>';
 
         foreach ($cached_pages as $cached_page) {
             unlink($cached_page);

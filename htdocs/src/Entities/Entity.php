@@ -48,20 +48,6 @@ class Entity implements Validatable
 
             // echo '<pre>' . var_export($this->definitions[$field], true) . '</pre>';
         }
-
-        // $keys = array_keys($data);
-        // $size = count($keys);
-        // $i = 0;
-        // while ($i < $size) {
-        //     $field = $keys[$i];
-        //     $this->definitions[$field] = isset($definitions[$field])
-        //         ? [$field, $definitions[$field]]
-        //         : [$field => [
-        //             'filter' => FILTER_VALIDATE_REGEXP,
-        //             'options' => ['regexp' => '/^([A-Za-z0-9_\-\s]+)$/']
-        //         ]];
-        //     $i++;
-        // }
     }
 
     /**
@@ -87,16 +73,6 @@ class Entity implements Validatable
      * */
     public function isValid(): bool
     {
-        // $filtered = filter_var_array($this->data, $this->definitions);
-        // $is_valid = 1;
-        // $iterator = new RecursiveArrayIterator($filtered);
-        // foreach (new RecursiveIteratorIterator($iterator) as $field) {
-        //     $is_valid &= ($field === false || $field === NULL) ? 0 : 1;
-        // }
-
-        // /* $is_valid is either 0 or 1, casting to bool should be ok here */
-        // return (bool) $is_valid;
-
         return $this->is_valid ?? !in_array(
             false,
             filter_var_array($this->data, $this->definitions),

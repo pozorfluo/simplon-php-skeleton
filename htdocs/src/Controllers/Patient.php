@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Helpers\DBConfig;
 use Models\DBPDO;
 use Views\View;
 

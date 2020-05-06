@@ -119,7 +119,7 @@ abstract class Controller
         /**
          *   - [ ] Consider this is probably only useful for components that
          *         take a while to render
-         *   - [ ] Consider usin Js/Ajax to make that part asynchronous,
+         *   - [ ] Consider using Js/Ajax to make that part asynchronous,
          *         especially if it hits DB
          */
         /* optional output buffering */
