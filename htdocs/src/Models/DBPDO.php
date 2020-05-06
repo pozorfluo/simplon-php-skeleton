@@ -43,7 +43,7 @@ class DBPDO extends Model
 
     /**
      * todo
-     *   - [ ] Avoid instancing a DB everytime if config is up and adequate
+     *   - [x] Avoid instancing a DB everytime if config is up and adequate
      */
     public function execute(
         string $config_name,

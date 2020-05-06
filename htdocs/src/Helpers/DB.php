@@ -106,13 +106,13 @@ class DB
     ): ?array {
         // echo '<pre>HelloPdo->transaction()</pre>';
         try {
-            $this->db->pdo->beginTransaction();
-            $statement = $this->db->query($query, $args);
-            $this->db->pdo->commit();
+            $this->pdo->beginTransaction();
+            $statement = $this->query($query, $args);
+            $this->pdo->commit();
             // echo '<pre>HelloPdo->transaction() commit : ok.</pre>';
             return $statement->fetchAll();
         } catch (Exception $e) {
-            $this->db->pdo->rollback();
+            $this->pdo->rollback();
             // throw $e;
             // echo '<pre>HelloPdo->transaction() error : failed :/ .</pre>';
             return null;

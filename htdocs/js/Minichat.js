@@ -47,7 +47,7 @@
         setTimeout(function () {
           fetch(refresh_chat_url, { method: "GET" })
             .then(function (response) {
-              // console.log(response);
+              console.log(response);
               if (response.ok) {
                 return response.json();
               } else {
@@ -55,7 +55,7 @@
               }
             })
             .then(function (json_data) {
-              minichat.textContent = json_data.join("\n");
+              minichat.textContent += json_data.join("\n") + "\n";
             })
             .catch(function (error) {
               console.warn("[error] : Could not refresh minichat.", error);
@@ -65,6 +65,5 @@
         }, timeout);
       });
     }
-
   }); /* DOMContentLoaded */
 })(); /* IIFE */

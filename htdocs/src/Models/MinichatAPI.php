@@ -30,10 +30,64 @@ use Helpers\DBConfig;
  */
 class MinichatAPI extends DBPDO
 {
-    public function opGET()
+    /**
+     * todo
+     *   - [ ] Translate PDO/MySQL errors into meaningful response for the
+     *         RESTish API
+     */
+    public function opGET() :array
+    {
+        try {
+            $results = $this->execute(
+                'patients',
+                "SELECT
+                    *
+                FROM 
+                    `patients`;"
+            );
+            if (empty($results)) {
+                $this->controller->set(['status_code' => 204]);
+            } else {
+                $this->controller->set(['status_code' => 200]);
+            }
+            $this->controller->set(['data' => $results]);
+            return [$results];
+        } catch (Exception $e) {
+            /**
+             * todo
+             *   - [ ] Have a look at PDO statement errorInfo()
+             */
+            return [$e->getMessage()];
+        }
+    }
+
+    /**
+     * 
+     */
+    public function opPOST()
     {
         $this->controller->set(['status_code' => 405]);
         // $this->args['status_code'] = 405;
-        return ['Fetch : not implemented yet', 'Fetch : not implemented yet'];
+        return ['POST : not implemented yet'];
+    }
+
+    /**
+     *
+     */
+    public function opPUT()
+    {
+        $this->controller->set(['status_code' => 405]);
+        // $this->args['status_code'] = 405;
+        return ['PUT : not implemented yet'];
+    }
+
+    /**
+     * 
+     */
+    public function opDELETE()
+    {
+        $this->controller->set(['status_code' => 405]);
+        // $this->args['status_code'] = 405;
+        return ['DELETE : not implemented yet'];
     }
 }
