@@ -34,6 +34,6 @@ class MinichatAPI extends DBPDO
     {
         $this->controller->set(['status_code' => 405]);
         // $this->args['status_code'] = 405;
-        return ['Fetch : not implemented yet'];
+        return ['Fetch : not implemented yet', 'Fetch : not implemented yet'];
     }
 }

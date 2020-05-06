@@ -81,5 +81,5 @@
         false
       );
     }
-  });
-})();
+}); /* DOMContentLoaded */
+})(); /* IIFE */

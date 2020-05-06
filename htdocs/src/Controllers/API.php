@@ -46,13 +46,14 @@ abstract class API extends Controller
         /**
          * todo
          *   - [ ] Allow and handle CORS
+         *     + [ ] See https://stackoverflow.com/questions/8719276/cross-origin-request-headerscors-with-php-headers
          *     + [ ] Implement some kind of API key checking
          *   - [ ] Implement Auth
          */
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: *');
 
-        // header('Content-Type: application/json');
+        header('Content-Type: application/json');
     }
 
     /**
@@ -142,10 +143,6 @@ abstract class API extends Controller
             $this->args['method']
         )) {
             /* requested mode of operation exists, run it */
-            // $this->emit(['not implemented yet'], 405);
-            // echo '<pre>'.var_export($this, true).'</pre><hr />';
-
-            // $this->model->{$this->args['method']}();
             $this->emit(
                 $this->model->{$this->args['method']}(),
                 $this->args['status_code']

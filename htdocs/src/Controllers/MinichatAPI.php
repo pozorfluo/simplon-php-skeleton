@@ -39,7 +39,7 @@ class MinichatAPI extends API
 
         $this->set($args);
         $this->call();
-        echo '<pre>'.var_export($this->args, true).'</pre><hr />';
+        // echo '<pre>'.var_export($this->args, true).'</pre><hr />';
     }
 }
 

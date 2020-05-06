@@ -27,6 +27,8 @@ class Console implements Templatable
         int $col_count = 90,
         int $max_length = 2000,
         string $id = 'hook-console',
+        bool $readonly = true,
+        string $placeholder = '...',
         bool $deferred = false
     ) {
         /**
@@ -39,6 +41,9 @@ class Console implements Templatable
         $this->data['col_count'] = $col_count;
         $this->data['max_length'] = $max_length;
         $this->data['id'] = $id;
+        $this->data['readonly'] = $readonly ? 'readonly' : '';
+        $this->data['placeholder'] = $placeholder;
+    
     }
 
     /**
@@ -63,9 +68,10 @@ class Console implements Templatable
           rows="{$this->data['row_count']}" 
           maxlength="{$this->data['max_length']}"
           style="white-space: pre-line;"
-          readonly>
+          placeholder="{$this->data['placeholder']}"
+          {$this->data['readonly']}>
           {$this->data['content']}
-    </textarea> 
+</textarea> 
 TEMPLATE;
 
         return $rendered_template;

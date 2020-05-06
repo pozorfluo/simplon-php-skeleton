@@ -38,10 +38,11 @@ class Minichat extends View
     {
 
         $this->components['fonts'] = [
-            new Fonts(['resources/fonts/font-ibmplexsans-min.html'])
+            new Fonts(['resources/fonts/font-ibmplexsans.min.html'])
         ];
         $this->components['css'] = [
-            new InlinedCss(['css/style.min.css'])
+            new InlinedCss(['css/style.min.css',
+            'css/Minichat.min.css'])
         ];
 
         $this->components['nav'] = [
@@ -53,14 +54,13 @@ class Minichat extends View
             ])
         ];
 
-        /* mock massaged data */
         $this->args['minichat_msg'] = [
-            '[Rupaul] Hello, hello, hello !',
-            '[Rupaul] Sissy that walk !'
+            '[Minichat] Hello, hello, hello !',
         ];
 
         $this->components['content'] = [
             new Console($this->args['minichat_msg']),
+            new Console(["What's up ?"],'msg-box', 1, 90, 280, 'hook-msg-box', false),
         ];
 
 
@@ -71,7 +71,8 @@ class Minichat extends View
         ];
 
         $this->components['js'] = [
-            new InlinedJs(['js/Minichat.min.js'])
+            // new InlinedJs(['js/Minichat.min.js']),
+            new InlinedJs(['js/Minichat.js']),
         ];
 
         return $this;
