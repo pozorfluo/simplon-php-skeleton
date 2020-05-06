@@ -45,7 +45,7 @@
  *   - [x] Rough an API for Minichat
  *     + [x] Extend Controller with a base API abstract class
  *     + [x] Flesh out a Minichat API extenting base API
- *     + [ ] Add the companion Model extending PDOModel
+ *     + [ ] Add the companion Model extending DBPDO
  *     + [ ] Test by looking at status response / json output
  *   - [ ] Rough a Minichat View
  *     + [ ] Add a deferred component to display Minichat message
@@ -201,7 +201,7 @@ $time_spent['serialize_config'] = (microtime(true) - $t);
 //-------------------------------------------------------------------- debug
 $t = microtime(true);
 
-if (!headers_sent()) {
+if (!in_array('Content-Type: application/json', headers_list())) {
     require ROOT . 'src/Helpers/Utilities.php';
     require ROOT . 'src/Templates/GlobalsDump.php';
 

@@ -41,7 +41,7 @@ abstract class API extends Controller
     {
         parent::__construct($args);
 
-        
+
         /**
          * todo
          *   - [ ] Allow and handle CORS
@@ -50,11 +50,11 @@ abstract class API extends Controller
          */
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: *');
-        
+
         header('Content-Type: application/json');
         // echo '<pre>new API ()</pre>';
     }
-    
+
     /**
      * Return the status string for a given status code
      *   1xx Informational
@@ -113,7 +113,7 @@ abstract class API extends Controller
     /**
      * 
      */
-    private function emit(array $data, int $status_code): self
+    protected function emit(array $data, int $status_code): self
     {
         $status = self::status($status_code);
         header("HTTP/1.1 {$status_code} {$status}");
@@ -125,6 +125,28 @@ abstract class API extends Controller
 
         return $this;
     }
+
+    /**
+     * note
+     *   Overriding Controller->cache()
+     * 
+     *   This controller emits json content and need to set an appropriate 
+     *   header before serving.
+     * 
+     *   The html cache behaviour is not suitable for calls to this RESTish
+     *   API controller
+     * 
+     *   As a hacky workaround, this turns cache() into a NOP
+     * 
+     *   todo
+     *     - [ ] Handle Dispatcher-level cache for json emission more gracefully
+     * 
+     */
+    public function cache(): Controller
+    {
+        return $this;
+    }
+
     /**
      * note
      *   Prepend all model mode of operation meant to be callable by a request

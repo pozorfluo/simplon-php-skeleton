@@ -53,14 +53,14 @@ class PatientList extends View
 
         $this->components['content'] = [
             new Table($this->args['data']),
-            new Table(array_fill(0, 10, array_fill(0, 8, '-'))),
-            new Table(array_fill(0, 20, ['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-'])),
-            new Image(
-                'resources/images/large-dummy-img.png',
-                'this should take some time to load',
-                480,
-                270
-            ),
+            // new Table(array_fill(0, 10, array_fill(0, 8, '-'))),
+            // new Table(array_fill(0, 20, ['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-'])),
+            // new Image(
+            //     'resources/images/large-dummy-img.png',
+            //     'this should take some time to load',
+            //     480,
+            //     270
+            // ),
         ];
 
 

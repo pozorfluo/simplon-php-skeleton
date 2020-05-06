@@ -28,7 +28,7 @@ abstract class Controller
     {
         $this->args = $args;
 
-        /* get default associated view, model name */
+        /* Get default associated view, model name */
         $associated_class = get_class($this);
         $namespace_end = strrpos($associated_class, '\\');
         $associated_class = substr($associated_class, $namespace_end + 1);

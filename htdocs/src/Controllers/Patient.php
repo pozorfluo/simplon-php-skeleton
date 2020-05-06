@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Helpers\DBConfig;
-use Models\PDOModel;
+use Models\DBPDO;
 use Views\View;
 
 
@@ -25,13 +25,10 @@ class Patient extends Controller
     {
         $this->set($args);
 
-
         // ($this->args['action'])()
 
         // echo '<pre>' . var_export($this->args, true) . '</pre><hr />';
         // echo '<pre>' . var_export($this, true) . '</pre><hr />';
-
-
         $this->serve();
     }
     /**
@@ -41,20 +38,8 @@ class Patient extends Controller
     {
         $this->set($args);
         $this->request['view'] = 'PatientList';
-        // echo '<pre>' . var_export($this, true) . '</pre><hr />';
 
-
-        // echo '<h2>LIST !!!</h2>';
-        // echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
-
-        /**
-         * todo
-         *   - [ ] Consider this may fit better in the Model now we have 2-way
-         *         communication
-         *   - [ ] See how View is run in server() and Controller->loadModel()
-         */
-        $db_config = new DBConfig($this->args['db_configs']);
-        $model = new PDOModel($db_config);
+        $model = new DBPDO($this);
 
         //     for($i=0; $i<50; $i++){
         //     $results =  $model->execute(
@@ -74,6 +59,7 @@ class Patient extends Controller
         //     );
         // }
 
+        // $t = microtime(true);
         $results =  $model->execute(
             'patients',
             "SELECT
@@ -81,9 +67,8 @@ class Patient extends Controller
             FROM 
                 `patients`;"
         );
-        // echo '<pre>' . var_export($results, true) . '</pre><hr />';
+        // echo '<pre>runList '.var_export((microtime(true) - $t), true).'</pre><hr />';
         $this->set(['data' => $results]);
-        // echo '<pre>' . var_export($this->args, true) . '</pre><hr />';
         $this->serve();
     }
 
@@ -93,11 +78,8 @@ class Patient extends Controller
     public function runAdd(array $args = []): void
     {
         $this->set($args);
-
-
         // echo '<h2>Add !!!</h2>';
         // echo '<pre>'.var_export($this->args['db_configs'], true).'</pre><hr />';
-
         $this->serve();
     }
 }

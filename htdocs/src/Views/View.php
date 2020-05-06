@@ -16,7 +16,8 @@ use Interfaces\Layoutable;
  */
 abstract class View implements Layoutable
 {
-    protected $args = [];
+    public $args = [];
+    
     protected $data = [];
     protected $components = [];
 

@@ -20,7 +20,10 @@ use Controllers\Controller;
  */
 abstract class Model
 {
-    protected $db;
+    public $args = [];
+    
+    protected $data = [];
+    protected $controller;
 
     public function __construct(Controller $controller)
     {
@@ -44,21 +47,5 @@ abstract class Model
          */
         $this->args = $controller->args;
     }
-    /**
-     * 
-     */
-    abstract public function execute(
-        string $config_name,
-        string $query,
-        ?array $args = NULL,
-        bool $transaction = false
-    ): ?array;
 
-    /**
-     * 
-     */
-    abstract protected function transaction(
-        string $query,
-        ?array $args = NULL
-    ): ?array;
 }

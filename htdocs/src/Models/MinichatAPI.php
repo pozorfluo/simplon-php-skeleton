@@ -14,9 +14,9 @@ use Helpers\DBConfig;
 /**
  * 
  */
-class MinichatAPI extends PDOModel
+class MinichatAPI extends DBPDO
 {
    public function opFetch() {
-       return 'Fetch : not implented yet';
+       return 'Fetch : not implemented yet';
    }
 }
