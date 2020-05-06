@@ -25,6 +25,7 @@ class Minimal implements Templatable
     {
         $defaults = [
             'page_title' => 'hello-php',
+            'fonts' => '',
             'css' => '',
             'nav' => '',
             'content' => '',
@@ -58,6 +59,7 @@ class Minimal implements Templatable
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{$this->data['page_title']}></title>
+    {$this->data['fonts']}
     <style>
     .loading {filter: opacity(50%);background : transparent url('resources/images/spinner.svg')  no-repeat scroll center center; background-blend-mode: multiply;}
     </style>

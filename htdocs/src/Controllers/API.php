@@ -17,6 +17,7 @@ use Models\Model;
  *   
  *     Controller       -> API
  *     Action           -> endpoint
+ *     Sub              -> sub-resource
  *     Request Method   -> mode of operation
  *     Other Parameters -> query parameters
  *     
@@ -30,10 +31,10 @@ use Models\Model;
  *     what is meant to be a callable action and thwart some malicious 
  *     requests
  *       e.g.,
- *         opFetch()
- *         opAdd()
- *         opUpdate()
- *         opRemove()
+ *         opGET()
+ *         opPOSTSubresource()
+ *         opPUTSubresource()
+ *         opDELETE()
  */
 abstract class API extends Controller
 {
@@ -51,8 +52,7 @@ abstract class API extends Controller
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: *');
 
-        header('Content-Type: application/json');
-        // echo '<pre>new API ()</pre>';
+        // header('Content-Type: application/json');
     }
 
     /**
@@ -128,9 +128,13 @@ abstract class API extends Controller
 
     public function call(): self
     {
-        /* 'escaping' and providing default action */
+        /**
+         * note
+         *   'escaping' and providing default action
+         *   Endpoint may access multiple sub-ressources with different methods
+         */
         $this->args['method'] =
-            'op' . ($this->args['method'] ?? 'Fetch');
+            'op' . ($this->args['sub'] ?? '') . ($this->args['method'] ?? 'GET');
 
         /* use existing model or load one */
         if (method_exists(
@@ -142,7 +146,10 @@ abstract class API extends Controller
             // echo '<pre>'.var_export($this, true).'</pre><hr />';
 
             // $this->model->{$this->args['method']}();
-            $this->emit($this->model->{$this->args['method']}(), $this->args['status_code']);
+            $this->emit(
+                $this->model->{$this->args['method']}(),
+                $this->args['status_code']
+            );
         } else {
             /* mode of operation does NOT exist on this endpoint */
             $this->emit(['no can do'], 405);

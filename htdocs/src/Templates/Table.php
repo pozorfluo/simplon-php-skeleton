@@ -55,7 +55,8 @@ TEMPLATE;
         /* table header */
         foreach (array_keys($this->data['entries'][0]) as $header) {
 
-            $rendered_template .= <<<TEMPLATE
+            $rendered_template .= 
+<<<TEMPLATE
 <th class="{$class}">{$header}</th>
 TEMPLATE;
         }
@@ -66,12 +67,14 @@ TEMPLATE;
         /* table header */
         foreach ($this->data['entries'] as $entry) {
 
-            $rendered_template .= <<<TEMPLATE
+            $rendered_template .= 
+<<<TEMPLATE
 <tr class="{$class}">
 TEMPLATE;
 
             foreach ($entry as $col => $value) {
-                $rendered_template .= <<<TEMPLATE
+                $rendered_template .= 
+<<<TEMPLATE
 <td class="{$class}">{$value}</a></td>
 TEMPLATE;
             }

@@ -42,8 +42,8 @@ class Nav implements Templatable
         $rendered_template = '<nav>';
         foreach ($this->data as $link => $href) {
 
-            $rendered_template .=
-                <<<TEMPLATE
+            $rendered_template .= 
+<<<TEMPLATE
 <a href="{$href}">
     <div class="nav-button">
         {$link}
@@ -51,10 +51,9 @@ class Nav implements Templatable
 </a>
 TEMPLATE;
 
-
         }
-
         $rendered_template .= '</nav><hr />';
+        
         return $rendered_template;
     }
 }

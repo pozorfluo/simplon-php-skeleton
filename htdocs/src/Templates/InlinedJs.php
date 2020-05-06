@@ -43,7 +43,6 @@ class InlinedJs implements Templatable
         
         foreach ($this->data as $path) {
             $rendered_template .= file_get_contents($path);
-
         }
 
         $rendered_template .= '</script>';

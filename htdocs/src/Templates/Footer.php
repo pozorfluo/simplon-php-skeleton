@@ -43,7 +43,7 @@ class Footer implements Templatable
         foreach ($this->data as $link => $href) {
 
             $rendered_template .=
-                <<<TEMPLATE
+<<<TEMPLATE
 <a href="{$href}">
     <div class="nav-button">
         {$link}

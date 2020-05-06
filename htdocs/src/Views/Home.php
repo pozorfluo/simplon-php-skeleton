@@ -50,7 +50,7 @@ class Home extends View
                 'Home' => 'index.php?controller=Home',
                 'List Patient' => '?controller=Patient&action=List',
                 'Add Patient' => '?controller=Patient&action=Add',
-                'Schedule' => '?controller=Patient&action=List',
+                'Minichat' => '?controller=Minichat',
             ])
         ];
 

@@ -58,7 +58,7 @@
  *     + [ ] Use something like cached json
  *     + [ ] Update/Serve cached json
  *     + [ ] Batch updates to the DB
- *   
+ *   - [ ] Investigate CORS issue with font preloading   
  */
 
 declare(strict_types=1);
