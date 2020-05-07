@@ -64,7 +64,6 @@ class MinichatForm implements Templatable
         return <<<TEMPLATE
 <form class="minichat-form" action="{$this->data['action']}" method="POST">
     {$input_id}
-
     <input 
         type="text"
         name="nickname"

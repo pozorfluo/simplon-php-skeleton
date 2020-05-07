@@ -39,12 +39,14 @@ class MinichatAPI extends DBPDO
      *         RESTish API
      *   - [ ] Add a json cache/buffer
      */
-    public function opGET(int $msg_count = 5): ?array
+    public function opGET(): ?array
     {
+        $msg_count = $this->controller->args['maxResults'] ?? 5;
+        // $order_by = $this->args['orderBy'] ?? 'created_at';
         try {
             $results = $this->execute(
                 'minichat',
-                "SELECT
+                'SELECT
                     `messages`.`created_at`,
                     `users`.`nickname`,
                     `messages`.`message`
@@ -52,9 +54,9 @@ class MinichatAPI extends DBPDO
                     `messages`
                  INNER JOIN `users` ON `messages`.`user_id` = `users`.`id`
                  ORDER BY
-                    `messages`.`created_at` ASC
+                    `messages`.`created_at` DESC
                  LIMIT 
-                    ?",
+                    ?',
                 [$msg_count]
             );
 
@@ -74,24 +76,61 @@ class MinichatAPI extends DBPDO
              */
             /* Internal Server Error */
             $this->controller->set(['status_code' => 500]);
-            return $e->getMessage();
+            return [$e->getMessage()];
         }
     }
 
     /**
      * 
      */
-    public function opPOST()
+    public function opPOST(): ?array
     {
-        $this->controller->set(['status_code' => 405]);
-        // $this->args['status_code'] = 405;
-        return ['POST : not implemented yet'];
+        /**
+         * todo
+         *   - [ ] Learn how to get client ip
+         *     + [ ] See https://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
+         *   - [ ] Check user exists
+         *     + [ ] Create user if necessary
+         */
+        $ip = '127.0.0.1';
+        $post_body = json_decode(file_get_contents('php://input'), true);
+        $this->controller->set(['status_code' => 201]);
+        $this->controller->set(['post_body' => $post_body]);
+
+        // echo '<pre>'.var_export($this->args, true).'</pre><hr />';
+        try {
+            $results = $this->execute(
+                'minichat',
+                'INSERT INTO `messages`(
+                    `user_id`,
+                    `message`,
+                    `ip_address`,
+                    `created_at`
+                )
+                VALUES
+                    (?, ?, ?, NOW())',
+                [1, $this->args['post_body']['message'], $ip]
+
+            );
+            $this->controller->set(['status_code' => 201]);
+            $this->controller->set(['data' => $results]);
+            return [$results];
+        } catch (Exception $e) {
+            /**
+             * todo
+             *   - [ ] Have a look at PDO statement errorInfo()
+             */
+            /* Internal Server Error */
+            $this->controller->set(['status_code' => 500]);
+            // return [$e->getMessage()];
+            return $_POST;
+        }
     }
 
     /**
      *
      */
-    public function opPUT()
+    public function opPUT(): ?array
     {
         $this->controller->set(['status_code' => 405]);
         // $this->args['status_code'] = 405;
@@ -101,7 +140,7 @@ class MinichatAPI extends DBPDO
     /**
      * 
      */
-    public function opDELETE()
+    public function opDELETE(): ?array
     {
         $this->controller->set(['status_code' => 405]);
         // $this->args['status_code'] = 405;

@@ -40,9 +40,10 @@ abstract class View implements Layoutable
          * note
          *   Error: Cannot access protected property Controllers\Home::$args 
          *          in /shared/httpd/hello-php/htdocs/src/Views/View.php
-         *   A decent hint that it is a reference
+         *   -> it is a copy of unknown depth
+         *   -> error is about visibility
          */
-        $this->args = $controller->args;
+        $this->args = &$controller->args;
     }
 
     /**

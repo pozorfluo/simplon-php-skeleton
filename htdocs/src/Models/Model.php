@@ -39,13 +39,13 @@ abstract class Model
          *     + [ ] Figure out if it is a copy (how deep ?), a reference ?
          *     + [ ] Compare modifying it directly if its a reference vs
          *           vs using reference to controller->set()
-         * 
          * note
          *   Error: Cannot access protected property Controllers\Home::$args 
          *          in /shared/httpd/hello-php/htdocs/src/Views/View.php
-         *   A decent hint that it is a reference
+         *   -> it is a copy of unknown depth
+         *   -> error is about visibility
          */
-        $this->args = $controller->args;
+        $this->args = &$controller->args;
     }
 
 }

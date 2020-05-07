@@ -7,15 +7,15 @@
    */
   window.addEventListener("DOMContentLoaded", function (event) {
     const minichat = document.querySelector("#hook-console");
-    const msg_box = document.querySelector("#hook-msg-box");
+    const msg_box = document.querySelector(".minichat-form");
 
     //-------------------------------------------- initial json plumbing ---
-    const refresh_chat_url = "?controller=MinichatAPI";
+    const chat_api_url = "?controller=MinichatAPI";
     // request.addEventListener("load", function (event) {
     //     console.log(request.response);
     //   minichat.textContent = request.response.join("\n");
     // });
-    
+
     /**
      * todo
      *   - [ ] Make poll_rate inversely proportional to user_count
@@ -36,7 +36,7 @@
         //------------------------------------------------------ timeout
         setTimeout(function () {
           //---------------------------------------------- fetch
-          fetch(refresh_chat_url, { method: "GET" })
+          fetch(chat_api_url, { method: "GET" })
             .then(function (response) {
               if (response.ok) {
                 //------------------------------------------- OK
@@ -61,10 +61,13 @@
       });
     }
 
+    /**
+     *
+     */
     function refreshContent(target_element, json_data) {
       let str_builder = "";
 
-      for (let i = 0, length = json_data.length; i < length; i++) {
+      for (let i = json_data.length - 1 ; i >= 0; i--) {
         str_builder +=
           `[${json_data[i].created_at.substr(10)}]` +
           ` ${json_data[i].nickname} said :\n` +
@@ -72,6 +75,48 @@
       }
       target_element.textContent = str_builder;
     }
+
+    /**
+     *
+     */
+    msg_box.addEventListener(
+      "submit",
+      function (event) {
+        // console.log(event.target[0].value);
+        // console.log(event.target[1].value);
+        // console.log(
+        //   JSON.stringify({
+        //     nickname: event.target[0].value,
+        //     message: event.target[1].value,
+        //   })
+        // );
+
+        fetch(chat_api_url, {
+          method: "POST",
+          body: JSON.stringify({
+            nickname: event.target[0].value,
+            message: event.target[1].value,
+          }),
+        })
+          .then(function (response) {
+            return response.text();
+          })
+          .then(function (json_data) {
+            console.log(json_data);
+          });
+
+        event.preventDefault();
+      },
+      false
+    );
+    //------------------------------------- press enter in msg-box to submit
+    // msg_box.addEventListener("focus", function (event) {}, false);
+    // msg_box.addEventListener("blur", function (event) {}, false);
+    // msg_box.addEventListener("keyup", function (event) {
+    //     if (event.key === 'enter') {
+    //         console.log('send');
+    //     }
+    // }, false);
   }); /* DOMContentLoaded */
 })(); /* IIFE */
 
