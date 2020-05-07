@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.9.4
--- https://www.phpmyadmin.net/
---
--- Hôte : localhost:3306
--- Généré le : mar. 05 mai 2020 à 07:42
--- Version du serveur :  5.7.19
--- Version de PHP : 7.2.30
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -66,7 +57,7 @@ ALTER TABLE `messages`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nickname` (`id`);
+  ADD UNIQUE KEY `nickname` (`nickname`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées

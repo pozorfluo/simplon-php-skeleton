@@ -114,14 +114,14 @@ abstract class API extends Controller
     /**
      * 
      */
-    protected function emit(array $data, int $status_code): self
+    protected function emit(?array $data, int $status_code): self
     {
         $status = self::status($status_code);
         header("HTTP/1.1 {$status_code} {$status}");
 
         /* keep it around for optional caching */
+        // if
         $this->rendered_page = json_encode($data);
-
         echo $this->rendered_page;
 
         return $this;

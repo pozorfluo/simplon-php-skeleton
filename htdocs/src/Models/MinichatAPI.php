@@ -32,7 +32,7 @@ use Helpers\DBConfig;
 class MinichatAPI extends DBPDO
 {
     /**
-     * Return last few messages
+     * -> Return last few messages
      *
      * todo
      *   - [ ] Translate PDO/MySQL errors into meaningful response for the
@@ -67,7 +67,9 @@ class MinichatAPI extends DBPDO
                 /* OK */
                 $this->controller->set(['status_code' => 200]);
             }
-            $this->controller->set(['data' => $results]);
+            /* useful only if you want to do more than emit json */
+            // $this->controller->set(['data' => $results]);
+
             return $results;
         } catch (Exception $e) {
             /**
@@ -86,16 +88,24 @@ class MinichatAPI extends DBPDO
     public function opPOST(): ?array
     {
         /**
+         * Insert new message
+         *   -> Return last few messages
          * todo
          *   - [ ] Learn how to get client ip
          *     + [ ] See https://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
          *   - [ ] Check user exists
          *     + [ ] Create user if necessary
          */
+
+         /* mock some data until it's implemented */
         $ip = '127.0.0.1';
+        
+        /* retrieve request body */
         $post_body = json_decode(file_get_contents('php://input'), true);
-        $this->controller->set(['status_code' => 201]);
         $this->controller->set(['post_body' => $post_body]);
+        
+        $msg_count = $this->controller->args['maxResults'] ?? 5;
+        
 
         // echo '<pre>'.var_export($this->args, true).'</pre><hr />';
         try {
@@ -108,13 +118,29 @@ class MinichatAPI extends DBPDO
                     `created_at`
                 )
                 VALUES
-                    (?, ?, ?, NOW())',
-                [1, $this->args['post_body']['message'], $ip]
+                    (?, ?, ?, ?)',
+                [
+                    1,
+                    $this->args['post_body']['message'],
+                    $ip,
+                    date('Y-m-d H:i:s')
+                ]
 
             );
+
+            /**
+             * todo
+             *   - [ ] Append to minichat.buffer
+             *   - [ ] Remove call to opGET
+             *   - [ ] Insert into db only when buffer reaches a certain size
+             */
+            $results = $this->opGET();
             $this->controller->set(['status_code' => 201]);
-            $this->controller->set(['data' => $results]);
-            return [$results];
+
+            /* useful only if you want to do more than emit json */
+            // $this->controller->set(['data' => $results]);
+
+            return $results;
         } catch (Exception $e) {
             /**
              * todo
@@ -122,8 +148,8 @@ class MinichatAPI extends DBPDO
              */
             /* Internal Server Error */
             $this->controller->set(['status_code' => 500]);
-            // return [$e->getMessage()];
-            return $_POST;
+            return [$e->getMessage()];
+            // return null;
         }
     }
 

@@ -25,7 +25,7 @@ class Dispatcher
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 6; /* seconds */
+    protected $cache_ttl = 30; /* seconds */
     protected $cache_path = ROOT . 'cache/';
 
     public function __construct(array $config)
@@ -38,7 +38,7 @@ class Dispatcher
          * Redirect to Home if query string specifies junk controller
          * 
          * todo
-         *   - [ ] Consider marking Abstract/non-instantiable class as such
+         *   - [x] Consider tagging/excluding non-instantiable class
          *         in the config whitelist
          */
         if ((!isset($this->request['controller'])
