@@ -132,8 +132,16 @@ if (!isset($config['components']) || DEV_FORCE_CONFIG_UPDATE) {
     $config['components'] = [];
 
     foreach ($php_files as $php_file) {
-        $component = array_slice(explode('/', $php_file[0]), -2);
-        $config['components'][$component[0]][] = substr($component[1], 0, -4);
+        /* do NOT register abstract classes or interfaces */
+        $is_interface_or_abstract = preg_match(
+            '/abstract class\s.+\n\{|interface\s.+\n\{/',
+            file_get_contents($php_file[0])
+        );
+
+        if (!$is_interface_or_abstract) {
+            $component = array_slice(explode('/', $php_file[0]), -2);
+            $config['components'][$component[0]][] = substr($component[1], 0, -4);
+        }
     }
     $config_exists = false;
     // echo 'components config missing ! Defaults emitted. <br />';
