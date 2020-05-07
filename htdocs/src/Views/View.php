@@ -21,7 +21,6 @@ abstract class View implements Layoutable
     protected $data = [];
     protected $components = [];
 
-    // public function __construct(array $args = [])
     public function __construct(Controller $controller)
     {
         /**
@@ -36,6 +35,7 @@ abstract class View implements Layoutable
          *     + [ ] Figure out if it is a copy (how deep ?), a reference ?
          *     + [ ] Compare modifying it directly if its a reference vs
          *           vs using reference to controller->set()
+         *     + [ ] Bench, pick one, move on
          * 
          * note
          *   Error: Cannot access protected property Controllers\Home::$args 

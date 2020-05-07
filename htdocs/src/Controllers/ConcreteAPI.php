@@ -13,7 +13,7 @@ use Models\Model;
 /**
  * 
  */
-class MinichatAPI extends API
+class ConcreteAPI extends API
 {
     protected $timeout = 30; /* seconds */
     protected $cache_path = ROOT . 'cache/minichat.buffer';

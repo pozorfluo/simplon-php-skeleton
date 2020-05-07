@@ -29,7 +29,7 @@ use Helpers\DBConfig;
  *     open() is FORBIDDEN  
  *       -> could be requested maliciously with a request for 'en'
  */
-class MinichatAPI extends DBPDO
+class ConcreteAPI extends DBPDO
 {
     /**
      * -> Return last few messages

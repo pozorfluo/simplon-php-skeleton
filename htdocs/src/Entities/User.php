@@ -11,7 +11,7 @@ namespace Entities;
 /**
  * 
  */
-class Patient extends Entity
+class User extends Entity
 {
     /**
      * 
