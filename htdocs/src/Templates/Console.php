@@ -31,19 +31,16 @@ class Console implements Templatable
         string $placeholder = '...',
         bool $deferred = false
     ) {
-        /**
-         * todo
-         *   - [ ] Expand the content from mixed array to string properly
-         */
-        $this->data['content'] = implode('&#13;&#10;', $content);
-        $this->data['class'] = $class;
-        $this->data['row_count'] = $row_count;
-        $this->data['col_count'] = $col_count;
-        $this->data['max_length'] = $max_length;
-        $this->data['id'] = $id;
-        $this->data['readonly'] = $readonly ? 'readonly' : '';
-        $this->data['placeholder'] = $placeholder;
-    
+        $this->data = [
+            'content' => implode('&#13;&#10;', $content),
+            'class' => $class,
+            'row_count' => $row_count,
+            'col_count' => $col_count,
+            'max_length' => $max_length,
+            'id' => $id,
+            'readonly' => $readonly ? 'readonly' : '',
+            'placeholder' => $placeholder,
+        ];
     }
 
     /**
@@ -59,9 +56,8 @@ class Console implements Templatable
      */
     public function render(): string
     {
-
-        $rendered_template = 
-<<<TEMPLATE
+        $rendered_template =
+            <<<TEMPLATE
 <textarea id="{$this->data['id']}"  
           class="{$this->data['class']}"  
           cols="{$this->data['col_count']}"

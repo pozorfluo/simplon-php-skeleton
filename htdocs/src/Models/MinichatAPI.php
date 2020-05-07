@@ -12,8 +12,9 @@ use Exception;
 use Helpers\DBConfig;
 
 /**
- * Serve Minichat RESTish API
- *   -> json
+ * Minichat RESTish API
+ *   -> set status_code
+ *   -> set data
  * 
  * note
  *   Prepend all model modes of operation meant to be callable by a request
@@ -31,33 +32,49 @@ use Helpers\DBConfig;
 class MinichatAPI extends DBPDO
 {
     /**
+     * Return last few messages
+     *
      * todo
      *   - [ ] Translate PDO/MySQL errors into meaningful response for the
      *         RESTish API
+     *   - [ ] Add a json cache/buffer
      */
-    public function opGET() :array
+    public function opGET(int $msg_count = 5): ?array
     {
         try {
             $results = $this->execute(
-                'patients',
+                'minichat',
                 "SELECT
-                    *
-                FROM 
-                    `patients`;"
+                    `messages`.`created_at`,
+                    `users`.`nickname`,
+                    `messages`.`message`
+                 FROM
+                    `messages`
+                 INNER JOIN `users` ON `messages`.`user_id` = `users`.`id`
+                 ORDER BY
+                    `messages`.`created_at` ASC
+                 LIMIT 
+                    ?",
+                [$msg_count]
             );
+
             if (empty($results)) {
+                /* No Content */
                 $this->controller->set(['status_code' => 204]);
             } else {
+                /* OK */
                 $this->controller->set(['status_code' => 200]);
             }
             $this->controller->set(['data' => $results]);
-            return [$results];
+            return $results;
         } catch (Exception $e) {
             /**
              * todo
              *   - [ ] Have a look at PDO statement errorInfo()
              */
-            return [$e->getMessage()];
+            /* Internal Server Error */
+            $this->controller->set(['status_code' => 500]);
+            return $e->getMessage();
         }
     }
 

@@ -55,6 +55,7 @@ class PatientForm implements Templatable
         } else {
             $input_id = '';
         }
+        
         return <<<TEMPLATE
 <form action="{$this->data['action']}" method="POST">
     {$input_id}

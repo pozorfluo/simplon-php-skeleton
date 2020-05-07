@@ -62,11 +62,6 @@ abstract class Controller
     public function loadModel(): Model
     {
         $model_name = '\Models\\' . $this->args['model'];
-        /**
-         * todo
-         *   - [ ] Decide if $this->args['model'] is worth keeping 
-         *         around / spending time to discard?
-         */
         // unset($this->args['model']);
         $this->model = new $model_name($this);
 
@@ -78,11 +73,6 @@ abstract class Controller
     public function loadView(): View
     {
         $view_name = '\Views\\' . $this->args['view'];
-        /**
-         * todo
-         *   - [ ] Decide if $this->args['model'] is worth keeping 
-         *         around / spending time to discard?
-         */
         // unset($this->args['view']);
         $this->view = new $view_name($this);
 
@@ -146,7 +136,7 @@ abstract class Controller
         // session_write_close();
         /**
          * todo
-         *   - [ ] Use Js/Ajax
+         *   - [x] Use Js/Ajax
          */
 
         /* output buffering OFF */

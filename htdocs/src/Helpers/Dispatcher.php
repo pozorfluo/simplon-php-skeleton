@@ -10,6 +10,8 @@ namespace Helpers;
 
 use Controllers\Controller;
 use Exception;
+use Reflection;
+use ReflectionClass;
 
 /**
  * index.php?controller=Home&action=value&p1=v1&p2=v2&pn=vn"
@@ -32,7 +34,12 @@ class Dispatcher
 
         /**
          * Validate query against whitelist of registered components
+         * Assert that the controller is instantiable
          * Redirect to Home if query string specifies junk controller
+         * 
+         * todo
+         *   - [ ] Consider marking Abstract/non-instantiable class as such
+         *         in the config whitelist
          */
         if ((!isset($this->request['controller'])
             || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {

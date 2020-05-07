@@ -15,6 +15,7 @@ use Templates\Footer;
 use Templates\InlinedCss;
 use Templates\InlinedJs;
 use Templates\Console;
+use Templates\MinichatForm;
 
 /**
  *
@@ -36,13 +37,14 @@ class Minichat extends View
      */
     public function compose(): self
     {
-
         $this->components['fonts'] = [
             new Fonts(['resources/fonts/font-ibmplexsans.min.html'])
         ];
         $this->components['css'] = [
-            new InlinedCss(['css/style.min.css',
-            'css/Minichat.min.css'])
+            new InlinedCss([
+                'css/style.min.css',
+                'css/Minichat.min.css'
+            ])
         ];
 
         $this->components['nav'] = [
@@ -59,8 +61,9 @@ class Minichat extends View
         ];
 
         $this->components['content'] = [
-            new Console($this->args['minichat_msg']),
-            new Console(["What's up ?"],'msg-box', 1, 90, 280, 'hook-msg-box', false),
+            new Console(['[Minichat] Connecting ...']),
+            // new Console(["Press enter to send !"], 'msg-box', 1, 90, 280, 'hook-msg-box', false),
+            new MinichatForm(),
         ];
 
 
