@@ -1,33 +1,39 @@
 <?php
 
-/**
- * 
- */
-
 declare(strict_types=1);
 
 namespace Helpers;
 
 use Controllers\Controller;
-use Exception;
-use Reflection;
-use ReflectionClass;
 
 /**
- * index.php?controller=Home&action=value&p1=v1&p2=v2&pn=vn"
- *   or ?
- * /Controller/Action/p1=v1&p2=v2&pn=vn
+ * Translate and dispatch a QUERY_STRING to the appropriate Controller or serve
+ * a valid cached version of the pages if one is available.
  * 
- * see https://www.php.net/manual/en/function.filter-has-var.php
+ * Accept queries formatted as follow :
+ * index.php?controller=ControllerName&action=ActionName&p1=v1&p2=v2&pn=vn"
+ * 
+ * Provide fallback routes for incomplete or junk queries.
+ * 
+ * note
+ *   Dispatcher is not in charge of invalidating cache files.
+ *   If a cache file exists and is not past its expiration date, it is 
+ *   considered valid and Dispatcher will serve it.
  */
 class Dispatcher
 {
     protected $request;
     protected $controller;
 
-    protected $cache_ttl = 30; /* seconds */
-    protected $cache_path = ROOT . 'cache/';
+    const CACHE_TTL = 30; /* seconds */
+    const CACHE_PATH = ROOT . 'cache/';
 
+    /**
+     * Create a new Dispatcher instance.
+     *
+     * @param  array $config
+     * @return void
+     */
     public function __construct(array $config)
     {
         parse_str($_SERVER['QUERY_STRING'], $this->request);
@@ -36,20 +42,13 @@ class Dispatcher
          * Validate query against whitelist of registered components
          * Assert that the controller is instantiable
          * Redirect to Home if query string specifies junk controller
-         * 
-         * todo
-         *   - [x] Consider tagging/excluding non-instantiable class
-         *         in the config whitelist
          */
         if ((!isset($this->request['controller'])
             || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {
-            // header("Location: /?controller=Home");
-            // exit;
-
+            
             /**
              * note
-             *   Can we avoid a redirection and pretend it is ok ? 
-             *   If you need to remember this happened :
+             *   If you need to remember this redirection happened :
              *     Compare QUERY_STRING and REQUEST_URI :wink:
              **/
             $this->request['controller'] = 'Home';
@@ -72,7 +71,7 @@ class Dispatcher
 
         $this->request['db_configs'] = $config['db_configs'];
         $this->request['cached_file'] =
-            substr($this->cache_path . $base_name, 0, 250) . '.html';
+            substr(self::CACHE_PATH . $base_name, 0, 250) . '.html';
     }
 
     /**
@@ -83,7 +82,7 @@ class Dispatcher
      *           both to make it clear what is meant to be a callable 
      *           action and thwart malicious requests
      */
-    public function call(): self
+    public function route(): self
     {
         if ($this->isCached()) {
             // echo 'Serving Cached !';
@@ -121,76 +120,5 @@ class Dispatcher
         $this->controller = new $controller_name();
 
         return $this->controller;
-    }
-
-    /**
-     *
-     */
-    public function isCached(): bool
-    {
-        $file_path = $this->request['cached_file'];
-        return is_file($file_path)
-            && (time() - $this->cache_ttl) < filemtime($file_path);
-    }
-
-    /**
-     *  note
-     *    Will erase content of cached file if used before call()
-     *    Subsequent call() may serve that cached empty files
-     */
-    public function cache(): self
-    {
-        ($this->controller ?? $this->load())->cache();
-
-        $cache_ttl_path = $this->cache_path . 'cache.ttl';
-        if (!is_file($cache_ttl_path)) {
-            touch($cache_ttl_path);
-        }
-        $this->pruneCache();
-
-        return $this;
-    }
-
-    /**
-     * Create cache.ttl ticker if it does NOT exist
-     * If at least a ttl period has elapsed since last pruning
-     *   Delete each cached files past ttl
-     *   Reset ticker
-     */
-    public function pruneCache(): self
-    {
-        $cache_ttl_path = $this->cache_path . 'cache.ttl';
-
-        if (!is_file($cache_ttl_path)) {
-            touch($cache_ttl_path);
-        } else {
-            if ((time() - $this->cache_ttl) > filemtime($cache_ttl_path)) {
-                // echo 'Pruning cache !';
-                $cached_pages = glob($this->cache_path . '*.html');
-
-                foreach ($cached_pages as $cached_page) {
-                    if ((time() - $this->cache_ttl) > filemtime($cached_page)) {
-                        unlink($cached_page);
-                    }
-                }
-
-                touch($cache_ttl_path);
-            }
-        }
-
-        return $this;
-    }
-    /**
-     * 
-     */
-    public function clearCache(): self
-    {
-        $cached_pages = glob($this->cache_path . '*.html');
-
-        foreach ($cached_pages as $cached_page) {
-            unlink($cached_page);
-        }
-
-        return $this;
     }
 }

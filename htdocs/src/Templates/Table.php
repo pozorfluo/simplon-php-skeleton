@@ -87,31 +87,3 @@ TEMPLATE;
         return $rendered_template;
     }
 }
-
-
-// $i = 0;
-// while ($i < $this->data['column_count']) {
-//     $rendered_template .= <<<TEMPLATE
-//     <th class="{$this->data['class']}">{$this->data['headers'][$i]}</th>
-// TEMPLATE;
-//     $i++;
-// }
-
-
-// public function __construct(
-//     array $entries = [['a' => '-', 'b' => '-', 'c' => '-', 'd' => '-']],
-//     array $headers = [],
-//     string $class = 'query'
-// ) {
-//     $this->data['column_count'] = count(array_keys($entries[0]));
-
-//     if ($this->data['column_count'] > count($headers)) {
-//         $headers = array_pad($headers, $this->data['column_count'], '-');
-//     }
-
-//     $this->data['entries'] = $entries;
-//     $this->data['headers'] = $headers;
-//     $this->data['class'] = $class;
-
-//     echo '<pre>'.var_export($this->getRaw(), true).'</pre><hr />';
-// }

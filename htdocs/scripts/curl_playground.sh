@@ -11,5 +11,11 @@ curl --header "Content-Type: application/json" \
     http://emjjjpl.cluster029.hosting.ovh.net/?controller=MinichatAPI
 
 
-curl http://hello-php.loc/?controller=MinichatAPI&action=Long
-curl http://hello-php.loc/?controller=MinichatAPI
+curl http://hello-php.loc/?controller=ConcreteAPI&action=Long
+curl http://hello-php.loc/?controller=ConcreteAPI
+
+
+curl --header "Content-Type: application/json" \
+     --header "X-HTTP-Method: PUT" \
+     --request POST \
+    http://hello-php.loc/?controller=ConcreteAPI

@@ -64,7 +64,7 @@
 declare(strict_types=1);
 
 define('ROOT', __DIR__ . '/');
-define('DEV_FORCE_CONFIG_UPDATE', false);
+define('DEV_FORCE_CONFIG_UPDATE', true);
 define('DEV_GLOBALS_DUMP', true);
 
 require ROOT . 'src/Helpers/AutoLoader.php';
@@ -72,6 +72,17 @@ require ROOT . 'src/Helpers/AutoLoader.php';
 use Helpers\Dispatcher;
 use Entities\Entity;
 
+//--------------------------------------------------------------- playground
+
+
+// echo uniqid('', true);
+// (time() - self::CACHE_TTL) > filemtime($cache_ttl_path)
+
+$distribution_factor = 1;
+$render_time = 0.004;
+$log_odd = log(mt_rand()/ mt_getrandmax());
+echo time() - $render_time * $distribution_factor * $log_odd;
+exit;
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -190,7 +201,7 @@ $t = microtime(true);
 date_default_timezone_set('Europe/Paris');
 
 $dispatcher = new Dispatcher($config);
-$dispatcher->call()->cache();
+$dispatcher->route()->cache();
 
 $time_spent['serving_page'] = (microtime(true) - $t);
 //------------------------------------------------------------------- config

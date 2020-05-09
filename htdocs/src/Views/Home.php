@@ -1,9 +1,5 @@
 <?php
 
-/**
- * 
- */
-
 declare(strict_types=1);
 
 namespace Views;
@@ -11,10 +7,8 @@ namespace Views;
 use Controllers\Controller;
 use Templates\Nav;
 use Templates\Footer;
-use Templates\Checkerboard;
 use Templates\Image;
 use Templates\InlinedCss;
-use Templates\InlinedJs;
 
 /**
  * 
@@ -55,21 +49,9 @@ class Home extends View
         ];
 
         $this->components['content'] = [
-            new InlinedCss(['css/Checkerboard.min.css']),
-            new InlinedJs(['js/Checkerboard.min.js']),
-            new Checkerboard(
-                intval($this->args['row_count']),
-                intval($this->args['col_count'])
-            ),
             new Image('resources/images/cross.svg', 'a red cross'),
             new Image('resources/images/cross.svg', 'a red cross', 64, 64),
             new Image('resources/images/cross.svg', 'a red cross', 128, 128),
-            // new Image(
-            //     'resources/images/large-dummy-img.png',
-            //     'this should take some time to load',
-            //     480,
-            //     270
-            // ),
         ];
 
 
