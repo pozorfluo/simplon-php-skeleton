@@ -27,23 +27,7 @@ class CacheItem
      * @param string
      */
     public $filename;
-
-
-    /**
-     * Optional tag list used for bulk invalidation.
-     *
-     * @var array [string]
-     */
-    public $tags = [];
-
-    /**
-     * Token used to decide if a CacheItem is due for pre-emptive re-rendering.
-     *
-     * @var int
-     */
-    public $popularity = 1;
-
-
+    
     /**
      * Time spent rendering this CacheItem.
      * 
@@ -52,8 +36,8 @@ class CacheItem
      * @var float
      */
     public $render_time;
-
-
+    
+    
     /**
      * This CacheItem best before date as a Unix timestamp.
      * 
@@ -62,6 +46,21 @@ class CacheItem
      * @var mixed
      */
     public $expiry_date;
+    
+    /**
+     * Optional tag list used for bulk invalidation.
+     *
+     * @var array [string]
+     */
+    public $tags = [];
+
+    /**
+     * Token counter used to decide if a CacheItem is due for pre-emptive 
+     * re-rendering.
+     *
+     * @var int
+     */
+    public $popularity = 1;
 
     /**
      * Create a new CacheItem instance from a json encoded representation.
