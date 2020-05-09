@@ -75,7 +75,9 @@ use Helpers\CacheItem;
 
 //--------------------------------------------------------------- playground
 
-
+echo is_file($file = 'index.php');
+echo $file;
+exit;
 
 echo time() . '<br/>';
 echo gettype(time()) . '<br/>';

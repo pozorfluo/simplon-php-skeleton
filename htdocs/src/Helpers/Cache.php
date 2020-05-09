@@ -8,8 +8,11 @@ use Controllers\Controller;
 
 /**
  * note
- *   If a cache file exists and is not past its expiration date, it is 
- *   considered valid and Dispatcher will serve it.
+ *   If a cache file exists and is referenced in the trove and is not past its 
+ *   expiration date, it is considered valid and Dispatcher will serve it.
+ * 
+ * todo
+ *   - [ ] Forbid instancing multiple Cache with the same name
  */
 class Cache
 {
@@ -19,68 +22,118 @@ class Cache
      * @var string
      */
     const CACHE_PATH = ROOT . 'cache/';
-        
+
+    /**
+     * List of currently instanced caches.
+     * 
+     * Used to forbid instancing multiple Cache with the same name.
+     * 
+     * @var array [string $name => 1]
+     */
+    public static $list = [];
+
+    /**
+     * Cache name.
+     *
+     * @var string
+     */
+    public $name;
+
     /**
      * Time To Live in seconds before an item in cache is considered stale.
      *
      * @var int
      */
     protected $ttl = 30;
-        
-    /**
-     * Cache name.
-     *
-     * @var string
-     */
-    protected $name;
 
     /**
      * Path to this cache .ttl file.
      *
+     * .ttl files are used to store serialized version of the Cache trove and as
+     * persistent tickers to determine when pruning is due.
+     * 
      * @var string
      */
     protected $ttl_path;
 
     /**
+     * Odds that pruning will be actually triggered when calling pruneCache().
      * 
-     * @var array 2-tuple
+     * Used to throttle possibly expensive cache operations. Does not affect
+     * cache invalidation.
+     * 
+     * @var array 2-tuple [int $chance, $int out_of]
      */
     protected $prune_odds;
 
     /**
+     * Cache metadata collection.
+     * 
+     * todo
+     *   - [ ] Decide if keeping a flipped [$filename => $key] is worth it
+     *         to speed up unique filename collision detection
+     * 
      * @var array [string $key, CacheItem $item]
      */
     protected $trove;
-    
+
     /**
      * Create a new Cache instance.
+     * 
+     * Caller must check and use the actual Cache name used not assume the one
+     * it requested was free.
      * 
      * @param integer $ttl
      * @param string $name
 
      * @return void
      */
-    public function __construct(int $ttl, string $name)
+    public function __construct(string $name) :
     {
-        parse_str($_SERVER['QUERY_STRING'], $this->request);
+        /* make sure a unique cache name is used */
+        if(isset(Cache::$list[$name])) {
 
-        /* sanitize */
-        $base_name = rawurlencode($_SERVER['QUERY_STRING']);
+        } else {
 
-        $this->request['cached_file'] =
-            substr(self::CACHE_PATH . $base_name, 0, 250) . '.html';
+        }
+    }
+
+
+    /**
+     * Retrieve cached content for given key if it exists and is not stale.
+     *
+     * @param  string $key
+     * @return string|NULL
+     */
+    public function getCached(string $key): ?string
+    {
+        if (
+            isset($this->trove[$key])
+            && (time() < $this->trove[$key]['expiry_date'])
+            && is_file(
+                $cached_file =
+                    self::CACHE_PATH . $this->trove[$key]['filename'] . '.' . $this->name
+            )
+        ) {
+
+            return file_get_contents($cached_file);
+        } else {
+            return NULL;
+        }
     }
 
     /**
-     * Determine if a valid cached version of the request exists.
+     * Determine if a valid cached version exists for given key.
      *
      * @return boolean
      */
-    public function isCached(): bool
+    public function isCached($key): bool
     {
-        $file_path = $this->request['cached_file'];
-        return is_file($file_path)
-            && (time() - $this->ttl) < filemtime($file_path);
+        return (isset($this->trove[$key])
+            && (time() < $this->trove[$key]['expiry_date'])
+            && is_file(
+                self::CACHE_PATH . $this->trove[$key]['filename'] . '.' . $this->name
+            ));
     }
 
     /**
@@ -190,18 +243,22 @@ class Cache
 
         return $this;
     }
+
     /**
-     * 
+     * Clear all files associated with this Cache, no questions asked.
+     *
+     * @return self
      */
     public function clearCache(): self
     {
-        $cached_pages = glob(self::CACHE_PATH . '*.html');
+        $cached_pages = glob(self::CACHE_PATH . '*.' . $this->name);
 
         foreach ($cached_pages as $cached_page) {
             unlink($cached_page);
         }
 
+        unlink($this->ttl_path);
+
         return $this;
     }
-    
 }
