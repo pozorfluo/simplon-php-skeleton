@@ -71,16 +71,86 @@ require ROOT . 'src/Helpers/AutoLoader.php';
 
 use Helpers\Dispatcher;
 use Entities\Entity;
+use Helpers\CacheItem;
 
 //--------------------------------------------------------------- playground
 
+$cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+$serialized_cached_item = serialize($cached_item);
+$unserialized_cached_item = unserialize($serialized_cached_item);
+echo '<pre>'.var_export($cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($serialized_cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($unserialized_cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($unserialized_cached_item == $cached_item).'</pre><hr />';
 
+$cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+$serialized_cached_item = json_encode($cached_item);
+$unserialized_cached_item = json_decode($serialized_cached_item);
+echo '<pre>'.var_export($cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($serialized_cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($unserialized_cached_item, true).'</pre><hr />';
+echo '<pre>'.var_export($unserialized_cached_item == $cached_item).'</pre><hr />';
+
+// $cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+// $serialized_cached_item = json_encode($cached_item);
+// $unserialized_cached_item = CacheItem::fromJson(json_decode($serialized_cached_item, true));
+// echo '<pre>'.var_export($cached_item, true).'</pre><hr />';
+// echo '<pre>'.var_export($serialized_cached_item, true).'</pre><hr />';
+// echo '<pre>'.var_export($unserialized_cached_item, true).'</pre><hr />';
+// echo '<pre>'.var_export($unserialized_cached_item == $cached_item).'</pre><hr />';
+
+
+$iterations = 10000;
+
+echo '//--------------------------------------------------------------<br />';
+$t = microtime(true);
+$i   = 0;
+$values = [];
+$collisions = 0;
+while ($i < $iterations) {
+
+    $cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+    $serialized_cached_item = serialize($cached_item);
+    $unserialized_cached_item = unserialize($serialized_cached_item);
+    ++$i;
+}
+echo '<pre>' . var_export('serialize : ' . (microtime(true) - $t), true) . '</pre>';
+echo '//--------------------------------------------------------------<br />';
+$t = microtime(true);
+$i   = 0;
+$values = [];
+$collisions = 0;
+while ($i < $iterations) {
+
+    $cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+    $serialized_cached_item = json_encode($cached_item);
+    $unserialized_cached_item = json_decode($serialized_cached_item);
+    ++$i;
+}
+echo '<pre>' . var_export('json_decode : ' . (microtime(true) - $t), true) . '</pre>';
+echo '//--------------------------------------------------------------<br />';
+$t = microtime(true);
+$i   = 0;
+$values = [];
+$collisions = 0;
+while ($i < $iterations) {
+
+    $cached_item = new CacheItem(uniqid('', true), 0.0012, time() + 30);
+    $serialized_cached_item = json_encode($cached_item);
+    $unserialized_cached_item = CacheItem::fromJson(json_decode($serialized_cached_item, true));
+    ++$i;
+}
+echo '<pre>' . var_export('CacheItem::fromJson(json_decode($serialized_cached_item) : ' . (microtime(true) - $t), true) . '</pre>';
+echo '//--------------------------------------------------------------<br />';
+
+echo time() .'<br/>';
+echo gettype(time()) .'<br/>';
 // echo uniqid('', true);
 // (time() - self::CACHE_TTL) > filemtime($cache_ttl_path)
 
 $distribution_factor = 1;
 $render_time = 0.004;
-$log_odd = log(mt_rand()/ mt_getrandmax());
+$log_odd = log(mt_rand() / mt_getrandmax());
 echo time() - $render_time * $distribution_factor * $log_odd;
 exit;
 //------------------------------------------------------------------ session

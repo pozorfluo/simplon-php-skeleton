@@ -21,11 +21,11 @@ class Cache
     const CACHE_PATH = ROOT . 'cache/';
         
     /**
-     * Cache time to live duration for its content.
+     * Time To Live in seconds before an item in cache is considered stale.
      *
      * @var int
      */
-    protected $ttl = 30; /* seconds */
+    protected $ttl = 30;
         
     /**
      * Cache name.
@@ -43,10 +43,14 @@ class Cache
 
     /**
      * 
-     * 
      * @var array 2-tuple
      */
     protected $prune_odds;
+
+    /**
+     * @var array [string $key, CacheItem $item]
+     */
+    protected $trove;
     
     /**
      * Create a new Cache instance.
@@ -68,7 +72,9 @@ class Cache
     }
 
     /**
+     * Determine if a valid cached version of the request exists.
      *
+     * @return boolean
      */
     public function isCached(): bool
     {
@@ -112,8 +118,8 @@ class Cache
      *   The goal is to pre-emptively re-render often requested pages that have
      *   been rendered and cached once they expire or are invalidated.
      *  
-     *   Structure the cached file names as follow :
-     *      sanitized_query_string.popularity_counter.extension
+     *   ~~Structure the cached file names as follow :~~
+     *      ~~sanitized_query_string.popularity_counter.extension~~
      *      
      *   Where popularity_counter is an integer incremented each time that page
      *   is requested and decremented each time it is pre-emptively re-rendered.
@@ -137,6 +143,7 @@ class Cache
      * ,
      *    "controller%3DHome" : {
      *      "filename" : "5eb62a757a56e0.61116934.html",
+     *      "tags" : ["tagA", "tagB"],
      *      "popularity" : 5,
      *      "render_time" : 0.0010299682617188
      *    },
