@@ -71,13 +71,19 @@ require ROOT . 'src/Helpers/AutoLoader.php';
 
 use Helpers\Dispatcher;
 use Entities\Entity;
+use Helpers\Cache;
 use Helpers\CacheItem;
-
 //--------------------------------------------------------------- playground
+
+$cache = new Cache('helloCache');
+$cache = new Cache('helloCache');
+echo '<pre>'.var_export($cache, true).'</pre><hr />';
+echo '<pre>'.var_export(Cache::listCaches(), true).'</pre><hr />';
+exit;
+
 
 echo is_file($file = 'index.php');
 echo $file;
-exit;
 
 echo time() . '<br/>';
 echo gettype(time()) . '<br/>';

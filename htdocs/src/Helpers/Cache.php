@@ -12,7 +12,7 @@ use Controllers\Controller;
  *   expiration date, it is considered valid and Dispatcher will serve it.
  * 
  * todo
- *   - [ ] Forbid instancing multiple Cache with the same name
+ *   - [x] Forbid instancing multiple Cache with the same name
  */
 class Cache
 {
@@ -24,13 +24,13 @@ class Cache
     const CACHE_PATH = ROOT . 'cache/';
 
     /**
-     * List of currently instanced caches.
+     * 'Set' of currently instanced caches.
      * 
      * Used to forbid instancing multiple Cache with the same name.
      * 
      * @var array [string $name => 1]
      */
-    public static $list = [];
+    private static $list = [];
 
     /**
      * Cache name.
@@ -70,8 +70,8 @@ class Cache
      * Cache metadata collection.
      * 
      * todo
-     *   - [ ] Decide if keeping a flipped [$filename => $key] is worth it
-     *         to speed up unique filename collision detection
+     *   - [ ] Decide if keeping a flipped [$filename => $key] as a ghetto set 
+     *         is worth it to speed up unique filename collision detection
      * 
      * @var array [string $key, CacheItem $item]
      */
@@ -80,25 +80,63 @@ class Cache
     /**
      * Create a new Cache instance.
      * 
-     * Caller must check and use the actual Cache name used not assume the one
-     * it requested was free.
+     * Caller must check and get the actual Cache name used and must NOT assume 
+     * the one it requested was free.
      * 
      * @param integer $ttl
      * @param string $name
 
      * @return void
      */
-    public function __construct(string $name) :
+    public function __construct(string $name)
     {
         /* make sure a unique cache name is used */
-        if(isset(Cache::$list[$name])) {
-
-        } else {
-
+        $this->name = $name;
+        while (isset(Cache::$list[$this->name])) {
+            $this->name = $name . uniqid();
         }
+        Cache::$list[$this->name] = 1;
     }
 
+        
+    /**
+     * List currently instanced Cache by name.
+     *
+     * @return array
+     */
+    public static function listCaches() : array {
+        return array_keys(Cache::$list);
+    }
+    
+    /**
+     * Determine if a Cache instance of given name exists.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public static function exists(string $name) : bool {
+        return (isset(Cache::$list[$name]));
+    }
+    
+    /**
+     * Load metadata persisted to disk, if any, into the Cache trove.
+     *
+     * @return self
+     */
+    public function load() : self
+    {
+        return $this;
+    }
 
+    /**
+     * Persist Cache trove metadata to disk.
+     *
+     * @return self
+     */
+    protected function save() : self
+    {
+        return $this;
+    }
     /**
      * Retrieve cached content for given key if it exists and is not stale.
      *

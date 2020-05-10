@@ -18,6 +18,10 @@ CMakeFiles
 CMakeScripts
 Testing
 
+# php
+composer.phar
+htdocs/vendor/*
+
 # Makefile
 cmake_install.cmake
 install_manifest.txt
