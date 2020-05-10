@@ -6,7 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 final class CacheTest extends TestCase
 {
-    public function test_a_Cache_instanced_with_an_existing_Cache_name_acquires_a_unique_name(): void
+    /**
+     * @test
+     */
+    // public function CacheInstancedWithAnExistingCacheNameAcquiresUniqueName(): void
+    public function Cache_instanced_with_an_existing_cache_name_acquires_a_unique_name(): void
     {
         /* Given a Cache instance */
         $existing_cache = new \Helpers\Cache('ExistingCacheName');
