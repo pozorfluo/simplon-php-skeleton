@@ -1,3 +1,6 @@
+# tp product-hunt
+![simplon-tp-product-hunt](htdocs/resources/images/tp-product-hunt.svg)
+
 ## todo
 - [ ] Use producthunt.com api reference as a starting point to sketch db
   + [ ] Sample some posts, users, comments data
