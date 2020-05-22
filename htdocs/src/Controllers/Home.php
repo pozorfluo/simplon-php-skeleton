@@ -23,16 +23,27 @@ class Home extends Controller
     //     parent::__construct();
     //     echo '<pre>Home()</pre>';
     // }
-    
+
     /**
      * 
      */
     public function runDefault(array $args = []): void
     {
         $this->set($args);
-        
-        // echo '<pre>' . var_export($this->template_args, true) . '</pre>';
-        // echo '<pre>' . var_export($this->view, true) . '</pre>';
         $this->serve();
     }
+
+    /**
+     * note
+     *   from simplon-tp-product-hunt
+     */
+    // public function runLogout(array $args = []): void
+    // {
+    //     if (isset($_COOKIE['user_name'])) {
+    //         setcookie('user_name', '', strtotime('-1 year'), '/');
+    //     }
+
+    //     header('Refresh: 0; url=/', TRUE, 302);
+    //     exit();
+    // }
 }

@@ -36,7 +36,7 @@ class Home extends View
     {
 
         $this->components['css'] = [
-            new InlinedCss(['css/style.min.css'])
+            new InlinedCss(['resources/css/style.min.css'])
         ];
 
         $this->components['nav'] = [
@@ -49,9 +49,9 @@ class Home extends View
         ];
 
         $this->components['content'] = [
-            new Image('resources/images/cross.svg', 'a red cross'),
-            new Image('resources/images/cross.svg', 'a red cross', 64, 64),
-            new Image('resources/images/cross.svg', 'a red cross', 128, 128),
+            new Image('public/images/icons/cross.svg', 'a red cross'),
+            new Image('public/images/icons/cross.svg', 'a red cross', 64, 64),
+            new Image('public/images/icons/cross.svg', 'a red cross', 128, 128),
         ];
 
 

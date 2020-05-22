@@ -7,32 +7,37 @@ namespace Controllers;
 use Models\Model;
 
 /**
- *   RESTish API setup
- *     Use the request method to define the mode of operation for this
- *     endpoint
- *   
+ * RESTish API
+ * 
+ * Mapping between query parameters as dissected by the Dispatcher and this
+ * RESTish API :
+ * 
  *     Controller       -> API
  *     Action           -> endpoint
  *     Sub              -> sub-resource
  *     Request Method   -> mode of operation
  *     Other Parameters -> query parameters
- *     
+ * 
+ * Use the request method to define the mode of operation for this endpoint.
+ *   
  *     Mode of operation
  *       GET    -> fetch
  *       POST   -> add
  *       PUT    -> update/edit
  *       DELETE -> remove
  * 
- *     Prepend mode of operation method names with 'op' to make it clear 
- *     what is meant to be a callable action and thwart some malicious 
- *     requests
- *       e.g.,
- *         opGET()
- *         opPOSTSubresource()
- *         opPUTSubresource()
- *         opDELETE()
+ * Prepend names of method available for each resource with 'rest' to make it 
+ * clear what is meant to be a callable action and thwart some malicious 
+ * requests.
  * 
- * todo
+ * @example
+ *
+ *         restGET()
+ *         restPOSTEndpointSubresource()
+ *         restPUTEndpoint()
+ *         restDELETE()
+ * 
+ * @todo
  *   - [ ] Implement API rate limiting
  *     + [ ] See https://www.yiiframework.com/doc/guide/2.0/en/rest-rate-limiting
  */
@@ -47,7 +52,7 @@ abstract class API extends Controller
      *   4xx Client Error
      *   5xx Server Error
      * 
-     * See [MDN HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+     * @see [MDN HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
      * 
      * @var array [int => string]
      */
@@ -105,15 +110,12 @@ abstract class API extends Controller
     ];
 
 
-
-
     public function __construct(array $args = [])
     {
         parent::__construct($args);
 
-
         /**
-         * todo
+         * @todo
          *   - [ ] Allow and handle CORS
          *     + [ ] See https://stackoverflow.com/questions/8719276/cross-origin-request-headerscors-with-php-headers
          *     + [ ] Implement some kind of API key checking
@@ -122,7 +124,7 @@ abstract class API extends Controller
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: *');
 
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
     }
 
     /**
@@ -138,11 +140,12 @@ abstract class API extends Controller
      */
     protected function emit(?array $data, int $status_code): self
     {
+        header('Content-Type: application/json');
+
         $status = self::status($status_code);
         header("HTTP/1.1 {$status_code} {$status}");
 
         /* keep it around for optional caching */
-        // if
         $this->rendered_page = json_encode($data);
         echo $this->rendered_page;
 
@@ -157,16 +160,18 @@ abstract class API extends Controller
          *   Endpoint may access multiple sub-ressources with different methods
          */
         $this->args['method'] =
-            'op' . ($this->args['sub'] ?? '') . ($this->args['method'] ?? 'GET');
+            'rest'
+            . ($this->args['method'] ?? 'GET')
+            . ($this->args['endpoint'] ?? '')
+            . ($this->args['sub'] ?? '');
 
-        /* use existing model or load one */
-        if (method_exists(
-            $this->model ?? $this->loadModel($this),
-            $this->args['method']
-        )) {
+        // echo $this->args['method'];
+        // exit();
+        
+        if (method_exists($this, $this->args['method'])) {
             /* requested mode of operation exists, run it */
             $this->emit(
-                $this->model->{$this->args['method']}(),
+                $this->{$this->args['method']}(),
                 $this->args['status_code']
             );
         } else {
@@ -177,7 +182,7 @@ abstract class API extends Controller
         return $this;
     }
     /**
-     * note
+     * @note
      *   Overriding Controller->cache()
      * 
      *   This controller emits json content and need to set an appropriate 
@@ -188,8 +193,8 @@ abstract class API extends Controller
      * 
      *   As a hacky workaround, this turns cache() into a NOP
      * 
-     *   todo
-     *     - [ ] Handle Dispatcher-level cache for json emission more gracefully
+     * @todo
+     *   - [ ] Handle Dispatcher-level cache for json emission more gracefully
      * 
      */
     public function cache(): Controller
@@ -198,9 +203,57 @@ abstract class API extends Controller
     }
 
     /**
-     * note
+     * @note
      *   Prepend all model mode of operation meant to be callable by a request
      *   with 'op'
      */
     abstract public function runDefault(array $args);
+
+    /**
+     * 
+     */
+    private function restGET(): ?array
+    {
+        /* use existing model or load one */
+        // $this->model ?? $this->loadModel();
+
+        $this->args['status_code'] = 405;
+        return ['GET : not implemented yet'];
+    }
+
+    /**
+     * 
+     */
+    private function restPOST(): ?array
+    {
+        /* use existing model or load one */
+        // $this->model ?? $this->loadModel();
+
+        $this->args['status_code'] = 405;
+        return ['POST : not implemented yet'];
+    }
+
+    /**
+     *
+     */
+    private function restPUT(): ?array
+    {
+        /* use existing model or load one */
+        // $this->model ?? $this->loadModel();
+
+        $this->args['status_code'] = 405;
+        return ['PUT : not implemented yet'];
+    }
+
+    /**
+     * 
+     */
+    private function restDELETE(): ?array
+    {
+        /* use existing model or load one */
+        // $this->model ?? $this->loadModel();
+
+        $this->args['status_code'] = 405;
+        return ['DELETE : not implemented yet'];
+    }
 }

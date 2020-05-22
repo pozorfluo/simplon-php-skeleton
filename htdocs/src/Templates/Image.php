@@ -32,7 +32,7 @@ class Image implements Templatable
      *   - [ ] Implement a InlinedSvg component
      */
     public function __construct(
-        string $path = 'resources/images/spinner.svg',
+        string $path = 'public/images/icons/spinner.svg',
         string $alt = '',
         ?int $width = NULL,
         ?int $height = NULL,
@@ -44,7 +44,7 @@ class Image implements Templatable
         if (is_file($img_path)) {
             $this->data['path'] = $path;
         } else {
-            $this->data['path'] = 'resources/images/spinner.svg';
+            $this->data['path'] = 'public/images/icons/spinner.svg';
             $width = 64;
             $height = 64;
         }

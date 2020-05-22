@@ -21,7 +21,7 @@ class InlinedJs implements Templatable
      * 
      */
     public function __construct(
-        array $paths = ['js/script.min.js']
+        array $paths = ['resources/js/script.min.js']
     ) {
         $this->data = $paths;
     }

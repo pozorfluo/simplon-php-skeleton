@@ -1,10 +1,27 @@
 <?php
 
-/**
- * 
- */
-
 declare(strict_types=1);
+
+// namespace Helpers;
+
+//------------------------------------------------------------- getRedirectUrl
+function getRedirectUrl(string $url): string
+{
+    $redirect_url = $url;
+
+    $headers = get_headers($url);
+
+    foreach ($headers as $header) {
+        if (substr($header, 0, 10) === 'Location: ') {
+            $redirect_url = trim(substr($header, 10));
+            break;
+        }
+    }
+
+    return $redirect_url;
+}
+
+
 //------------------------------------------------------------- flattenArray
 function flattenArray(array $nested_arrays): void
 {
@@ -80,15 +97,15 @@ function prettyDump(array $nested_arrays): void
                     . 'font-weight : bold;">'
                     . $key . '<span style="color : steelblue;'
                     . 'font-weight : 100;"> ('
-                    . gettype($value).' : '. get_class($value). ')</span>'
+                    . gettype($value) . ' : ' . get_class($value) . ')</span>'
                     . '</summary><ul style="font-size: 0.75rem;'
                     . 'background-color: ghostwhite">');
-                    prettyDump(get_object_vars($value));
-                    echo ' <details open><summary style="font-weight : bold;'
+                prettyDump(get_object_vars($value));
+                echo ' <details open><summary style="font-weight : bold;'
                     . 'color : plum">(methods)</summary><pre>';
-                    prettyArray(get_class_methods($value));
-                    echo '</details></pre>';
-                    echo '</li></ul></details>';
+                prettyArray(get_class_methods($value));
+                echo '</details></pre>';
+                echo '</li></ul></details>';
                 break;
             case 'callable':
             case 'iterable':
@@ -107,29 +124,4 @@ function prettyDump(array $nested_arrays): void
                 break;
         }
     }
-
-    // echo 'is $GLOBALS an object ? ' . var_export(is_object($GLOBALS), true);
-    // echo '<pre style="margin-left: 2rem;">' . var_export($GLOBALS, true) . '</pre>';
-    // echo '<pre>' . var_dump($GLOBALS) . '</pre>';
-
-    // function prettyDump(array $nested_arrays): void
-    // {
-    //     foreach ($nested_arrays as $key => $value) {
-    //         if (gettype($value) !== 'array') {
-    //             echo ('<li style="margin-left: 2rem;color: teal; background-color: white">'
-    //                 . '<span style="color : steelblue;font-weight : bold;">'
-    //                 . $key . '</span> : '
-    //                 . $value . '</li>');
-    //         } else {
-    //             /* ignore same level recursion */
-    //             if ($nested_arrays !== $value) {
-    //                 echo ('<details><summary style="color : tomato; font-weight : bold;">'
-    //                     . $key . '<span style="color : steelblue;font-weight : 100;"> ('
-    //                     . count($value) . ')</span>'
-    //                     . '</summary><ul style="font-size: 0.75rem; background-color: ghostwhite">');
-    //                 prettyDump($value);
-    //                 echo ('</ul></details>');
-    //             }
-    //         }
-    //     }
 }

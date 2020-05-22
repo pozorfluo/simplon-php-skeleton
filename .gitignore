@@ -20,8 +20,8 @@ Testing
 
 # php
 composer.phar
-htdocs/vendor/*
-
+htdocs/vendor/
+.phpdoc/
 # Makefile
 cmake_install.cmake
 install_manifest.txt
@@ -940,7 +940,7 @@ MigrationBackup/
 
 # vs code
 .vscode/*
-!.vscode/settings.json
+# !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json

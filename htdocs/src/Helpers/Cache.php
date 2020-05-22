@@ -11,8 +11,7 @@ use Controllers\Controller;
  *   If a cache file exists and is referenced in the trove and is not past its 
  *   expiration date, it is considered valid and Dispatcher will serve it.
  * 
- * todo
- *   - [x] Forbid instancing multiple Cache with the same name
+ * @todo - [x] Forbid instancing multiple Cache with the same name
  */
 class Cache
 {
@@ -42,7 +41,20 @@ class Cache
     /**
      * Time To Live in seconds before an item in cache is considered stale.
      *
-     * @var int
+     * A specific ttl is configurable per response status code.
+     *
+     * @var array <pre><code>[
+     *         200       => int
+     *         400       => int,
+     *         404       => int,
+     *         ... 
+     *         'default' => int
+     *     ...
+     * ] </code></pre>
+     * 
+     * @todo Consider storing ttl in each CacheItem for fine-grained tuning.
+     * @todo Consider storing expires_at in each CacheItem wether using coarse
+     *       or fine grained ttl values.
      */
     protected $ttl = 30;
 
@@ -199,11 +211,17 @@ class Cache
      *   Reset ticker
      * 
      * todo
-     *   - [ ] Implement probabilistic early expiration
-     *   - [ ] Implement subsequent pre-emptive re-rendering
+     *   - [ ] Implement probabilistic early expiration.
+     *   - [ ] Implement subsequent pre-emptive re-rendering.
      *     + [ ] Throttle/delay pre-emptive re-rendering according to server 
-     *           load
+     *           load.
      *     + [ ] See https://www.php.net/manual/en/function.proc-nice.php
+     *   - [ ] Consider locking a Cache item so that only process at a time can
+     *         populate it. 
+     *     + [ ] Serve stale or keep concurrent process/requests on hold until
+     *           lock is released.
+     *   - [ ] Limit Cache to a size or number of CacheItem.
+     *     + [ ] Toss CacheItem based on freshness/popularity.
      * 
      * note
      *   The goal is to pre-emptively re-render often requested pages that have
@@ -232,11 +250,12 @@ class Cache
      * 
      *  e.g.
      * ,
-     *    "controller%3DHome" : {
+     *    "controller%3DHome@Cookie:Value" : {
      *      "filename" : "5eb62a757a56e0.61116934.html",
      *      "tags" : ["tagA", "tagB"],
      *      "popularity" : 5,
-     *      "render_time" : 0.0010299682617188
+     *      "render_time" : 0.0010299682617188,
+     *      "expires_at" : 1590134476,
      *    },
      * 
      *  

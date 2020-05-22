@@ -21,7 +21,7 @@ class InlinedCss implements Templatable
      * 
      */
     public function __construct(
-        array $paths = ['css/style.min.css']
+        array $paths = ['resources/css/style.min.css']
     ) {
         $this->data = $paths;
     }

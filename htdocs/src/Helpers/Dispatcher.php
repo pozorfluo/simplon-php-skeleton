@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Helpers;
 
 use Controllers\Controller;
+use Interfaces\Loadable;
 
 /**
  * Translate and dispatch a QUERY_STRING to the appropriate Controller or serve
@@ -23,6 +24,10 @@ use Controllers\Controller;
 class Dispatcher
 {
     protected $request;
+
+    /**
+     * @var Loadable
+     */
     protected $controller;
 
     const CACHE_TTL = 30; /* seconds */
@@ -33,6 +38,13 @@ class Dispatcher
      *
      * @param  array $config
      * @return void
+     * 
+     * @todo Consider making a set 
+     *       ( or a ghetto-set e.g., [component => bool $is_instantiable] )
+     *       out of registered components instead of an array.
+     * 
+     * @todo Bench break even count of registered components for 
+     *       isset/array_key_exists vs in_array.
      */
     public function __construct(array $config)
     {
@@ -44,8 +56,12 @@ class Dispatcher
          * Redirect to Home if query string specifies junk controller
          */
         if ((!isset($this->request['controller'])
-            || (!in_array($this->request['controller'], $config['components']['Controllers'], true)))) {
-            
+            || (!in_array(
+                    $this->request['controller'],
+                    $config['components']['Controllers'],
+                    true
+                )))) {
+
             /**
              * note
              *   If you need to remember this redirection happened :
@@ -75,12 +91,15 @@ class Dispatcher
     }
 
     /**
-     * todo
+     * @todo
      *   - [x] Figure out how to prevent a call to a method that does
      *         NOT represent an action ?!
      *     + [x] Consider prepending / appending with 'run' or Action' 
      *           both to make it clear what is meant to be a callable 
      *           action and thwart malicious requests
+     * @todo Move the controller instancing logic to a method in Controller base
+     *       class that returns the appropriate Controller all setup with given
+     *       request as args.
      */
     public function route(): self
     {
@@ -111,7 +130,9 @@ class Dispatcher
     }
 
     /**
-     * 
+     * @todo Move the controller instancing logic to a method in Controller base
+     *       class that returns the appropriate Controller all setup with given
+     *       request as args.
      */
     public function load(): Controller
     {
@@ -120,5 +141,16 @@ class Dispatcher
         $this->controller = new $controller_name();
 
         return $this->controller;
+    }
+
+    /**
+     * @todo Use Cache class
+     * 
+     * note
+     *   This is short-circuited until upgraded Cache is plugged in.
+     */
+    public function isCached(): bool
+    {
+        return false;
     }
 }

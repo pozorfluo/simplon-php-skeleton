@@ -1,7 +1,6 @@
 # generate autoload files
 php composer.phar dump-autoload
 
-
 # list 
 ./vendor/bin/phpunit --list-tests
 

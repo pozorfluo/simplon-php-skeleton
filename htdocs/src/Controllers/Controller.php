@@ -8,19 +8,20 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Interfaces\Loadable;
 use Models\Model;
 use Views\View;
 
 /**
  * 
  */
-abstract class Controller
+abstract class Controller //implements Loadable
 {
     public $args = [];
 
     protected $model;
     protected $view;
-    protected $layout = "Minimal";
+    protected $layout = 'Minimal';
 
     protected $rendered_page = '';
 
@@ -117,7 +118,7 @@ abstract class Controller
 
         // for ($i = 0; $i < 3; $i++) {
         //     echo '<h2>DEFERRED COMPONENT PLACEHOLDER</h2>';
-        //     echo '<img src="resources/images/spinner.svg" alt="loading !">';
+        //     echo '<img src="public/images/icons/spinner.svg" alt="loading !">';
         //     /**
         //      * note
         //      *   Some padding may be necessary to force the webserver and

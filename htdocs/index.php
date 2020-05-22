@@ -23,7 +23,7 @@
  *     + [ ] Handle getting hammered with requests that resolve to a valid
  *           Controller but end up swamping the cache because of distinct
  *           query strings filled with junk parameters
- *     + [ ] Handle requests resolving to super long file name more gracefully
+ *     + [x] Handle requests resolving to super long file name more gracefully
  *     + [x] Check if all characters allowed in a query string are valid in
  *           a filename
  *       - [ ] Consider a rewrite rule or some validation
@@ -36,28 +36,6 @@
  *   - [ ] Test run Templates using and rendering other Templates
  *   - [ ] Add a project specific QueryString builder to simplify link creation
  *   - [ ] Write the test suite Entity->isValid(), validate() deserves
- * 
- *   - [x] Create minichat database
- *     + [x] Create messages table
- *     + [x] Create users table
- *     + [x] Link messages and users tables
- *     + [x] Add minichat db configuration to .env
- *   - [x] Rough an API for Minichat
- *     + [x] Extend Controller with a base API abstract class
- *     + [x] Flesh out a Minichat API extenting base API
- *     + [ ] Add the companion Model extending DBPDO
- *     + [ ] Test by looking at status response / json output
- *   - [ ] Rough a Minichat View
- *     + [ ] Add a deferred component to display Minichat message
- *     + [ ] Use Ajax in that component to poll Minichat API periodically
- *       - [ ] Keep it 'lazy'
- *       - [ ] Use something like setTimeout in promise resolution instead of
- *             setInterval in order not to hammer the API
- *   - [ ] Consider adding a cache layer between the Minichat API and the 
- *         model/DB
- *     + [ ] Use something like cached json
- *     + [ ] Update/Serve cached json
- *     + [ ] Batch updates to the DB
  *   - [ ] Investigate CORS issue with font preloading   
  */
 
@@ -75,26 +53,6 @@ use Helpers\Cache;
 use Helpers\CacheItem;
 //--------------------------------------------------------------- playground
 
-$cache = new Cache('helloCache');
-$cache = new Cache('helloCache');
-echo '<pre>'.var_export($cache, true).'</pre><hr />';
-echo '<pre>'.var_export(Cache::listCaches(), true).'</pre><hr />';
-exit;
-
-
-echo is_file($file = 'index.php');
-echo $file;
-
-echo time() . '<br/>';
-echo gettype(time()) . '<br/>';
-// echo uniqid('', true);
-// (time() - self::CACHE_TTL) > filemtime($cache_ttl_path)
-
-$distribution_factor = 1;
-$render_time = 0.004;
-$log_odd = log(mt_rand() / mt_getrandmax());
-echo time() - $render_time * $distribution_factor * $log_odd;
-exit;
 //------------------------------------------------------------------ session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -128,66 +86,21 @@ if (session_status() === PHP_SESSION_NONE) {
      */
 }
 //------------------------------------------------------------------- config
-/**
- * Get list of registered components, database configs, etc... from config file
- * or provide/build some defaults
- */
-$t = microtime(true);
-
-$config_path = ROOT . '.env';
-$config_exists = is_file($config_path);
-
-
-if ($config_exists) {
-    $config = json_decode(file_get_contents($config_path), true);
-}
-
-if (!isset($config['components']) || DEV_FORCE_CONFIG_UPDATE) {
-    $src_dir = new RecursiveDirectoryIterator(ROOT . 'src/');
-    $iterator = new RecursiveIteratorIterator($src_dir);
-    $php_files = new RegexIterator(
-        $iterator,
-        '/^.+\.php$/i',
-        RecursiveRegexIterator::GET_MATCH
-    );
-
-    /* reset for DEV_FORCE_CONFIG_UPDATE */
-    $config['components'] = [];
-
-    foreach ($php_files as $php_file) {
-        /* do NOT register abstract classes or interfaces */
-        $is_interface_or_abstract = preg_match(
-            '/abstract class\s.+\n\{|interface\s.+\n\{/',
-            file_get_contents($php_file[0])
-        );
-
-        if (!$is_interface_or_abstract) {
-            $component = array_slice(explode('/', $php_file[0]), -2);
-            $config['components'][$component[0]][] = substr($component[1], 0, -4);
-        }
-    }
-    $config_exists = false;
-    // echo 'components config missing ! Defaults emitted. <br />';
-}
-if (!isset($config['db_configs'])) {
-    $config['db_configs'] = [
-        'default' => [
-            'DB_DRIVER' => 'mysql',
-            'DB_HOST' => '127.0.0.1',
-            'DB_PORT' => '3306',
-            'DB_NAME' => 'default',
-            'DB_CHARSET' => 'utf8mb4',
-            'DB_USER' => null,
-            'DB_PASSWORD' => null,
-        ]
-    ];
-    $config_exists = false;
-    // echo 'db_configs config missing ! Defaults emitted.<br />';
-}
-
-$time_spent['config'] = (microtime(true) - $t);
-
+require ROOT . 'src/Helpers/Config.php';
+date_default_timezone_set('Europe/Paris');
 //--------------------------------------------------------------- playground
+echo is_file($file = 'index.php');
+echo $file;
+
+echo time() . '<br/>';
+echo gettype(time()) . '<br/>';
+
+$distribution_factor = 1;
+$render_time = 0.004;
+$log_odd = log(mt_rand() / mt_getrandmax());
+echo time() - $render_time * $distribution_factor * $log_odd;
+// exit;
+
 // use Entities\Patient;
 
 // $test_entity = new Patient(
@@ -210,40 +123,15 @@ $time_spent['config'] = (microtime(true) - $t);
 //---------------------------------------------------------------------- run
 $t = microtime(true);
 
-date_default_timezone_set('Europe/Paris');
+
 
 $dispatcher = new Dispatcher($config);
-$dispatcher->route()->cache();
+// $dispatcher->route()->cache();
+$dispatcher->route();
 
 $time_spent['serving_page'] = (microtime(true) - $t);
+
 //------------------------------------------------------------------- config
-/**
- * Serialize config to file if needed once the page is served 
- */
-$t = microtime(true);
-
-if (!$config_exists) {
-    $config_file = fopen($config_path, 'w');
-    fwrite($config_file, json_encode($config));
-    fclose($config_file);
-}
-
-$time_spent['serialize_config'] = (microtime(true) - $t);
-
-
+require ROOT . 'src/Helpers/SerializeConfig.php';
 //-------------------------------------------------------------------- debug
-$t = microtime(true);
-
-if (!in_array('Content-Type: application/json', headers_list())) {
-    require ROOT . 'src/Helpers/Utilities.php';
-    require ROOT . 'src/Templates/GlobalsDump.php';
-
-    $time_spent['display_debug'] = (microtime(true) - $t);
-    $time_spent['total'] = array_sum($time_spent);
-
-    echo "<pre>config           : {$time_spent['config']}</pre>";
-    echo "<pre>serving_page     : {$time_spent['serving_page']}</pre>";
-    echo "<pre>serialize_config : {$time_spent['serialize_config']}</pre>";
-    echo "<pre>display_debug    : {$time_spent['display_debug']}</pre>";
-    echo "<pre>total            : {$time_spent['total']}</pre>";
-}
+require ROOT . 'src/Helpers/DebugInfo.php';
