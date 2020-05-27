@@ -30,8 +30,13 @@ class Dispatcher
      */
     protected $controller;
 
-    const CACHE_TTL = 30; /* seconds */
-    const CACHE_PATH = ROOT . 'cache/';
+    /**
+     * var array ['route_name' => route]
+     */
+    protected $routes;
+
+    // const CACHE_TTL = 30; /* seconds */
+    // const CACHE_PATH = ROOT . 'cache/';
 
     /**
      * Create a new Dispatcher instance.

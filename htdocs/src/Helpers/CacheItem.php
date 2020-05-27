@@ -24,7 +24,7 @@ class CacheItem
     /**
      * Random unique filename attributed to this cached item.
      *
-     * @param string
+     * @var string
      */
     public $filename;
     

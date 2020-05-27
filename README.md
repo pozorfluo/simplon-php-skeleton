@@ -53,18 +53,22 @@ A student-developped php educational mini-framework based on the MVC pattern.
 
 ## notes
 
+### convention-based routing/dispatching
+*It seems that this fine specimen of buzzwordy banter is already in use for 
+something different.*
+
+Controller's method following a naming scheme based on reserved
+prefixes are automatically considered viable routes by the Dispatcher.
+
+( After some research, it seems similar to the default routing system in ASP.NET
+modulo the use of reserved prefixes )
+
+
 ### caching strategy
-> cache-aside, refresh-ahead, tag-based invalidation queue populated by triggers
-in db.
+> cache-as-sor, refresh-ahead, tag-based invalidation queue 
+~~populated by triggers in db~~.
 
 see [oracle docs](https://docs.oracle.com/cd/E15357_01/coh.360/e15723/cache_rtwtwbra.htm#COHDG208)
-
-
-
-#### cache-aside
-The Cache component is very complex compared to the rest of the app.
-The cache-aside strategy seems like an appropriate way to keep it entirely 
-optional.
 
 #### refresh-ahead
 
@@ -126,14 +130,19 @@ Add a *generated at :* __timestamp__ to cached items content.
 
 ## todo
 
-- [ ] Merge updates from simplon-tp-product-hunt exercise.
+- [x] Merge updates from simplon-tp-product-hunt exercise.
 - [ ] Document with phpdoc as done in simplon-tp-product-hunt exercise.
 - [ ] Work/Test with phpunit as done with Cache class.
+  + [ ] See https://stackoverflow.com/questions/31217935/how-to-unit-test-a-database-insert-function-pdo
 - [ ] Consider splitting core and app files.
-- [ ] Update repo name.
-- [ ] Implement alternate *cute* path scheme.
-- [ ] Add some form of dependency injection to make the controller portion of
-      RESTish API demo testable.
+- [ ] Update repo name.  
+- [x] ~~Consider registering routes explicitely in index.php.~~
+- [ ] Extend the convention based auto-routing system.
+  + [ ] Implement alternate *cute* path scheme.
+  + [ ] Add a way to retrieve/display the whole routing scheme.
+- [ ] Implement some form of Authentification, Authorization (+ Accountability) 
+      in RESTish API.
+- [ ] Add Http caching directives to RESTish API.
 
 ## decisions log
 

@@ -5,10 +5,10 @@
  * Retrieve configuration
  * Run the app !
  * 
- * note
+ * @note
  *   This is is the main entry point
  * 
- * todo
+ * @todo
  *   - [x] Redirect to parameterized index.php
  *   - [x] Use Dispatcher to call Controller/Action/Param
  *   - [x] Use Controller to request, filter, hand over Model data
@@ -36,7 +36,7 @@
  *   - [ ] Test run Templates using and rendering other Templates
  *   - [ ] Add a project specific QueryString builder to simplify link creation
  *   - [ ] Write the test suite Entity->isValid(), validate() deserves
- *   - [ ] Investigate CORS issue with font preloading   
+ *   - [ ] Investigate CORS issue with font preloading
  */
 
 declare(strict_types=1);
