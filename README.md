@@ -140,6 +140,8 @@ Add a *generated at :* __timestamp__ to cached items content.
 - [ ] Extend the convention based auto-routing system.
   + [ ] Implement alternate *cute* path scheme.
   + [ ] Add a way to retrieve/display the whole routing scheme.
+  + [ ] Consider defining __call in Controller base class to redirect to 404,
+        possibly removing the method_exists check in dispatcher.
 - [ ] Implement some form of Authentification, Authorization (+ Accountability) 
       in RESTish API.
 - [ ] Add Http caching directives to RESTish API.

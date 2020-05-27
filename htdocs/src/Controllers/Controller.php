@@ -42,7 +42,6 @@ abstract class Controller //implements Loadable
          */
         $this->args['model'] = $associated_class;
         $this->args['view'] = $associated_class;
-
     }
 
     /**
@@ -162,6 +161,22 @@ abstract class Controller //implements Loadable
         }
         return $this;
     }
+
+    /**
+     * Fallback action called when the Dispatcher resolves the url/request to
+     * a route that does NOT exists.
+     * 
+     * @example Serve a 404 page.
+     * 
+     * @param  string $name
+     * @param  array $arguments
+     * @return void
+     * 
+     * @todo Research if that use case for __call is ill-advised.
+     */    
+    abstract public function __call(string $name, array $arguments): void;
+   
+
     /**
      * note
      *   Prepend all actions meant to be callable by a request with 'run'
